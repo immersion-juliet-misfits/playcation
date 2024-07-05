@@ -8,19 +8,19 @@ let vacationPlace = [
   location: '1234Street',
   name: 'fun Holetale',
   reviews: reviews,
-  image: 'image'
+  image: './images/cute-dog-png-hd-puppy-png-hd-pluspng-com-964-puppy-png-hd-964.png'
 },
 {id: 1234,
   location: 'florda',
   name: 'Disany world',
   reviews: reviews,
-  image: 'image'
+  image: './images/fried robot.png'
 },
 {id: 1234,
   location: '1211 Avanue',
   name: 'bayou camperPark',
   reviews: reviews,
-  image: 'image'
+  image: './images/money rain.jpg'
 }
 
 ]
