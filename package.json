@@ -1,0 +1,26 @@
+{
+  "name": "playcation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagecantrelle/playcation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gagecantrelle/playcation/issues"
+  },
+  "homepage": "https://github.com/gagecantrelle/playcation#readme",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "react": "^18.3.1"
+  }
+}
