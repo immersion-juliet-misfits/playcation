@@ -19,6 +19,12 @@
   },
   "homepage": "https://github.com/immersion-juliet-misfits/playcation#readme",
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/nunito": "^5.0.18",
+    "@fontsource/ubuntu": "^5.0.13",
+    "@mui/icons-material": "^5.16.0",
+    "@mui/material": "^5.16.0",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
