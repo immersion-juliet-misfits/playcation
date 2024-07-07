@@ -1,5 +1,6 @@
 import React, { useState, Component } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import Homepage from "./Homepage.jsx";
 
 // ES6 Class/Functional component
 const App = () => {
@@ -9,10 +10,10 @@ const App = () => {
         <h1>Hello Subjects</h1>
       </div>
       <Routes>
-        <Route path="/home" element={}/>
+        <Route path="/" element={<Homepage />} />
+        {/* <Route path="/" element={}/>
         <Route path="/" element={}/>
-        <Route path="/" element={}/>
-        <Route path="/" element={}/>
+        <Route path="/" element={}/> */}
       </Routes>
       </> 
     );
