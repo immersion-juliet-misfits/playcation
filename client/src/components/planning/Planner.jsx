@@ -1,40 +1,51 @@
-// Pass into App.jsx
-
-// 
-
-
-// Pass into Planner.jsx
+// This is the only component that will be passed into Planner.jsx
+// Do I need below for router to work on our Homepage?
+import { Link } from 'react-router-dom';
 import React from 'react';
- 
-class Planner extends React.Component {
-constructor(props) {
-super();
+import axios from 'axios';
+import { Container, Grid, Paper, TextField } from '@mui/material';
 
-this.state = {
+const Planner = () => {
+  // React Hooks replace state, constructor, and super()
+  // Don't have to bind methods
 
-};
-// Bind methods here
-}
+  // GET Method to retrieve stored plans
+  // getPlans(){};
 
-// Method to GET stored Plans from the Database
+  // Mount previous method on page load - Does React Hooks use this?
+  // componentDidMount() {
+  //   this.getPlans()
+  // };
 
-// Mount previous method on page load
-// componentDidMount() {};
+  // POST Method to create new plans
+  // savePlans() {};
 
-// Method 
-
-// Render required Planner Components
-render () {
+  // Render required Planner Components
   return (
-<div>
-<h1>Search Component Here</h1>
-<div>Saved Plans Component Here</div>
-</div>
+    <Container
+      className='planner_all'
+      style={{
+        width: '800vh',
+        height: '80vh',
+        border: '2px solid black',
+        borderRadius: '20px',
+      }}
+    >
+      <Grid className='grid_all' container spacing={2} alignItems='stretch'>
+        <Grid className='grid_search' item xs={6}>
+          <Paper style={{ padding: 16, height: '100%' }}>
+            <h1>Search Component Here</h1>
+            <TextField variant='outlined' placeholder='Search Here' fullWidth />
+          </Paper>
+        </Grid>
+        <Grid className='grid_plans' item xs={6}>
+          <Paper style={{ padding: 16, height: '100%' }}>
+            <div>Saved Plans Component Here</div>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
-}
+};
 
-}
-
-
-
-
+export default Planner;
