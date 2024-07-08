@@ -12,7 +12,7 @@ const NavDrawer = () => {
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)}>Temp Nav</Button>
+      <Button onClick={toggleDrawer(true)}>Home</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}></Drawer>
     </>
   );

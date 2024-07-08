@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 
-function CommunityPage() {
+const CommunityPage = () => {
   return (
     <h2>Sharecation</h2>
   )
