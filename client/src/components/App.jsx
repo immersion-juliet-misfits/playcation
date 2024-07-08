@@ -1,6 +1,7 @@
 import React, { useState, Component } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Homepage from "./Homepage.jsx";
+import Planner from "./planning/Planner.jsx"
 
 // ES6 Class/Functional component
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/home" element={<Homepage />} />
         <Route path="/*" element={<h1>Page Not Found</h1>} />
+        <Route path="/planner" element={<Planner />} />
       </Routes>
       </> 
     );
