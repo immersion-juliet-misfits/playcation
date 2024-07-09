@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const CommunityRoutes = require('./routes/communityRoutes/community.js');
 
 require('dotenv').config();
 
@@ -12,6 +13,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.use('/community', CommunityRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'dist', 'index.html'));
