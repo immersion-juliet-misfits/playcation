@@ -23,6 +23,8 @@ import {
 // debounce may need to be imported separately, I want to test this method first
 import LocationOnIcon from '@mui/icons-material';
 // Import Map API after setting up basic code 
+require('dotenv').config();
+const gpmKEY = process.env.GOOGLE_MAPS_API_KEY;
 
 
 // Create script of executable code to invoke once page loads
@@ -46,6 +48,8 @@ const PlannerSearch = () => {
   const [options, setOptions] = useState([]); // Hook tracks "current" autocomplete suggestions
   const loaded = useRef(false); // Hook tracks if 'loadMapScript' has been loaded
 
+// Hook for retrieving the Key
+useEffect(() => {
   // Verify that the window exists & that loadMapScript has not been loaded
   if (typeof window !== 'undefined' && !loaded.current) {
     // Verifies if an element with the id doesn't exist yet
@@ -59,7 +63,8 @@ const PlannerSearch = () => {
     }
     // Change loadMapScript status to true
     loaded.current = true;
-  }
+  } 
+}, [gpmKEY])
 
   // define fetch function with useMemo hook to retrieve Place predictions based on "current" input
   // Add debounce to avoid const request firing
