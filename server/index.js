@@ -5,6 +5,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const bodyParser = require('body-parser');
 const isAuthenticated = require('./middleware/auth')
+const routes = require('./routes/routes');
 
 require('dotenv').config();
 
@@ -72,6 +73,9 @@ passport.deserializeUser((user, done) => {done(null, user);})
 app.use(express.static(path.join(__dirname, '../client/dist')));
 // Parse incoming request bodies in a middleware before your handlers
 app.use(bodyParser.json());
+
+// routers
+app.use('/api', routes);
 
 // login with goggle
 app.get('auth/google', passport.authenticate('google', {

@@ -6,5 +6,7 @@
 node_modules/
 jspm_packages/
 
+*~Stashed changes
+
 # dist
 dist
