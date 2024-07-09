@@ -13,9 +13,20 @@ Community.get('/post', (req, res) => {
     });
 });
 
-// Community.post('/post', (req, res) => {
-//   communityPost.
-// })
+Community.post('/post', (req, res) => {
+  console.log(req.body);
+  communityPost.create({
+    title: 'Test Save',
+    body: 'Test save body descrption',
+    user_id: 4
+  })
+    .then((created) => {
+      res.send(created);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
 //   .then((tr) => {
 //     res.send('good try', tr)
 //   })
