@@ -15,10 +15,11 @@ Community.get('/post', (req, res) => {
 
 Community.post('/post', (req, res) => {
   console.log(req.body);
+  const { title, body, user_id } = req.body;
   communityPost.create({
-    title: 'Test Save',
-    body: 'Test save body descrption',
-    user_id: 4
+    title,
+    body,
+    user_id
   })
     .then((created) => {
       res.send(created);
