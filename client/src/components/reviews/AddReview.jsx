@@ -1,5 +1,5 @@
 import React, { useState, Component } from "react";
-import { Button } from '@mui/material'
+import { Button, Box } from '@mui/material'
 
 const AddReviews = () => {
   const [text, settext] = useState('')
@@ -16,11 +16,11 @@ const AddReviews = () => {
   }
 
   return (
-    <>
+    <Box sx={{ border: '2px solid grey', width: '350px' }} >
       <Button variant="contained" onClick={() => { console.log("text: " + text + " rating: ", + rating + " click") }}>Add review</Button>
       <input type="number" name="rating" min="0" max="5" value={rating} onChange={(e) => { edit(e.target.name, e.target.value) }}></input>
       <textarea rows="5" cols="40" name="text" onChange={(e) => { edit(e.target.name, e.target.value) }}></textarea>
-    </>
+    </Box>
   )
 }
 
