@@ -25,20 +25,20 @@ const Planner = () => {
   // Render required Planner Components
   // Unsure if I prefer the way it looks with or without the Container
   return (
-    // <Container
-    //   className='planner_all'
-    //   style={{
-    //     width: '100%',
-    //     height: '95vh',
-    //     border: '2px solid navy',
-    //     borderRadius: '20px',
-    //   }}
-    // >
+    <Container
+      className='planner_all'
+      style={{
+        width: '100%',
+        height: '95vh',
+        border: '2px solid navy',
+        borderRadius: '20px',
+      }}
+    >
       <Grid className='grid_all' container spacing={1} alignItems='stretch'>
         <PlannerSearch />
         <PlannerDisplay />
       </Grid>
-    // </Container>
+    </Container>
   );
 };
 
