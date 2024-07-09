@@ -18,7 +18,7 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 // authorize user
 const userAuth = (req, accessToken, refreshToken, profile, done) => {
   // if user has been created
-  UserActivation.findOne({
+  User.findOne({
     where: {
       googleId: profile.id
     }
@@ -53,7 +53,7 @@ app.use(passport.session());
 passport.use(
   new GoogleStrategy(
     {
-      clientId: GOOGLE_CLIENT_ID,
+      clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: `/auth/google/callback`,
       passReqToCallback: true
