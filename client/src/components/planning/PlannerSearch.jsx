@@ -7,6 +7,8 @@ This will be a good way to select items to add to a "Plan".
 Needed Methods: 
 GP Search
 POST request to DB 
+
+Change so I can commit & push .gitignore fix
 */
 // import { Link } from 'react-router-dom';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
