@@ -4,6 +4,19 @@ import axios from 'axios';
 import { Button, Typography, Box } from '@mui/material';
 
 function Homepage() {
+  const [userName, setUsername] = useState('');
+
+  useEffect(() => {
+    axios.get('api/user')
+      .then((res) => {
+        const user = res.data;
+        // set username
+        setUsername(user.username);
+      }).catch((err) => {
+        console.error('Failed to GET user data: ', err);
+      });
+  }, []);
+
   return (
     <div>
       <h1>Homepage</h1> 

@@ -4,6 +4,6 @@ const router = Express.Router();
 
 // User Routers
 router.route('/user').get(userController.getUser);
-router.route('/user').post(userController.addUser);
+// router.route('/user').post(userController.addUser);
 
 module.exports = router;

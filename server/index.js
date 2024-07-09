@@ -81,7 +81,7 @@ app.get('auth/google', passport.authenticate('google', {
 // After login, redirect to home for success and / for failure
 app.get('/auth/google/callback', passport.authenticate('google', {
   successRedirect: '/home',
-  failureRedirect: '/'
+  failureRedirect: '/home'
 }));
 
 // Logout 

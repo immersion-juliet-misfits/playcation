@@ -6,7 +6,7 @@ module.exports = {
     const { id } = req.user;
     const userId = id;
     // find user 
-    User.findByPk(userId, {include: []})
+    User.findByPk(userId)
       .then((user) => {
         res.send(user);
       })
@@ -17,29 +17,29 @@ module.exports = {
   },
 
   // POST /api/user
-  addUser: (req, res) => {
-    const { newUser } = req.body;
-    //find user
-    User.findOne({username: newUser.username})
-    .then((user) => {
-      if (user) {
-        throw 'user exists';
-      }
-      else {
-        return User.create(newUser);
-      }
-    })
-    .then(() => {
-      res.sendStatus(201);
-    })
-    .catch((err) => {
-      if (err === 'user exists') {
-        res.sendStatus(400, 'User already exists');
-      }
-      else {
-        res.sendStatus(500);
-        console.error(err)
-      }
-    })
-  }
+  // addUser: (req, res) => {
+  //   const { newUser } = req.body;
+  //   //find user
+  //   User.findOne({username: newUser.username})
+  //   .then((user) => {
+  //     if (user) {
+  //       throw 'user exists';
+  //     }
+  //     else {
+  //       return User.create(newUser);
+  //     }
+  //   })
+  //   .then(() => {
+  //     res.sendStatus(201);
+  //   })
+  //   .catch((err) => {
+  //     if (err === 'user exists') {
+  //       res.sendStatus(400, 'User already exists');
+  //     }
+  //     else {
+  //       res.sendStatus(500);
+  //       console.error(err)
+  //     }
+  //   })
+  // }
 };
