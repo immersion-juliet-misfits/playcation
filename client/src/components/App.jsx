@@ -15,13 +15,13 @@ const App = () => {
       <>
            {/* Replace NavDrawer with empty div on login */}
            {
-            location.pathname === '/' ? <div></div> :
+            location.pathname === '/' ? <div>Welcome to Playcation</div> :
             <NavDrawer /> 
 
            }
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Homepage />} />
+        <Route path="/" element={<Login />} />
         <Route path="/planner" element={<Planner />} />
         {/* <Route path="/community" element={<CommunityPage />} /> */}
         {/* <Route path="/reviews" element={<Reviews />} /> */}
