@@ -1,19 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
 const CommunityFeed = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getPosts()
+    // console.log('STATE', posts)
+  }, [])
+
+  useEffect(() => {
+    // getPosts()
+    console.log('STATE', posts)
+  }, [posts])
+
+  const getPosts = () => {
+    axios.get('/community/post')
+      .then(({data}) => {
+        console.log('Invoked from client', data)
+        setPosts(data)
+      })
+      .catch((err) => {
+        console.error('NOT Invoked from client', err)
+      })
+  }
+
   return (
     <div>
     <h2>Playcay Daily Feed</h2><button>Make a Post</button>
     <ul>
-        <li>Post 1</li>
-        <li>Post 2</li>
-        <li>Post 3</li>
-        <li>Post 4</li>
-        <li>Post 5</li>
-        <li>Post 6</li>
-        <li>Post 7</li>
+      {posts.map((post) => (
+        <li>{post.title}</li>
+      ))}
     </ul>
     </div>
   )

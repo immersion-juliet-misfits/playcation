@@ -8,8 +8,8 @@ const CommunityPage = () => {
   return (
     <div>
     <h1>Playcay Community</h1>
-    <CommunityFeed />
     <CommunityInput />
+    <CommunityFeed />
     </div>
   )
 }
