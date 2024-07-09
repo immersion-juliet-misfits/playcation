@@ -6,6 +6,10 @@ require('dotenv').config();
 // Constants
 // Port
 const PORT = 8000;
+// Google Places Map keys from .env
+const gpmKEY = process.env.GOOGLE_MAPS_API_KEY;
+
+
 
 // Start Express app
 const app = express();
