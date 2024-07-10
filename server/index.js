@@ -6,8 +6,9 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const bodyParser = require('body-parser');
 const isAuthenticated = require('./middleware/auth');
-const { User } = require('./db/index'); 
+const { User } = require('./db/index');
 const routes = require('./routes/routes');
+const CommunityRoutes = require('./routes/communityRoutes/community.js');
 
 require('dotenv').config();
 
@@ -86,6 +87,7 @@ app.use(bodyParser.json());
 
 // routers
 app.use('/api', routes);
+app.use('/community', CommunityRoutes);
 
 // login with goggle
 app.get(
