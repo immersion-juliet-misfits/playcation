@@ -3,15 +3,28 @@ import axios from "axios";
 
 
 const CommunityInput = () => {
+  const [postTitle, setPostTitle] = useState('')
+  const [postBody, setPostBody] = useState('');
+
+  const handleTitleChange = (e) => {
+    console.log(e.target.value)
+    setPostTitle(e.target.value)
+  }
+
+  const handleBodyChange = (e) => {
+    console.log(e.target.value)
+    setPostBody(e.target.value)
+  }
+
   return (
     <div>
     <h2>Playcay Ventures</h2>
     <form>
       <label htmlFor="commtitle">Venture Location:</label><br/>
-      <input id="commtitle" type="text" placeholder="Where'd you go?"/><br/><br/>
+      <input id="commtitle" type="text" placeholder="Where'd you go?" value={postTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
 
       <label htmlFor="commbody">Venture Story:</label><br/>
-      <textarea id="commtitle" type="text" placeholder="Share your experience" /><br/><br/>
+      <textarea id="commtitle" type="text" placeholder="Share your experience" value={postBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
       
       <label htmlFor="comm">Venture Snapshot:</label><br/>
       <input id="commtitle" type="file"></input><br/><br/>
