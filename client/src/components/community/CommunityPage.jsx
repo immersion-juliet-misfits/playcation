@@ -39,7 +39,7 @@ const CommunityPage = () => {
   return (
     <div>
     <h1>Playcay Community</h1>
-    <CommunityInput getPosts={() => getPosts()} />
+    {makeAPost && <CommunityInput getPosts={() => getPosts()} /> }
     <CommunityFeed posts={posts} toggleInput={() => toggleInput()}/>
     </div>
   )
