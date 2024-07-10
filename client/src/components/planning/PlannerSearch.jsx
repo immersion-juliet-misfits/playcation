@@ -25,8 +25,8 @@ import {
 // debounce may need to be imported separately, I want to test this method first
 import LocationOnIcon from '@mui/icons-material';
 // Import Map API after setting up basic code 
-require('dotenv').config();
-const gpmKEY = process.env.GOOGLE_MAPS_API_KEY;
+// require('dotenv').config(); // This being used here is causing my Webpack issue
+// gpmKEY = process.env.GOOGLE_MAPS_API_KEY;
 
 
 // Create script of executable code to invoke once page loads
@@ -58,7 +58,7 @@ useEffect(() => {
     if (!document.querySelector('#map-search')) {
       // Invokes loadMapScript to load the Google Maps API
       loadMapScript(
-        `https://maps.googleapis.com/maps/api/js?key=${gpmKEY}&libraries=places`,
+        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
         document.querySelector('head'),
         'map-search',
       );
@@ -66,7 +66,7 @@ useEffect(() => {
     // Change loadMapScript status to true
     loaded.current = true;
   } 
-}, [gpmKEY])
+}, [GOOGLE_MAPS_API_KEY])
 
   // define fetch function with useMemo hook to retrieve Place predictions based on "current" input
   // Add debounce to avoid const request firing
