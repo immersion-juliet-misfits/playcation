@@ -31,8 +31,8 @@ const CommunityFeed = () => {
     <div>
     <h2>Playcay Daily Feed</h2><button>Make a Post</button>
     <ul>
-      {posts.map((post) => (
-        <CommunityPost title={post.title} body={post.body} />
+      {posts.map((post, i) => (
+        <CommunityPost key={`${post.title}-${i}`} title={post.title} body={post.body} postDate={post.updatedAt} />
         // <li>{post.title}</li>
       ))}
     </ul>
