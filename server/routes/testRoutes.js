@@ -3,7 +3,6 @@ const axios = require('axios')
 const {User, reviews} = require('../db/index')
 
 let router = express.Router()
-
 // User.findAll()
 //   .then((data) => {
 //     console.log(data)

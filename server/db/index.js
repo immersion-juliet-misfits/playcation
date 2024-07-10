@@ -28,7 +28,7 @@ const User = db.define('User', {
   },
 });
 
-// Community post: id, title, body, image_id, user_id
+// // Community post: id, title, body, image_id, user_id
 // const communityPost = db.define('communityPost', {
 //   id: {
 //     type: DataTypes.INTEGER,
@@ -57,7 +57,7 @@ const User = db.define('User', {
 //   }
 // });
 
-// Community Pics: id, url
+// // Community Pics: id, url
 // const communityPics = db.define('communityPics', {
 // id: {
 //   type: DataTypes.INTEGER,
@@ -69,7 +69,7 @@ const User = db.define('User', {
 // }
 // });
 
-// Hotels: 
+// // Hotels: 
 // const hotels = db.define('hotels', {
 //   id: {
 //     type: DataTypes.INTEGER,
@@ -89,30 +89,30 @@ const User = db.define('User', {
 //   }
 //   });
 
-// Reviews: id, review, rating, user_id
-const reviews = db.define('reviews', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  review: {
-    type: DataTypes.STRING,
-  },
-  rating: {
-    type: DataTypes.INTEGER
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User, 
-      key: 'id'
-    }
-  }
-  });
+// // Reviews: id, review, rating, user_id
+// const reviews = db.define('reviews', {
+//   id: {
+//     type: DataTypes.INTEGER,
+//     autoIncrement: true,
+//     primaryKey: true,
+//   },
+//   review: {
+//     type: DataTypes.STRING,
+//   },
+//   rating: {
+//     type: DataTypes.INTEGER
+//   },
+//   user_id: {
+//     type: DataTypes.INTEGER,
+//     references: {
+//       model: User, 
+//       key: 'id'
+//     }
+//   }
+//   });
 
 
-// Crimes: id, crime_list, location
+// // Crimes: id, crime_list, location
 // const crimes = db.define('crimes', {
 //   id: {
 //     type: DataTypes.INTEGER,
@@ -132,7 +132,7 @@ const reviews = db.define('reviews', {
 //   });
 
 
-// Planner: id, user_id, hotel_id, plan_name, trip_location, plan_notes, activities
+// // Planner: id, user_id, hotel_id, plan_name, trip_location, plan_notes, activities
 // const planner = db.define('planner', {
 //   id: {
 //     type: DataTypes.INTEGER,
@@ -165,8 +165,8 @@ const reviews = db.define('reviews', {
 //   activities: {
 //     type: DataTypes.ARRAY
 //   }, 
-// Question, how should Activity List be handled (string, array, or other)
- // });
+// // Question, how should Activity List be handled (string, array, or other)
+//   });
 
   (async () => {
     try {
