@@ -9,5 +9,7 @@ package-lock.json
 # Wildcard Ignore patterns
 *~Stashed changes
 
+*~Stashed changes
+
 # dist
 dist

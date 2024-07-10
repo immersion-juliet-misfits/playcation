@@ -22,8 +22,9 @@ import {
 } from '@mui/material';
 // debounce may need to be imported separately, I want to test this method first
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-// Import Map API after setting up basic code
+// Import Map API after setting up basic code 
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+
 
 // Create script of executable code to invoke once page loads
 const loadMapScript = (src, position, id) => {
