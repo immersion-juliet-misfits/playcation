@@ -4,8 +4,8 @@ const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const bodyParser = require('body-parser');
-const isAuthenticated = require('./middleware/auth')
-
+const isAuthenticated = require('./middleware/auth');
+const { User } = require('./db/index'); 
 require('dotenv').config();
 
 // Constants
@@ -15,37 +15,39 @@ const PORT = 8000;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-
 // authorize user
 const userAuth = (req, accessToken, refreshToken, profile, done) => {
   // if user has been created
   User.findOne({
     where: {
-      googleId: profile.id
-    }
-  })
-  .then((user) => {
+      googleId: profile.id,
+    },
+  }).then((user) => {
     // if user, log the user in
-    if(user){
-      done(null, user)
+    if (user) {
+      done(null, user);
     } else {
-       User.create({
-        googleId: profile.id, 
-        username: profile.given_name
-    })
-    .then(() => done(null, newUser)) // log in user
+      User.create({
+        googleId: profile.id,
+        username: profile.given_name,
+      })
+        .then((newUser) => done(null, newUser))
+        .then((newUser) => console.log(newUser));
+      // log in user
     }
-  })
+  });
 };
 
 // Start Express app
 const app = express();
 // Express session
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true
-}))
+app.use(
+  session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -57,16 +59,20 @@ passport.use(
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: `/auth/google/callback`,
-      passReqToCallback: true
+      passReqToCallback: true,
     },
-    userAuth,
-  ),
+    userAuth
+  )
 );
 
 // user info from login
-passport.serializeUser((user, done) => {done(null, user);})
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 // user info saved from the serializeUser invocation
-passport.deserializeUser((user, done) => {done(null, user);})
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 // Serves to the dist folder
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -74,29 +80,35 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
 
 // login with goggle
-app.get('auth/google', passport.authenticate('google', {
-  scope: ['email', 'profile']
-}));
+app.get(
+  '/auth/google',
+  passport.authenticate('google', {
+    scope: ['email', 'profile'],
+  })
+);
 
 // After login, redirect to home for success and / for failure
-app.get('/auth/google/callback', passport.authenticate('google', {
-  successRedirect: '/home',
-  failureRedirect: '/home'
-}));
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/home',
+    failureRedirect: '/home',
+  })
+);
 
-// Logout 
+// Logout
 app.post('/auth/logout', (req, res, next) => {
   req.logout((err) => {
     console.error(err);
-  })
+  });
 });
 
-// All wildcard routes 
+// All wildcard routes
 app.get('*', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'dist', 'index.html'));
 });
 
 // Server listen
 app.listen(PORT, () => {
-  console.info(`Server listening on http://localhost:${PORT}`); 
+  console.info(`Server listening on http://localhost:${PORT}`);
 });
