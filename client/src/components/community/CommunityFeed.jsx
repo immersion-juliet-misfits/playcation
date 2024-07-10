@@ -3,29 +3,7 @@ import axios from "axios";
 import CommunityPost from "./CommunityPost.jsx";
 
 
-const CommunityFeed = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    getPosts()
-    // console.log('STATE', posts)
-  }, [])
-
-  useEffect(() => {
-    // getPosts()
-    console.log('STATE', posts)
-  }, [posts])
-
-  const getPosts = () => {
-    axios.get('/community/post')
-      .then(({data}) => {
-        console.log('Invoked from client', data)
-        setPosts(data)
-      })
-      .catch((err) => {
-        console.error('NOT Invoked from client', err)
-      })
-  }
+const CommunityFeed = ({posts}) => {
 
   return (
     <div>

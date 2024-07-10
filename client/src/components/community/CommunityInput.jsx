@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 
-const CommunityInput = () => {
-  const [user_id, setPostUser] = useState(3)  
+const CommunityInput = ({getPosts}) => {
+  const [user_id, setPostUser] = useState(1)  
   const [title, setPostTitle] = useState('')
   const [body, setPostBody] = useState('');
 
@@ -24,6 +24,9 @@ const CommunityInput = () => {
       user_id,
       title,
       body
+    })
+    .then(() => {
+      getPosts()
     })
   }
 
