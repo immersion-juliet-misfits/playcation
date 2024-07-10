@@ -7,9 +7,9 @@ PATCH request to change Plan name
 DELETE request to delete an existing Plan
 */
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { Grid, Paper, TextField } from '@mui/material';
 
 
