@@ -15,3 +15,5 @@ let router = express.Router()
 router.get('/test', (req, res)=>{
   res.send({mssg: 'it worked'})
 })
+
+module.exports = router
