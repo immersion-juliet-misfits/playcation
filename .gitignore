@@ -1,11 +1,14 @@
 # dotenv environment variable files
 .env
 
-
 # Dependency directories
-node_modules/
 jspm_packages/
+node_modules/
 package-lock.json
+
+# Wildcard Ignore patterns
+*~Stashed changes
+
 *~Stashed changes
 
 # dist

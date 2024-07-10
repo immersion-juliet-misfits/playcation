@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 import { Container, Grid, Paper, TextField } from '@mui/material';
+import PlannerSearch from './PlannerSearch.jsx';
+import PlannerDisplay from './PlannerDisplays.jsx';
 
 const Planner = () => {
   // React Hooks replace state, constructor, and super()
@@ -21,28 +23,20 @@ const Planner = () => {
   // savePlans() {};
 
   // Render required Planner Components
+  // Unsure if I prefer the way it looks with or without the Container
   return (
     <Container
       className='planner_all'
       style={{
-        width: '800vh',
-        height: '80vh',
-        border: '2px solid black',
+        width: '100%',
+        height: '95vh',
+        border: '2px solid navy',
         borderRadius: '20px',
       }}
     >
-      <Grid className='grid_all' container spacing={2} alignItems='stretch'>
-        <Grid className='grid_search' item xs={6}>
-          <Paper style={{ padding: 16, height: '100%' }}>
-            <h1>Search Component Here</h1>
-            <TextField variant='outlined' placeholder='Search Here' fullWidth />
-          </Paper>
-        </Grid>
-        <Grid className='grid_plans' item xs={6}>
-          <Paper style={{ padding: 16, height: '100%' }}>
-            <div>Saved Plans Component Here</div>
-          </Paper>
-        </Grid>
+      <Grid className='grid_all' container spacing={1} alignItems='stretch'>
+        <PlannerSearch />
+        <PlannerDisplay />
       </Grid>
     </Container>
   );

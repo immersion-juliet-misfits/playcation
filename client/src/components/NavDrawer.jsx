@@ -12,8 +12,8 @@ const NavDrawer = () => {
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)}>Home</Button>
-      <Drawer open={open} onClose={toggleDrawer(false)}></Drawer>
+      <Button onClick={toggleDrawer(true)}>Temp Nav</Button>
+      <Drawer open={open} onClose={toggleDrawer}></Drawer>
     </>
   );
 };
