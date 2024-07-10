@@ -1,15 +1,12 @@
 /* 
 https://mui.com/material-ui/react-autocomplete/#google-maps-place
-Studying this to understand what each line does & to see what I do & don't need for this component.
-There is also information on how to add Checkboxes. 
-This will be a good way to select items to add to a "Plan".
+Reference information on adding Checkboxes in order to select items to add to a "Plan".
 
 Needed Methods: 
 GP Search
 POST request to DB 
-
-Change so I can commit & push .gitignore fix
 */
+
 // import { Link } from 'react-router-dom';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 // import axios from 'axios';
