@@ -8,13 +8,12 @@ Community.use(express.json());
 Community.get('/post', (req, res) => {
   communityPost.findAll()
     .then((data) => {
-      console.log(data[1].dataValues);
       res.send(data);
     });
 });
 
 Community.post('/post', (req, res) => {
-  console.log(req.body);
+  console.log('Saved:', req.body);
   const { title, body, user_id } = req.body;
   communityPost.create({
     title,

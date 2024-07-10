@@ -3,9 +3,11 @@ import axios from "axios";
 
 
 const CommunityInput = () => {
-  const [postTitle, setPostTitle] = useState('')
-  const [postBody, setPostBody] = useState('');
+  const [user_id, setPostUser] = useState(3)  
+  const [title, setPostTitle] = useState('')
+  const [body, setPostBody] = useState('');
 
+  // computer property to reuse logic?
   const handleTitleChange = (e) => {
     console.log(e.target.value)
     setPostTitle(e.target.value)
@@ -16,21 +18,30 @@ const CommunityInput = () => {
     setPostBody(e.target.value)
   }
 
+  const handleSubmit = (e) => {
+    console.log(e.target.value)
+    axios.post('/community/post', {
+      user_id,
+      title,
+      body
+    })
+  }
+
   return (
     <div>
     <h2>Playcay Ventures</h2>
-    <form>
+    {/* <form> */}
       <label htmlFor="commtitle">Venture Location:</label><br/>
-      <input id="commtitle" type="text" placeholder="Where'd you go?" value={postTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
+      <input id="commtitle" type="text" placeholder="Where'd you go?" value={title}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
 
       <label htmlFor="commbody">Venture Story:</label><br/>
-      <textarea id="commtitle" type="text" placeholder="Share your experience" value={postBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
+      <textarea id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
       
       <label htmlFor="comm">Venture Snapshot:</label><br/>
       <input id="commtitle" type="file"></input><br/><br/>
       
-      <input type="submit" value="Post Venture" />
-    </form>
+      <input type="button" value="Post Venture" onClick={(e) => handleSubmit(e)} />
+    {/* </form> */}
 
     {/* <h2>Playcay Plans</h2>
     <form>
