@@ -23,7 +23,8 @@ import {
 // debounce may need to be imported separately, I want to test this method first
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 // Import Map API after setting up basic code 
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+console.log("GM Key Client:", GOOGLE_PLACES_API_KEY);
 
 
 // Create script of executable code to invoke once page loads
@@ -57,7 +58,7 @@ const PlannerSearch = () => {
       if (!document.querySelector('#map-search')) {
         // Invokes loadMapScript to load the Google Maps API
         loadMapScript(
-          `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
+          `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_PLACES_API_KEY}&libraries=places`,
           document.querySelector('head'),
           'map-search',
         );
@@ -65,7 +66,7 @@ const PlannerSearch = () => {
       // Change loadMapScript status to true
       loaded.current = true;
     }
-  }, [GOOGLE_MAPS_API_KEY])
+  }, [GOOGLE_PLACES_API_KEY])
 
   // define fetch function with useMemo hook to retrieve Place predictions based on "current" input
   // Add debounce to avoid const request firing
@@ -138,7 +139,7 @@ const PlannerSearch = () => {
       sx={{ width: 200 }}
       value={value}
       getOptionLabel={(option) =>
-        typeof option === 'string' ? option : options.description
+        typeof option === 'string' ? option : option.description
       }
       onChange={(event, newValue) => {
         setOptions(newValue ? [newValue, ...options] : options);
@@ -170,15 +171,6 @@ const PlannerSearch = () => {
                 item
                 sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word' }}
               >
-                {parts.map((part, index) => (
-                  <Box
-                    key={index}
-                    component='span'
-                    sx={{ fontWeight: part.highlight ? 'bold' : 'regular' }}
-                  >
-                    {part.text}
-                  </Box>
-                ))}
                 <Typography variant='body2' color='text.secondary'>
                   {option.structured_formatting.secondary_text}
                 </Typography>
@@ -201,3 +193,14 @@ export default PlannerSearch;
 //     </Paper>
 //   </Grid>
 // );
+
+// Removed from 173 about Typography
+                /* {parts.map((part, index) => (
+                  <Box
+                    key={index}
+                    component='span'
+                    sx={{ fontWeight: part.highlight ? 'bold' : 'regular' }}
+                  >
+                    {part.text}
+                  </Box>
+                ))} */
