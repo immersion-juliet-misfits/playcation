@@ -23,10 +23,9 @@ import {
   Typography,
 } from '@mui/material';
 // debounce may need to be imported separately, I want to test this method first
-import LocationOnIcon from '@mui/icons-material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 // Import Map API after setting up basic code 
-// require('dotenv').config(); // This being used here is causing my Webpack issue
-// gpmKEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 
 // Create script of executable code to invoke once page loads

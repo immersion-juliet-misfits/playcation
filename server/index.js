@@ -6,6 +6,8 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const bodyParser = require('body-parser');
 const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index'); 
+const routes = require('./routes/routes');
+
 require('dotenv').config();
 
 // Constants
