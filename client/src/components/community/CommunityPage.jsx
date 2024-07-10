@@ -6,6 +6,7 @@ import CommunityFeed from "./CommunityFeed.jsx";
 
 const CommunityPage = () => {
     const [posts, setPosts] = useState([]);
+    const [makeAPost, setMakeAPost] = useState(false);
 
     useEffect(() => {
       getPosts()
@@ -13,9 +14,12 @@ const CommunityPage = () => {
     }, [])
   
     useEffect(() => {
-      // getPosts()
       console.log('STATE', posts)
     }, [posts])
+
+    useEffect(() => {
+        console.log('STATE', makeAPost)
+      }, [makeAPost])
   
     const getPosts = () => {
       axios.get('/community/post')
@@ -28,11 +32,15 @@ const CommunityPage = () => {
         })
     }
 
+    const toggleInput = () => {
+      setMakeAPost((makeAPost) => !makeAPost)
+    }
+
   return (
     <div>
     <h1>Playcay Community</h1>
     <CommunityInput getPosts={() => getPosts()} />
-    <CommunityFeed posts={posts} />
+    <CommunityFeed posts={posts} toggleInput={() => toggleInput()}/>
     </div>
   )
 }
