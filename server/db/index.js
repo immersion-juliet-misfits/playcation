@@ -112,13 +112,14 @@ const reviews = db.define('reviews', {
   },
   user_id: {
     type: DataTypes.INTEGER,
-    // references: {
-    //   model: User, 
-    //   key: 'id'
-    // }
+    references: {
+      model: User, 
+      key: 'id'
+    }
   }
   });
-
+  User.hasMany(reviews, { foreignKey: 'user_id' });
+  reviews.belongsTo(User, { foreignKey: 'user_id' });
 
 // Crimes: id, crime_list, location
 // const crimes = db.define('crimes', {
