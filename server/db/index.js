@@ -89,27 +89,27 @@ const User = db.define('User', {
 //   }
 //   });
 
-// // Reviews: id, review, rating, user_id
-// const reviews = db.define('reviews', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   },
-//   review: {
-//     type: DataTypes.STRING,
-//   },
-//   rating: {
-//     type: DataTypes.INTEGER
-//   },
-//   user_id: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       model: User, 
-//       key: 'id'
-//     }
-//   }
-//   });
+// Reviews: id, review, rating, user_id
+const reviews = db.define('reviews', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  review: {
+    type: DataTypes.STRING,
+  },
+  rating: {
+    type: DataTypes.INTEGER
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    // references: {
+    //   model: User, 
+    //   key: 'id'
+    // }
+  }
+  });
 
 
 // // Crimes: id, crime_list, location
@@ -177,7 +177,7 @@ const User = db.define('User', {
       // communityPost.sync();
       // communityPics.sync();
       // hotels.sync();
-      reviews.sync();
+      // reviews.sync();
       // crimes.sync();
       // planner.sync();
       // Connection notification
