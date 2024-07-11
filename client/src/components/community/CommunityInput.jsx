@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ImageUpload from "./ImageUpload.jsx";
 
 
 const CommunityInput = ({getPosts}) => {
@@ -30,6 +31,16 @@ const CommunityInput = ({getPosts}) => {
     })
   }
 
+  const handleUpload = (url) => {
+    console.log(url)
+  }
+
+  const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;
+  const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
+
+
+  console.log(cloudName, 'CNAMEHERE')
+
   return (
     <div>
     <h2>Playcay Ventures</h2>
@@ -44,6 +55,7 @@ const CommunityInput = ({getPosts}) => {
       <input id="commtitle" type="file"></input><br/><br/>
       
       <input type="button" value="Post Venture" onClick={(e) => handleSubmit(e)} />
+      <ImageUpload cloudName={cloudName} uploadPreset={uploadPreset} handleUpload={handleUpload} />
     {/* </form> */}
 
     {/* <h2>Playcay Plans</h2>

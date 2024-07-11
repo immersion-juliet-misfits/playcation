@@ -30,7 +30,7 @@ const CommunityPost = ({ title, body, postDate }) => {
         <CardMedia
           component="img"
           height="194"
-          image="https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-goose.jpg"
+          image="https://res.cloudinary.com/dxbpjnifu/image/upload/v1720656974/encryption-001_qedwoc.webp"
           alt="Photo not rendering"
         />
         <CardContent>

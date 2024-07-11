@@ -4,7 +4,7 @@ import CommunityInput from "./CommunityInput.jsx";
 import CommunityFeed from "./CommunityFeed.jsx";
 
 
-const CommunityPage = () => {
+const CommunityPage = ({user}) => {
     const [posts, setPosts] = useState([]);
     const [makeAPost, setMakeAPost] = useState(false);
 
@@ -39,6 +39,9 @@ const CommunityPage = () => {
   return (
     <div>
     <h1>Playcay Community</h1>
+    <h2>
+    {`${user}'s Ventures`}
+    </h2>
     {makeAPost && <CommunityInput getPosts={() => getPosts()} /> }
     <CommunityFeed posts={posts} toggleInput={() => toggleInput()}/>
     </div>
