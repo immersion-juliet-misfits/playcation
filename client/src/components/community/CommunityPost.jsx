@@ -13,9 +13,12 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
-const CommunityPost = ({ title, body, postDate, url, id, getPosts }) => {
+const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
   // console.log('id', id)
   const handleDelete = () => {
+    if (user.id !== postOwner) {
+      throw 'Cannot delete other user\'s post!'
+    }
     axios.delete(`/community/post/${id}`)
       .then(() => {
         console.log('Successfully deleted');
