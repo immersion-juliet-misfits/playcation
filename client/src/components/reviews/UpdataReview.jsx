@@ -2,7 +2,7 @@ import React, { useState, Component } from "react";
 import { Button, Box } from '@mui/material'
 import axios from "axios";
 
-const AddReviews = ({ user, add, symbol, thumbup }) => {
+const UpdateReview = ({ user, currentReview, update, changeShow, currentRow, symbol, thumbup }) => {
   const [text, settext] = useState('')
   const [rating, setrating] = useState(0)
 
@@ -13,22 +13,20 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
       setrating(value)
     }
   }
-
-  const addReview = () => {
-    let obj = { review: text, rating, user_id: user.id }
-    console.log(obj)
-    axios.post('reviews/post', obj)
-      .then((data) => {
-        console.log(data)
+  let updateRequest = () => {
+    axios.patch('reviews/patch', { review: text, rating, id: currentReview.id })
+      .then(() => {
+        update({ review: text, rating, id: currentReview.id, createdAt: currentReview.createdAt, user_id: currentReview.user_id, name: user.username }, currentRow)
+        changeShow()
       })
       .catch((err) => {
-        console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
+        console.log('Reviews.jsx, something went wrong updateing reviews: ', err)
       })
-    add(obj)
   }
+
   return (
-    <Box sx={{ border: '2px solid grey', width: '350px', top: '20px' }} >
-      <Button variant="contained" onClick={() => { addReview() }}>Add review</Button>
+    <Box sx={{ border: '2px solid grey', width: '350px' }} >
+      <Button variant="contained" onClick={() => { updateRequest() }}>Update review</Button>
       <input type="number" name="rating" min="0" max="5" value={rating} onChange={(e) => { edit(e.target.name, e.target.value) }}></input>
       <>{symbol + thumbup}</>
       <textarea rows="5" cols="40" name="text" onChange={(e) => { edit(e.target.name, e.target.value) }}></textarea>
@@ -36,4 +34,4 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
   )
 }
 
-export default AddReviews
+export default UpdateReview

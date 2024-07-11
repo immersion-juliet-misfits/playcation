@@ -3,36 +3,82 @@ import AddReviews from "./AddReview.jsx";
 import { Card, CardContent, Box, Fab } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import axios from "axios";
+import UpdateReview from './UpdataReview.jsx'
 
-const Reviews = () => {
+const Reviews = ({ user }) => {
   const [thumbUp, setthumbUp] = useState({})
+  const [symbols, setsymbols] = useState({})
   const [reviewList, setreviewList] = useState([])
+  const [show, setshow] = useState(false)
+  const [currentReview, setcurrentReview] = useState({})
+  const [currentRow, setcurrentRow] = useState({})
   const [func, setfunc] = useState(() => {
-    //emojies
+    //emojis body
     axios.get('reviews/getEmoji')
       .then(({ data }) => {
         setthumbUp(data)
       }).catch((err) => {
-        console.log('Reviews.jsx, something when wrong requesting emojies: ', err)
+        console.log('Reviews.jsx, something went wrong requesting emojies: ', err)
+      })
+    //emojis symbols
+    axios.get('reviews/getEmoji2')
+      .then(({ data }) => {
+        setsymbols(data)
+      }).catch((err) => {
+        console.log('Reviews.jsx, something went wrong requesting emojies: ', err)
       })
     //reviews
     axios.get('reviews/get')
       .then(({ data }) => {
         setreviewList(data)
       }).catch((err) => {
-        console.log('Reviews.jsx, something when wrong requesting reviews: ', err)
+        console.log('Reviews.jsx, something went wrong requesting reviews: ', err)
       })
+
   })
+
+  let changeShow = (current, row) => {
+    setshow(!show);
+    setcurrentReview(current);
+    setcurrentRow(row)
+  }
+
+  let add = (data) => { setreviewList(data.concat(reviewList)) }
+
+  let update = (data, row) => {
+    let arr = reviewList.concat([])
+    arr[row] = data
+    setreviewList(arr)
+  }
+
+  let deleteReview = (id) => {
+    let url = 'reviews/delete/' + id;
+    console.log(url)
+    axios.delete(url, { reviewid: id })
+      .then(() => {
+        let arr = []
+        for (let i = 0; i < reviewList.length; i++) {
+          if (reviewList[i].id !== id) {
+            arr.push(reviewList[i])
+          }
+        }
+        setreviewList(arr)
+      })
+      .catch((err) => {
+        console.log('Reviews.jsx, something went wrong deleting review: ', err)
+      })
+  }
 
   return (
     <>
-      <span></span>
-      <AddReviews />
+      {show === false && <AddReviews user={user} add={add} symbol={symbols?.[0]} thumbup={thumbUp?.[1]} />}
+      {show === true && <UpdateReview user={user} symbol={symbols?.[0]} thumbup={thumbUp?.[1]} update={update} currentReview={currentReview} changeShow={changeShow} currentRow={currentRow} />}
       <Box
         sx={(theme) => ({
           width: 500,
           "& > div": {
-            overflow: "hidden auto",
+            height: 510,
+            overflow: "hidden scroll",
             "&::-webkit-scrollbar": { height: 10, WebkitAppearance: "none" },
             "&::-webkit-scrollbar-thumb": {
               borderRadius: 10,
@@ -52,12 +98,14 @@ const Reviews = () => {
               <div>{reviewList.map((data, i) => {
                 return (
                   <Card key={i} sx={{ width: 490, border: "2px solid" }}>
-                    <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { console.log('clicked') }}>d</Fab>
-                    <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { console.log('clicked') }}>u</Fab>
-                    <h4>{data.user + ' gave ' + thumbUp?.[data.rating]}</h4>
+                    {user.id === data.user_id && <>
+                      <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { deleteReview(data.id) }}>{symbols?.[1]}</Fab>
+                      <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { changeShow(data, i) }}>{symbols?.[2]}</Fab>
+                    </>
+                    }
+                    <h4>{data.name + ' gave ' + thumbUp?.[data.rating]}</h4>
                     <p>{data.review}</p>
                   </Card>
-
                 )
               })}</div >
             </Grid>

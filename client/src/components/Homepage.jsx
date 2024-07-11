@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button, Typography, Box } from '@mui/material';
 
 
-function Homepage() {
+function Homepage({ add }) {
   const [userName, setUsername] = useState('');
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function Homepage() {
         const user = res.data;
         // set username
         setUsername(user.username);
-
+        add(user)
       }).catch((err) => {
         console.error('Failed to GET user data: ', err);
       });

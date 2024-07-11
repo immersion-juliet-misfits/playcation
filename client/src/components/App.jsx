@@ -11,6 +11,12 @@ import CommunityPage from './community/CommunityPage.jsx';
 
 // ES6 Class/Functional component
 const App = () => {
+  const [user, setuser] = useState({})
+
+  const add = (data) => {
+    setuser(data)
+  }
+
   return (
     <>
       {/* Replace NavDrawer with empty div on login */}
@@ -20,11 +26,11 @@ const App = () => {
         <NavDrawer />
       )}
       <Routes>
-        <Route path="/home" element={<Homepage />} />
+        <Route path="/home" element={<Homepage add={add} />} />
         <Route path="/" element={<Login />} />
         <Route path="/planner" element={<Planner />} />
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/reviews" element={<Reviews user={user} />} />
         {/* <Route path="/watchout" element={<Watchout />} /> */}
         <Route path="/*" element={<h1>Page Not Found</h1>} />
       </Routes>
