@@ -25,7 +25,9 @@ import {
 // debounce may need to be imported separately, I want to test this method first
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 // Import Map API after setting up basic code 
+// import { Loader } from "@googlemaps/js-api-loader"
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+console.log('ENV?', GOOGLE_MAPS_API_KEY);
 
 
 // Create script of executable code to invoke once page loads
@@ -49,7 +51,8 @@ const PlannerSearch = () => {
   const [options, setOptions] = useState([]); // Hook tracks "current" autocomplete suggestions
   const loaded = useRef(false); // Hook tracks if 'loadMapScript' has been loaded
 
-// Hook for retrieving the Key
+  // May need to replace this useEffect block, it is causing issues due to the API key
+// Hook for retrieving the information using the Key
 useEffect(() => {
   // Verify that the window exists & that loadMapScript has not been loaded
   if (typeof window !== 'undefined' && !loaded.current) {
