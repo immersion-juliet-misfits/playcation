@@ -45,7 +45,7 @@ const ImageUpload = ({ cloudName, uploadPreset, handleUpload }) => {
           }
         }
       );
-  });
+  }, []);
 };
 
 export default ImageUpload;

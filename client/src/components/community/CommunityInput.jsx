@@ -8,6 +8,7 @@ const CommunityInput = ({getPosts, userId}) => {
   const [title, setPostTitle] = useState('')
   const [body, setPostBody] = useState('');
   const [url, setPostUrl] = useState('');
+  const [showUpload, setShowUpload] = useState(false);
 
   // computer property to reuse logic?
   const handleTitleChange = (e) => {
@@ -31,12 +32,18 @@ const CommunityInput = ({getPosts, userId}) => {
     })
     .then(() => {
       getPosts()
+      setShowUpload(false);
     })
+  }
+
+  const toggleUpload = () => {
+    setShowUpload((showUpload) => !showUpload)
   }
 
   const handleUpload = (url) => {
     console.log(url)
     setPostUrl(url)
+    setShowUpload(false);
   }
 
   const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;
@@ -56,10 +63,10 @@ const CommunityInput = ({getPosts, userId}) => {
       <textarea id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
       
       <label htmlFor="comm">Venture Snapshot:</label><br/>
-      <input id="commtitle" type="file"></input><br/><br/>
+      <input id="commtitle" type="button" value="Upload Image" onClick={toggleUpload}></input><br/><br/>
       
       <input type="button" value="Post Venture" onClick={(e) => handleSubmit(e)} />
-      <ImageUpload cloudName={cloudName} uploadPreset={uploadPreset} handleUpload={handleUpload} />
+      {showUpload && <ImageUpload cloudName={cloudName} uploadPreset={uploadPreset} handleUpload={handleUpload} />}
     {/* </form> */}
 
     {/* <h2>Playcay Plans</h2>
