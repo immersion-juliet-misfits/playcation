@@ -7,6 +7,7 @@ import NavDrawer from './NavDrawer.jsx';
 import CommunityPage from './community/CommunityPage.jsx';
 // import Reviews from "./reviews/Reviews.jsx"
 // import Watchout from "./threats/Watchout.jsx"
+import Profile from './Profile.jsx';
 
 // ES6 Class/Functional component
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/community" element={<CommunityPage />} />
         {/* <Route path="/reviews" element={<Reviews />} /> */}
         {/* <Route path="/watchout" element={<Watchout />} /> */}
+        <Route path="/profile" element={<Profile/>} />
         <Route path="/*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </>

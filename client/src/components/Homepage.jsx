@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Typography, Box } from '@mui/material';
 
-function Homepage() {
+const Homepage = () => {
   const [userName, setUsername] = useState('');
 
   useEffect(() => {

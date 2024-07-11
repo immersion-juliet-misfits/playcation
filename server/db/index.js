@@ -10,7 +10,7 @@ const db = new Sequelize('Playcation', 'root', '', {
   logging: false,
 });
 
-// User: { id, username, googleId, location }
+// User: { id, username, googleId }
 const User = db.define('User', {
   id: {
     type: DataTypes.INTEGER,
@@ -23,10 +23,36 @@ const User = db.define('User', {
   googleId: {
     type: DataTypes.STRING,
   },
-  location: {
+});
+
+// Profile: {id, user_id, firstName, lastName, city/state, bio(200), profilePic?}
+const Profile = db.define('profile', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  firstName: {
     type: DataTypes.STRING,
   },
+  lastName: {
+    type: DataTypes.STRING,
+  },
+  bio: {
+    type: DataTypes.STRING,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: 'id',
+    },
+    allowNull: false,
+  },
 });
+
+User.hasMany(Profile, { foreignKey: 'user_id' });
+Profile.belongsTo(User, { foreignKey: 'user_id' });
 
 // Community post: id, title, body, image_id, user_id
 const communityPost = db.define('communityPost', {

@@ -25,7 +25,7 @@ import {
 // debounce may need to be imported separately, I want to test this method first
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 // Import Map API after setting up basic code 
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
 
 // Create script of executable code to invoke once page loads
@@ -57,7 +57,7 @@ useEffect(() => {
     if (!document.querySelector('#map-search')) {
       // Invokes loadMapScript to load the Google Maps API
       loadMapScript(
-        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
+        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_PLACES_API_KEY}&libraries=places`,
         document.querySelector('head'),
         'map-search',
       );
@@ -65,7 +65,7 @@ useEffect(() => {
     // Change loadMapScript status to true
     loaded.current = true;
   } 
-}, [GOOGLE_MAPS_API_KEY])
+}, [GOOGLE_PLACES_API_KEY])
 
   // define fetch function with useMemo hook to retrieve Place predictions based on "current" input
   // Add debounce to avoid const request firing
