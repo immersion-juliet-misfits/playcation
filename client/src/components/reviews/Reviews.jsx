@@ -1,6 +1,6 @@
 import React, { useState, Component } from "react";
 import AddReviews from "./AddReview.jsx";
-import { Card, CardContent, Box } from '@mui/material'
+import { Card, CardContent, Box, Fab } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import axios from "axios";
 
@@ -52,6 +52,8 @@ const Reviews = () => {
               <div>{reviewList.map((data, i) => {
                 return (
                   <Card key={i} sx={{ width: 490, border: "2px solid" }}>
+                    <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { console.log('clicked') }}>d</Fab>
+                    <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { console.log('clicked') }}>u</Fab>
                     <h4>{data.user + ' gave ' + thumbUp?.[data.rating]}</h4>
                     <p>{data.review}</p>
                   </Card>

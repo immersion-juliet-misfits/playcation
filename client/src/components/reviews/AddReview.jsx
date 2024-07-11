@@ -4,6 +4,7 @@ import { Button, Box } from '@mui/material'
 const AddReviews = () => {
   const [text, settext] = useState('')
   const [rating, setrating] = useState(0)
+  const [user, setuser] = useState(null)
 
   function edit(name, value) {
     if (name === 'text') {

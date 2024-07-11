@@ -59,10 +59,9 @@ reviewsRoute.post('/post', (req, res)=>{
 
 //update Reviews
 reviewsRoute.patch('/patch', (req, res)=>{
-  const {review, rating, user_id, id} = req.body
+  const {review, rating, id} = req.body
   reviews.update({review, rating, updatedAt: new Date()}, {where:{
-    id: id,
-    user_id: user_id
+    id: id
   }})
   .then((data) => {
     res.send(data).status(200)
@@ -75,10 +74,9 @@ reviewsRoute.patch('/patch', (req, res)=>{
 
 //delete Reviews
 reviewsRoute.delete('/delete', (req, res)=>{
-  const { user_id, id} = req.body
+  const {id} = req.body
   reviews.destroy({where:{
     id: id,
-    user_id: user_id
   }})
   .then(() => {
     res.sendStatus(200)
