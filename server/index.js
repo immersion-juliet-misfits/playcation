@@ -8,6 +8,7 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
+// import { Loader } from "@googlemaps/js-api-loader"
 
 require('dotenv').config();
 

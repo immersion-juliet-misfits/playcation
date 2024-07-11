@@ -78,24 +78,24 @@ communityPost.belongsTo(User, { foreignKey: 'user_id' });
 // communityPost.belongsTo(communityPics, { foreignKey: 'image_id' });
 
 // Hotels:
-// const hotels = db.define('hotels', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//     references: {
-//       model: planner,
-//       key: 'hotel_id',
-//     },
-//   },
-//   review_id: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       model: reviews,
-//       key: 'id',
-//     },
-//   },
-// });
+const hotels = db.define('hotels', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    // references: {
+    //   model: planner,
+    //   key: 'hotel_id',
+    // },
+  },
+  review_id: {
+    type: DataTypes.INTEGER,
+    // references: {
+    //   model: reviews,
+    //   key: 'id',
+    // },
+  },
+});
 
 // Reviews: id, review, rating, user_id
 // const reviews = db.define('reviews', {
@@ -152,13 +152,13 @@ const planner = db.define('planner', {
       key: 'id',
     },
   },
-  // hotel_id: {
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: hotels,
-  //     key: 'id',
-  //   },
-  // },
+  hotel_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: hotels,
+      key: 'id',
+    },
+  },
   trip_location: {
     type: DataTypes.STRING,
   },
@@ -168,9 +168,9 @@ const planner = db.define('planner', {
   plan_notes: {
     type: DataTypes.STRING,
   },
-  // activities: {
-  //   type: DataTypes.ARRAY,
-  // },
+  activities: {
+    type: DataTypes.JSON,
+  },
 });
 
 (async () => {
@@ -181,10 +181,10 @@ const planner = db.define('planner', {
     User.sync();
     communityPost.sync();
     // communityPics.sync();
-    // hotels.sync();
+    hotels.sync();
     // reviews.sync();
     // crimes.sync();
-    // planner.sync();
+    planner.sync();
     // Connection notification
     console.info('Database connection has been established.');
   } catch (error) {

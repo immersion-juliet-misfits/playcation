@@ -21,7 +21,8 @@ Plan.get('/get', (req, res) => {
   });
 });
 
-// GET: Retrieve one planners
+// GET: Retrieve one planner
+
 // DELETE: Remove an existing planner
 
 // PATCH: Add activity
