@@ -6,6 +6,8 @@ import axios from 'axios';
 import { Container, Grid, Paper, TextField } from '@mui/material';
 import PlannerSearch from './PlannerSearch.jsx';
 import PlannerDisplay from './PlannerDisplays.jsx';
+import Search from '../Search.jsx';
+// import InitAutocomplete from './PlannerDisplays.jsx';
 
 const Planner = () => {
   // React Hooks replace state, constructor, and super()
@@ -29,13 +31,14 @@ const Planner = () => {
       className='planner_all'
       style={{
         width: '100%',
+        minWidth: '1000px',
         height: '95vh',
         border: '2px solid navy',
         borderRadius: '20px',
       }}
     >
       <Grid className='grid_all' container spacing={1} alignItems='stretch'>
-        <PlannerSearch />
+        <Search />
         <PlannerDisplay />
       </Grid>
     </Container>
