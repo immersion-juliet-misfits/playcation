@@ -139,40 +139,39 @@ communityPost.belongsTo(User, { foreignKey: 'user_id' });
 // });
 
 // Planner: id, user_id, hotel_id, plan_name, trip_location, plan_notes, activities
-// const planner = db.define('planner', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   },
-//   user_id: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       model: User,
-//       key: 'id',
-//     },
-//   },
-//   hotel_id: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       model: hotels,
-//       key: 'id',
-//     },
-//   },
-//   trip_location: {
-//     type: DataTypes.STRING,
-//   },
-//   plan_name: {
-//     type: DataTypes.STRING,
-//   },
-//   plan_notes: {
-//     type: DataTypes.STRING,
-//   },
-//   activities: {
-//     type: DataTypes.ARRAY,
-//   },
-//   // Question, how should Activity List be handled (string, array, or other)
-// });
+const planner = db.define('planner', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: 'id',
+    },
+  },
+  // hotel_id: {
+  //   type: DataTypes.INTEGER,
+  //   references: {
+  //     model: hotels,
+  //     key: 'id',
+  //   },
+  // },
+  trip_location: {
+    type: DataTypes.STRING,
+  },
+  plan_name: {
+    type: DataTypes.STRING,
+  },
+  plan_notes: {
+    type: DataTypes.STRING,
+  },
+  // activities: {
+  //   type: DataTypes.ARRAY,
+  // },
+});
 
 (async () => {
   try {
