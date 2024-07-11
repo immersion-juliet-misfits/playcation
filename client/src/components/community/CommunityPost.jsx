@@ -13,15 +13,20 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
-const CommunityPost = ({ title, body, postDate, url, id }) => {
+const CommunityPost = ({ title, body, postDate, url, id, handleDelete }) => {
   // console.log('id', id)
+  const deletePost = () => {
+    // console.log(id, handleDelete)
+    handleDelete(id)
+  }
+
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={<Avatar>C</Avatar>}
           action={
-            <IconButton>
+            <IconButton onClick={deletePost} >
               <MoreVertIcon />
             </IconButton>
           }

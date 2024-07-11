@@ -1,6 +1,6 @@
 const express = require('express');
 const Community = express.Router();
-const { communityPost } = require('../../db/index');
+const { communityPost, User } = require('../../db/index');
 
 Community.use(express.json());
 
@@ -31,6 +31,14 @@ Community.post('/post', (req, res) => {
 
 Community.delete('/post/:id', (req, res) => {
   console.log(req.params)
+  const { id } = req.params;
+
+  communityPost.destroy({where: { id }})
+    .then(() => {
+      // console.log(user)
+      res.status(200).send('Successfully deleted')
+      // communityPost
+    })
 })
 //   .then((tr) => {
 //     res.send('good try', tr)
