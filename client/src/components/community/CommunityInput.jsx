@@ -7,6 +7,7 @@ const CommunityInput = ({getPosts}) => {
   const [user_id, setPostUser] = useState(1)  
   const [title, setPostTitle] = useState('')
   const [body, setPostBody] = useState('');
+  const [url, setPostUrl] = useState('');
 
   // computer property to reuse logic?
   const handleTitleChange = (e) => {
@@ -24,7 +25,8 @@ const CommunityInput = ({getPosts}) => {
     axios.post('/community/post', {
       user_id,
       title,
-      body
+      body,
+      url
     })
     .then(() => {
       getPosts()
@@ -33,6 +35,7 @@ const CommunityInput = ({getPosts}) => {
 
   const handleUpload = (url) => {
     console.log(url)
+    setPostUrl(url)
   }
 
   const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;

@@ -13,7 +13,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
-const CommunityPost = ({ title, body, postDate }) => {
+const CommunityPost = ({ title, body, postDate, url }) => {
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
@@ -30,7 +30,7 @@ const CommunityPost = ({ title, body, postDate }) => {
         <CardMedia
           component="img"
           height="194"
-          image="https://res.cloudinary.com/dxbpjnifu/image/upload/v1720656974/encryption-001_qedwoc.webp"
+          image={url}
           alt="Photo not rendering"
         />
         <CardContent>
