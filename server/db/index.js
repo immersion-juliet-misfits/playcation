@@ -27,6 +27,41 @@ const User = db.define('User', {
     type: DataTypes.STRING,
   },
 });
+``
+// Community post: id, title, body, image_id, user_id
+const communityPost = db.define('communityPost', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  title: {
+    type: DataTypes.STRING,
+  },
+  body: {
+    type: DataTypes.STRING,
+  },
+  // image_id: {
+  //   type: DataTypes.INTEGER,
+  //   references: {
+  //     model: communityPics, 
+  //     key: 'id'
+  //   }
+  // },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User, 
+      key: 'id'
+    },
+    allowNull: false,
+  },
+}, {
+  timestamps: true
+});
+
+User.hasMany(communityPost, { foreignKey: 'user_id' });
+communityPost.belongsTo(User, { foreignKey: 'user_id' });
 
 // Community Pics: id, url
 // const communityPics = db.define('communityPics', {
@@ -40,38 +75,25 @@ const User = db.define('User', {
 // }
 // });
 
-// Community post: id, title, body, image_id, user_id
-// const communityPost = db.define('communityPost', {
+// Hotels: 
+// const hotels = db.define('hotels', {
 //   id: {
 //     type: DataTypes.INTEGER,
 //     autoIncrement: true,
 //     primaryKey: true,
-//   },
-//   title: {
-//     type: DataTypes.STRING,
-//   },
-//   body: {
-//     type: DataTypes.STRING,
-//   },
-//   image_id: {
-//     type: DataTypes.INTEGER,
 //     references: {
-//       model: communityPics, 
-//       key: 'id'
+//       model: planner, 
+//       key: 'hotel_id'
 //     }
 //   },
-//   user_id: {
+//   review_id: {
 //     type: DataTypes.INTEGER,
 //     references: {
-//       model: User, 
+//       model: reviews, 
 //       key: 'id'
 //     }
 //   }
-// });
-
-
-
-
+//   });
 
 // Reviews: id, review, rating, user_id
 // const reviews = db.define('reviews', {
@@ -96,7 +118,24 @@ const User = db.define('User', {
 //   });
 
 
-
+// Crimes: id, crime_list, location
+const crimes = db.define('crimes', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  crime_list: {
+    type: DataTypes.STRING
+  },
+  trip_location: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: planner,
+      key: 'id'
+    }
+  }
+  });
 
 
 // Planner: id, user_id, hotel_id, plan_name, trip_location, plan_notes, activities
@@ -121,8 +160,7 @@ const planner = db.define('planner', {
   //   }
   // }, 
   trip_location: {
-    type: DataTypes.STRING,
-    // primaryKey: true,
+    type: DataTypes.STRING
   }, 
   plan_name: {
     type: DataTypes.STRING
@@ -131,60 +169,13 @@ const planner = db.define('planner', {
     type: DataTypes.STRING
   }, 
   activities: {
-    type: DataTypes.STRING
+    type: DataTypes.ARRAY
   }, 
 // Question, how should Activity List be handled (string, array, or other)
   });
-  
-// Hotels: 
-// const hotels = db.define('hotels', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-    // references: {
-    //   model: planner, 
-    //   key: 'hotel_id'
-    // }
-//   },
-  // review_id: {
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: reviews, 
-  //     key: 'id'
-  //   }
-  // }
-//   });
 
-// Crimes: id, crime_list, location
-const crimes = db.define('crimes', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  crime_list: {
-    type: DataTypes.STRING
-  },
-   trip_location: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: planner,
-      key: 'id'
-    }
-  }
-  });
-
-  //user_id: {
-    //     type: DataTypes.INTEGER,
-    //     references: {
-    //       model: User, 
-    //       key: 'id'
-    //     }
-    //   }
 
 /***REFERENCES SECTION*/
-
 // User.hasMany(communityPost, { foreignKey: 'user_id' });
 // communityPost.belongsTo(User, { foreignKey: 'user_id' });
 
@@ -204,14 +195,13 @@ planner.hasMany(crimes, { foreignKey: 'trip_location' }); // Assuming trip_locat
 crimes.belongsTo(planner, { foreignKey: 'trip_location' });
 /***REFERENCES SECTION*/
 
-
 (async () => {
     try {
       // Connection verification
       await db.authenticate();
       // Schema sync
       User.sync();
-      // await communityPost.sync();
+      communityPost.sync();
       // await communityPics.sync();
       // await hotels.sync();
       // await reviews.sync();
@@ -224,12 +214,11 @@ crimes.belongsTo(planner, { foreignKey: 'trip_location' });
     }
   })();
 
-
 module.exports = {
   db,
   User,
-  // communityPost,
-  // communityPics,
+  communityPost,
+  communityPics,
   // hotels,
   // reviews,
   crimes, 

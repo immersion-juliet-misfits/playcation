@@ -1,4 +1,4 @@
- # dotenv environment variable files
+# dotenv environment variable files
 .env
 
 # Dependency directories
@@ -7,6 +7,8 @@ node_modules/
 package-lock.json
 
 # Wildcard Ignore patterns
+*~Stashed changes
+
 *~Stashed changes
 
 # dist
