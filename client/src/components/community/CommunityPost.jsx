@@ -10,7 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 // import image from 'Desktop/fence/screamtest.jpg'
 
 const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
@@ -36,10 +37,16 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={<Avatar>C</Avatar>}
-          action={
+          action={user.id === postOwner &&
+            <div>
             <IconButton onClick={() => handleDelete()} >
-              <MoreVertIcon />
+              <ModeEditIcon color="primary" />
             </IconButton>
+
+            <IconButton onClick={() => handleDelete()} >
+              <DeleteForeverIcon />
+            </IconButton>
+            </div>
           }
           title={title}
           subheader={postDate.slice(0, 10)}

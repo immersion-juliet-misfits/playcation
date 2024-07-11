@@ -40,7 +40,7 @@ const CommunityPage = ({user}) => {
     <div>
     <h1>Playcay Community</h1>
     <h2>
-    {`${user.username}'s Ventures`}
+    {`Venture On, ${user.username}`}
     </h2>
     {makeAPost && <CommunityInput getPosts={() => getPosts()} userId={user.id} /> }
     <CommunityFeed posts={posts} toggleInput={() => toggleInput()} getPosts={() => getPosts()} user={user} />
