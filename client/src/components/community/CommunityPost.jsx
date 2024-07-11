@@ -36,7 +36,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     <div>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
-          avatar={<Avatar>C</Avatar>}
+          avatar={<Avatar>{user.username[0]}</Avatar>}
           action={user.id === postOwner &&
             <div>
             <IconButton onClick={() => handleDelete()} >
@@ -48,8 +48,8 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
             </IconButton>
             </div>
           }
-          title={title}
-          subheader={postDate.slice(0, 10)}
+          title={<h3>{title}</h3>}
+          subheader={`Posted by ${user.username} on ${postDate.slice(0, 10)}`}
         />
         <CardMedia
           component="img"

@@ -40,6 +40,20 @@ Community.delete('/post/:id', (req, res) => {
       // communityPost
     })
 })
+
+Community.patch('/post/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, body, user_id, url } = req.body;
+
+  communityPost.update({
+    title,
+    body,
+    url
+  }, {where: { id }})
+  .then(() => {
+    res.status(201).send('Successfully updated')
+  })
+})
 //   .then((tr) => {
 //     res.send('good try', tr)
 //   })
