@@ -11,14 +11,14 @@ import CommunityPage from './community/CommunityPage.jsx';
 
 // ES6 Class/Functional component
 const App = () => {
-  const [userName, setUsername] = useState('');
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     axios.get('api/user')
       .then((res) => {
         const user = res.data;
         // set username
-        setUsername(user.username);
+        setUser(user);
       }).catch((err) => {
         console.error('Failed to GET user data: ', err);
       });
@@ -36,7 +36,7 @@ const App = () => {
         <Route path="/home" element={<Homepage />} />
         <Route path="/" element={<Login />} />
         <Route path="/planner" element={<Planner />} />
-        <Route path="/community" element={<CommunityPage user={userName} />} />
+        <Route path="/community" element={<CommunityPage user={user} />} />
         {/* <Route path="/reviews" element={<Reviews />} /> */}
         {/* <Route path="/watchout" element={<Watchout />} /> */}
         <Route path="/*" element={<h1>Page Not Found</h1>} />

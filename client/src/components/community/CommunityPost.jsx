@@ -13,7 +13,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
-const CommunityPost = ({ title, body, postDate, url }) => {
+const CommunityPost = ({ title, body, postDate, url, id }) => {
+  // console.log('id', id)
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>

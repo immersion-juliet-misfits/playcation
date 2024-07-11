@@ -10,7 +10,7 @@ const CommunityFeed = ({posts, toggleInput}) => {
     <h2>Playcay Daily Feed</h2><button onClick={toggleInput}>Make a Post</button>
     <ul>
       {posts.map((post, i) => (
-        <CommunityPost key={`${post.title}-${i}`} title={post.title} body={post.body} url={post.url} postDate={post.updatedAt} />
+        <CommunityPost key={`${post.title}-${i}`} id={post.id} title={post.title} body={post.body} url={post.url} postDate={post.updatedAt} />
         // <li>{post.title}</li>
       ))}
     </ul>

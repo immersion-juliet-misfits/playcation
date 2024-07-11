@@ -28,6 +28,10 @@ Community.post('/post', (req, res) => {
       console.error(err);
     });
 });
+
+Community.delete('/post/:id', (req, res) => {
+  console.log(req.params)
+})
 //   .then((tr) => {
 //     res.send('good try', tr)
 //   })
