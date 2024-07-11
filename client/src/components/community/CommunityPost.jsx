@@ -13,11 +13,19 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
-const CommunityPost = ({ title, body, postDate, url, id, handleDelete }) => {
+const CommunityPost = ({ title, body, postDate, url, id, getPosts }) => {
   // console.log('id', id)
-  const deletePost = () => {
-    // console.log(id, handleDelete)
-    handleDelete(id)
+  const handleDelete = () => {
+    axios.delete(`/community/post/${id}`)
+      .then(() => {
+        console.log('Successfully deleted');
+      })
+      .then(() => {
+        getPosts()
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   return (
@@ -26,7 +34,7 @@ const CommunityPost = ({ title, body, postDate, url, id, handleDelete }) => {
         <CardHeader
           avatar={<Avatar>C</Avatar>}
           action={
-            <IconButton onClick={deletePost} >
+            <IconButton onClick={() => handleDelete()} >
               <MoreVertIcon />
             </IconButton>
           }

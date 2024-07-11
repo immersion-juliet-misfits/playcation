@@ -3,8 +3,8 @@ import axios from "axios";
 import ImageUpload from "./ImageUpload.jsx";
 
 
-const CommunityInput = ({getPosts}) => {
-  const [user_id, setPostUser] = useState(1)  
+const CommunityInput = ({getPosts, userId}) => {
+  const [user_id] = useState(userId)  
   const [title, setPostTitle] = useState('')
   const [body, setPostBody] = useState('');
   const [url, setPostUrl] = useState('');
@@ -12,6 +12,7 @@ const CommunityInput = ({getPosts}) => {
   // computer property to reuse logic?
   const handleTitleChange = (e) => {
     console.log(e.target.value)
+    console.log(user_id)
     setPostTitle(e.target.value)
   }
 

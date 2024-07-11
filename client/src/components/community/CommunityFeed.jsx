@@ -3,14 +3,14 @@ import axios from "axios";
 import CommunityPost from "./CommunityPost.jsx";
 
 
-const CommunityFeed = ({posts, toggleInput, handleDelete}) => {
+const CommunityFeed = ({posts, toggleInput, handleDelete, getPosts}) => {
 
   return (
     <div>
     <h2>Playcay Daily Feed</h2><button onClick={toggleInput}>Make a Post</button>
     <ul>
       {posts.map((post, i) => (
-        <CommunityPost key={`${post.title}-${i}`} id={post.id} title={post.title} body={post.body} url={post.url} postDate={post.updatedAt} handleDelete={handleDelete} />
+        <CommunityPost key={`${post.title}-${i}`} id={post.id} title={post.title} body={post.body} url={post.url} postDate={post.updatedAt} handleDelete={handleDelete} getPosts={getPosts} />
         // <li>{post.title}</li>
       ))}
     </ul>

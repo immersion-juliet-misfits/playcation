@@ -20,16 +20,6 @@ const CommunityPage = ({user}) => {
     useEffect(() => {
         console.log('STATE', makeAPost)
       }, [makeAPost])
-
-    const handleDelete = (postId) => {
-      axios.delete(`/community/post/${postId}`)
-        .then(() => {
-          console.log('Successfully deleted');
-        })
-        .catch((err) => {
-          console.error(err);
-        })
-    }
   
     const getPosts = () => {
       axios.get('/community/post')
@@ -52,8 +42,8 @@ const CommunityPage = ({user}) => {
     <h2>
     {`${user.username}'s Ventures`}
     </h2>
-    {makeAPost && <CommunityInput getPosts={() => getPosts()} /> }
-    <CommunityFeed posts={posts} toggleInput={() => toggleInput()} handleDelete={(postId) => handleDelete(postId)} />
+    {makeAPost && <CommunityInput getPosts={() => getPosts()} userId={user.id} /> }
+    <CommunityFeed posts={posts} toggleInput={() => toggleInput()} getPosts={() => getPosts()} user={user} />
     </div>
   )
 }
