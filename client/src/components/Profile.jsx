@@ -10,33 +10,44 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 const Profile = () => {
+  const [profile, setProfile] = useState({firstName: '', lastName: '', bio: ''});
+
+  // GET request to /api/profile for profile data
   const getProfile = () => {
     axios
-      .get()
-      .then(() => {})
+      .get('/api/profile')
+      .then((data) => {
+        setProfile(data)
+      })
       .catch((err) => {
         console.error("Could not GET Profile: ", err);
       });
   };
 
+  // Put request to /api/profile/${profile.id} to edit the profile data
   const editProfile = () => {
     axios
-      .patch()
-      .then(() => {})
-      .catch((err) => {
-        console.error("Could not edit Profile: ", err);
-      });
+    .put(`/api/profile/${profile.id}`)
+    .then((data) => {
+      setProfile(data)
+    })
+    .catch((err) => {
+      console.error("Could not edit Profile: ", err);
+    });
   };
-
+  
+  // Delete request to /api/profile/${profile.id} to delete profile
   const deleteProfile = () => {
     axios
-      .delete()
-      .then(() => {})
-      .catch((err) => {
-        console.error("Could not delete Profile: ", err);
-      });
+    .delete('/api/profile/${profile.id}')
+    .then(() => {})
+    .catch((err) => {
+      console.error("Could not delete Profile: ", err);
+    });
   };
 
+  useEffect(() => getProfile());
+  
   return (
     <>
       <h1>Profile</h1>
