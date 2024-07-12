@@ -94,26 +94,28 @@ communityPost.belongsTo(User, { foreignKey: 'user_id' });
 // });
 
 // Reviews: id, review, rating, user_id
-// const reviews = db.define('reviews', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   },
-//   review: {
-//     type: DataTypes.STRING,
-//   },
-//   rating: {
-//     type: DataTypes.INTEGER,
-//   },
-//   user_id: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       model: User,
-//       key: 'id',
-//     },
-//   },
-// });
+const reviews = db.define('reviews', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  review: {
+    type: DataTypes.STRING,
+  },
+  rating: {
+    type: DataTypes.INTEGER
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User, 
+      key: 'id'
+    }
+  }
+  });
+  User.hasMany(reviews, { foreignKey: 'user_id' });
+  reviews.belongsTo(User, { foreignKey: 'user_id' });
 
 // Crimes: id, crime_list, location
 // const crimes = db.define('crimes', {
@@ -195,7 +197,8 @@ module.exports = {
   communityPost,
   // communityPics,
   // hotels,
-  // reviews,
-  // crimes,
-  // planner,
-};
+  reviews,
+  // crimes, 
+  // planner
+}
+

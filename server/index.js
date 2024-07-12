@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+//const routes = require('./routes/testRoutes.js')
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
@@ -8,6 +9,7 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
+const reviews = require('./routes/reviewsRoutes.js')
 
 require('dotenv').config();
 
@@ -77,6 +79,8 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+//app.use(routes);
+app.use(express.json());
 // Serves to the dist folder
 app.use(express.static(path.join(__dirname, '../client/dist')));
 // Parse incoming request bodies in a middleware before your handlers
@@ -85,6 +89,7 @@ app.use(bodyParser.json());
 // routers
 app.use('/api', routes);
 app.use('/community', CommunityRoutes);
+app.use('/reviews', reviews)
 
 // login with goggle
 app.get(
