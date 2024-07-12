@@ -31,18 +31,28 @@ const Planner = () => {
       className='planner_all'
       style={{
         width: '100%',
-        minWidth: '1000px',
-        height: '95vh',
+        height: '900px',
         border: '2px solid navy',
         borderRadius: '20px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <Grid className='grid_all' container spacing={1} alignItems='stretch'>
+      <Grid
+        className='grid_all'
+        container
+        spacing={1}
+        alignItems='stretch'
+        justifyContent='center'
+        style={{ width: '100%', height: '95%', overflowY: 'hidden'  }}
+      >
         <Search />
         <PlannerDisplay />
       </Grid>
     </Container>
   );
+  // ****************
 };
 
 export default Planner;

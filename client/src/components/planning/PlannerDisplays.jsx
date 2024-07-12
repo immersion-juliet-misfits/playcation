@@ -10,8 +10,13 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
+  Box,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -25,9 +30,8 @@ import fData from '../../../../server/db/plan_fData.js';
 
 const PlannerDisplays = () => {
   // React Hooks replace state, constructor, super(), & bind
-
-  // Create test data/array to populate fields then refactor to pull from Search
-  // Activity items will populate in a Plan list
+  const [data, setData] = useState([]); // Data retrieved from DB
+  const [selectedPlan, setSelectedPlan] = useState(null); // State for Planner select box
 
   // Create these Axios calls after getting test data to work
   // Need to Create plan / POST to DB
@@ -35,36 +39,55 @@ const PlannerDisplays = () => {
   // Add items to Plan / PATCH
   // Remove items from plan / DELETE
 
-  // return (
-  //   <Grid className='grid_plans' item xs={6} style={{ midWidth: '200px' }}>
-  //     <Paper style={{ padding: 16, height: '100%' }}>
-  //       <div>
-  //         <h1>Saved Plans Component Here</h1>
-  //       </div>
-  //     </Paper>
-  //   </Grid>
-  // );
-
-  const [data, setData] = useState([]);
+  // Method to det4ct & handle changes made in Planner select box
+  const handleSelectChange = (event) => {
+    const planName = event.target.value;
+    const selectedPlanData = data.find((plan) => plan.plan_name === planName);
+    setSelectedPlan(selectedPlanData);
+  };
 
   useEffect(() => {
     // Simulating an API call with the fake data
     setData(fData);
   }, []);
 
+  // When I have time, figure out what properties I don't need since I added a lot trying to fix the browser proportion issue
   return (
-    <Grid className='grid_plans' item xs={5}>
-      <Paper style={{ padding: 15, height: '100%' }}>
+    <Grid className='grid_plans' item xs={6}>
+      <Paper style={{ padding: 10, height: '100%' }}>
         <h1 style={{ textAlign: 'center' }}>Playcation Plans</h1>
-        <Paper
-          style={{
-            maxHeight: '500px',
-            overflowY: 'auto',
-            padding: 15,
-            paddingRight: 30, // Add extra padding to the right to account for scrollbar
-          }}
-        >
-          {data.map((plan) => (
+
+        {/* Select Box */}
+        <FormControl fullWidth>
+          <InputLabel id='select-label'>Select Plan</InputLabel>
+          <Select
+            labelId='select-label'
+            id='select-box'
+            value={selectedPlan ? selectedPlan.plan_name : ''}
+            label='Select Plan'
+            onChange={handleSelectChange}
+          >
+            <MenuItem value=''>
+              <em>None</em>
+            </MenuItem>
+            {data.map((plan) => (
+              <MenuItem key={plan.id} value={plan.plan_name}>
+                {plan.plan_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {selectedPlan && (
+          <Paper
+            style={{
+              maxHeight: '700px',
+              overflowY: 'auto',
+              padding: 15,
+              paddingRight: 30,
+              marginTop: 20,
+            }}
+          >
             <TableContainer
               component={Paper}
               sx={{
@@ -75,29 +98,68 @@ const PlannerDisplays = () => {
                 width: 'auto',
                 display: 'block',
               }}
-              key={plan.id}
             >
               <Table sx={{ tableLayout: 'fixed' }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align='center' colSpan={3}>
-                      <h3 style={{ fontWeight: 'bold' }}>{plan.plan_name}</h3>
+                    <TableCell align='center' colSpan={4}>
+                      <h1
+                        style={{
+                          fontWeight: 'bold',
+                          lineHeight: '1',
+                          marginTop: 0,
+                        }}
+                      >
+                        {selectedPlan.plan_name}
+                      </h1>
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell align='center'>{plan.hotel_id}</TableCell>
-                    <TableCell align='center'>{plan.trip_location}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align='center' colSpan={2}>
-                      {plan.plan_notes}
+                    <TableCell
+                      align='center'
+                      colSpan={2}
+                      style={{ fontSize: '1.5rem' }}
+                    >
+                      {selectedPlan.hotel_id}
+                    </TableCell>
+                    <TableCell
+                      align='center'
+                      colSpan={2}
+                      style={{ fontSize: '1.5rem' }}
+                    >
+                      {selectedPlan.trip_location}
                     </TableCell>
                   </TableRow>
-                  {plan.activities.map((activity, index) => (
+                  <TableRow>
+                    <TableCell
+                      align='center'
+                      colSpan={4}
+                      style={{ fontSize: '1.5rem' }}
+                    >
+                      {selectedPlan.plan_notes}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align='center' colSpan={4}>
+                      <Box
+                        component='section'
+                        sx={{
+                          p: 2,
+                          backgroundColor: '#1976d2',
+                          borderRadius: '5px',
+                          color: '#ffffff',
+                          textAlign: 'center',
+                        }}
+                      >
+                        ACTIVITIES
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                  {selectedPlan.activities.map((activity, index) => (
                     <TableRow key={index}>
-                      <TableCell align='center' colSpan={3}>
+                      <TableCell align='center' colSpan={4}>
                         {activity}
                       </TableCell>
                     </TableRow>
@@ -105,11 +167,13 @@ const PlannerDisplays = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-          ))}
-        </Paper>
+          </Paper>
+        )}
       </Paper>
     </Grid>
   );
+
+  // ************
 };
 
 export default PlannerDisplays;

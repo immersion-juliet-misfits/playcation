@@ -7,7 +7,7 @@ const pData = [
     user_id: 1010,
     hotel_id: 2011,
     trip_location: "Minden, Louisiana",
-    plan_name: "Boring Overpriced Getaway",
+    plan_name: "Boring Getaway",
     plan_notes: "Visit the tiny Museum if it happens to be open.",
     activities: [
       "Tiny Museum",
