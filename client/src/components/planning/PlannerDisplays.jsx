@@ -6,6 +6,7 @@ POST request to create a new Plan
 PATCH request to change Plan name
 DELETE request to delete an existing Plan
 */
+
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
