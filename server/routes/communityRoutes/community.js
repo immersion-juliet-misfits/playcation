@@ -48,7 +48,6 @@ Community.patch('/post/:id', (req, res) => {
   communityPost.update({
     title,
     body,
-    url
   }, {where: { id }})
   .then(() => {
     res.status(201).send('Successfully updated')

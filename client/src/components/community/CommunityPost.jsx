@@ -12,10 +12,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import GradingIcon from '@mui/icons-material/Grading';
 // import image from 'Desktop/fence/screamtest.jpg'
 
 const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
   const [makeEdit, setMakeEdit] = useState(false);
+  const [editTitle, setEditTitle] = useState(title)
+  const [editBody, setEditBody] = useState(body);
   // console.log('id', id)
   const handleDelete = () => {
     if (user.id !== postOwner) {
@@ -41,10 +44,18 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     if (user.id !== postOwner) {
       throw 'Cannot delete other user\'s post!'
     }
-    axios.update(`/community/post/${id}`, {url, body, title})
+    axios.patch(`/community/post/${id}`, {body: editBody, title: editTitle})
       .then(() => {
         console.log('updated')
       })
+  }
+
+  const handleTitleChange = (e) => {
+    setEditTitle(e.target.value)
+  }
+
+  const handleBodyChange = (e) => {
+    setEditBody(e.target.value)
   }
 
   return (
@@ -54,6 +65,10 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           avatar={<Avatar>{user.username[0]}</Avatar>}
           action={user.id === postOwner &&
             <div>
+            {makeEdit && <IconButton onClick={() => handleEdit()} >
+              <GradingIcon color="success" />
+            </IconButton>}
+
             <IconButton onClick={() => toggleEdit()} >
               <ModeEditIcon color="primary" />
             </IconButton>
@@ -67,7 +82,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           !makeEdit && <h3>{title}</h3> || makeEdit && 
           <div>
             <label htmlFor="commtitle">Venture Location:</label><br/>
-            <input id="commtitle" type="text" placeholder="Where'd you go?" value={title}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
+            <input id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
           </div>
         }
           subheader={`Posted by ${user.username} on ${postDate.slice(0, 10)}`}
@@ -86,7 +101,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           {makeEdit && 
           <div>
             <label htmlFor="commbody">Venture Story:</label><br/>
-            <textarea id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
+            <textarea id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
           </div>
 
           }
