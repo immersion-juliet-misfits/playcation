@@ -15,6 +15,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 // import image from 'Desktop/fence/screamtest.jpg'
 
 const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
+  const [makeEdit, setMakeEdit] = useState(false);
   // console.log('id', id)
   const handleDelete = () => {
     if (user.id !== postOwner) {
@@ -32,6 +33,20 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
       })
   }
 
+  const toggleEdit = () => {
+    setMakeEdit((makeEdit) => !makeEdit)
+  }
+
+  const handleEdit = () => {
+    if (user.id !== postOwner) {
+      throw 'Cannot delete other user\'s post!'
+    }
+    axios.update(`/community/post/${id}`, {url, body, title})
+      .then(() => {
+        console.log('updated')
+      })
+  }
+
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
@@ -39,7 +54,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           avatar={<Avatar>{user.username[0]}</Avatar>}
           action={user.id === postOwner &&
             <div>
-            <IconButton onClick={() => handleDelete()} >
+            <IconButton onClick={() => toggleEdit()} >
               <ModeEditIcon color="primary" />
             </IconButton>
 
@@ -48,7 +63,13 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
             </IconButton>
             </div>
           }
-          title={<h3>{title}</h3>}
+          title={
+          !makeEdit && <h3>{title}</h3> || makeEdit && 
+          <div>
+            <label htmlFor="commtitle">Venture Location:</label><br/>
+            <input id="commtitle" type="text" placeholder="Where'd you go?" value={title}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
+          </div>
+        }
           subheader={`Posted by ${user.username} on ${postDate.slice(0, 10)}`}
         />
         <CardMedia
@@ -58,10 +79,17 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           alt="Photo not rendering"
         />
         <CardContent>
-          <Typography color="text.secondary">
+          {!makeEdit && <Typography color="text.secondary">
             {body}
           {/* <img src="https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-goose.jpg" /> */}
-          </Typography>
+          </Typography>}
+          {makeEdit && 
+          <div>
+            <label htmlFor="commbody">Venture Story:</label><br/>
+            <textarea id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
+          </div>
+
+          }
         </CardContent>
         <CardActions disableSpacing>
           <IconButton>
