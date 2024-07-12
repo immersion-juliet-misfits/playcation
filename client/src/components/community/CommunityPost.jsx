@@ -42,11 +42,18 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
 
   const handleEdit = () => {
     if (user.id !== postOwner) {
-      throw 'Cannot delete other user\'s post!'
+      throw 'Cannot edit other user\'s post!'
     }
     axios.patch(`/community/post/${id}`, {body: editBody, title: editTitle})
       .then(() => {
-        console.log('updated')
+        console.log('Updated')
+        setMakeEdit(false);
+      })
+      .then(() => {
+        getPosts();
+      })
+      .catch(() => {
+        console.error('Could not update')
       })
   }
 
