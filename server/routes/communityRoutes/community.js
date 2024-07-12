@@ -9,6 +9,9 @@ Community.get('/post', (req, res) => {
   communityPost.findAll()
     .then((data) => {
       res.send(data);
+    })
+    .catch((err) => {
+      console.error('Could not get posts', err)
     });
 });
 
@@ -36,6 +39,9 @@ Community.delete('/post/:id', (req, res) => {
     .then(() => {
       res.status(200).send('Successfully deleted')
     })
+    .catch((err) => {
+      console.error('Failed deleting post');
+    })
 })
 
 Community.patch('/post/:id', (req, res) => {
@@ -49,12 +55,10 @@ Community.patch('/post/:id', (req, res) => {
   .then(() => {
     res.status(201).send('Successfully updated')
   })
+  .catch((err) => {
+    console.error('Failed to edit post', err)
+  })
 })
-//   .then((tr) => {
-//     res.send('good try', tr)
-//   })
-//   .catch((err) => {
-//     console.error(err)
-//   })
+
 
 module.exports = Community;
