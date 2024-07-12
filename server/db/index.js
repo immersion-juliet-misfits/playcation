@@ -41,13 +41,9 @@ const communityPost = db.define('communityPost', {
   body: {
     type: DataTypes.STRING,
   },
-  // image_id: {
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: communityPics,
-  //     key: 'id',
-  //   },
-  // },
+  url: {
+    type: DataTypes.STRING,
+  },
   user_id: {
     type: DataTypes.INTEGER,
     references: {

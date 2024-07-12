@@ -5,14 +5,14 @@ import { Button, Typography, Box } from '@mui/material';
 
 
 function Homepage({ add }) {
-  const [userName, setUsername] = useState('');
+  // const [userName, setUsername] = useState('');
 
   useEffect(() => {
     axios.get('api/user')
       .then((res) => {
         const user = res.data;
         // set username
-        setUsername(user.username);
+        // setUsername(user.username);
         add(user)
       }).catch((err) => {
         console.error('Failed to GET user data: ', err);

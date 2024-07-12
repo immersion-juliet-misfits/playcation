@@ -16,10 +16,8 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
 
   const addReview = () => {
     let obj = { review: text, rating, user_id: user.id }
-    console.log(obj)
     axios.post('reviews/post', obj)
       .then((data) => {
-        console.log(data)
       })
       .catch((err) => {
         console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
