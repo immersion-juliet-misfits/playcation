@@ -24,7 +24,8 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
       .catch((err) => {
         console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
       })
-    add(obj)
+    obj.name = user.username
+    add([obj])
   }
   return (
     <Box sx={{ border: '2px solid grey', width: '350px', top: '20px' }} >

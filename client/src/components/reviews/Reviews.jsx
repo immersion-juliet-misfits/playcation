@@ -2,6 +2,7 @@ import React, { useState, Component } from "react";
 import AddReviews from "./AddReview.jsx";
 import { Card, CardContent, Box, Fab } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
+import DeleteIcon from '@mui/icons-material/Delete'
 import axios from "axios";
 import UpdateReview from './UpdataReview.jsx'
 
@@ -53,7 +54,6 @@ const Reviews = ({ user }) => {
 
   let deleteReview = (id) => {
     let url = 'reviews/delete/' + id;
-    console.log(url)
     axios.delete(url, { reviewid: id })
       .then(() => {
         let arr = []
@@ -99,7 +99,7 @@ const Reviews = ({ user }) => {
                 return (
                   <Card key={i} sx={{ width: 490, border: "2px solid" }}>
                     {user.id === data.user_id && <>
-                      <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { deleteReview(data.id) }}>{symbols?.[1]}</Fab>
+                      <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { deleteReview(data.id) }}><DeleteIcon /></Fab>
                       <Fab sx={{ height: '10px', width: '35px' }} onClick={() => { changeShow(data, i) }}>{symbols?.[2]}</Fab>
                     </>
                     }
