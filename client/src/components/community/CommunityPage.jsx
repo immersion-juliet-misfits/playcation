@@ -4,27 +4,23 @@ import CommunityInput from "./CommunityInput.jsx";
 import CommunityFeed from "./CommunityFeed.jsx";
 
 
-const CommunityPage = () => {
+const CommunityPage = ({user}) => {
     const [posts, setPosts] = useState([]);
     const [makeAPost, setMakeAPost] = useState(false);
 
     useEffect(() => {
       getPosts()
-      // console.log('STATE', posts)
     }, [])
   
     useEffect(() => {
-      console.log('STATE', posts)
     }, [posts])
 
     useEffect(() => {
-        console.log('STATE', makeAPost)
       }, [makeAPost])
   
     const getPosts = () => {
       axios.get('/community/post')
         .then(({data}) => {
-          console.log('Invoked from client', data)
           setPosts(data)
         })
         .catch((err) => {
@@ -39,8 +35,11 @@ const CommunityPage = () => {
   return (
     <div>
     <h1>Playcay Community</h1>
-    {makeAPost && <CommunityInput getPosts={() => getPosts()} /> }
-    <CommunityFeed posts={posts} toggleInput={() => toggleInput()}/>
+    <h2>
+    {`Venture On, ${user.username}`}
+    </h2>
+    {makeAPost && <CommunityInput getPosts={() => getPosts()} userId={user.id} /> }
+    <CommunityFeed posts={posts} toggleInput={() => toggleInput()} getPosts={() => getPosts()} user={user} />
     </div>
   )
 }

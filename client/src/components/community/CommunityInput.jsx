@@ -1,34 +1,48 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ImageUpload from "./ImageUpload.jsx";
 
 
-const CommunityInput = ({getPosts}) => {
-  const [user_id, setPostUser] = useState(1)  
+const CommunityInput = ({getPosts, userId}) => {
+  const [user_id] = useState(userId)  
   const [title, setPostTitle] = useState('')
   const [body, setPostBody] = useState('');
-
+  const [url, setPostUrl] = useState('');
+  const [showUpload, setShowUpload] = useState(false);
+  
+  const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;
+  const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
   // computer property to reuse logic?
   const handleTitleChange = (e) => {
-    console.log(e.target.value)
     setPostTitle(e.target.value)
   }
 
   const handleBodyChange = (e) => {
-    console.log(e.target.value)
     setPostBody(e.target.value)
   }
 
   const handleSubmit = (e) => {
-    console.log(e.target.value)
     axios.post('/community/post', {
       user_id,
       title,
-      body
+      body,
+      url
     })
     .then(() => {
       getPosts()
+      setShowUpload(false);
     })
   }
+
+  const toggleUpload = () => {
+    setShowUpload((showUpload) => !showUpload)
+  }
+
+  const handleUpload = (url) => {
+    setPostUrl(url)
+    setShowUpload(false);
+  }
+
 
   return (
     <div>
@@ -41,9 +55,10 @@ const CommunityInput = ({getPosts}) => {
       <textarea id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
       
       <label htmlFor="comm">Venture Snapshot:</label><br/>
-      <input id="commtitle" type="file"></input><br/><br/>
+      <input id="commtitle" type="button" value="Upload Image" onClick={toggleUpload}></input><br/><br/>
       
       <input type="button" value="Post Venture" onClick={(e) => handleSubmit(e)} />
+      {showUpload && <ImageUpload cloudName={cloudName} uploadPreset={uploadPreset} handleUpload={handleUpload} />}
     {/* </form> */}
 
     {/* <h2>Playcay Plans</h2>
