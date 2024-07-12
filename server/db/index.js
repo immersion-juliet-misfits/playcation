@@ -149,7 +149,7 @@ const planner = db.define('planner', {
     type: DataTypes.STRING
   }, 
   activities: {
-    type: DataTypes.ARRAY
+    type: DataTypes.JSONB
   }, 
 // Question, how should Activity List be handled (string, array, or other)
   });
@@ -162,7 +162,7 @@ const weather = db.define('weather', {
     primaryKey: true,
   },
   weather_list: {
-    type: DataTypes.STRING
+    type: DataTypes.JSON
   },
   trip_location: {
     type: DataTypes.INTEGER,
