@@ -14,6 +14,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Checkbox,
   FormControl,
   Grid,
   InputLabel,
@@ -91,7 +92,11 @@ const PlannerDisplays = () => {
 
         {/* Plan Buttons Start*/}
         <Box display='flex' justifyContent='center' mt={2}>
-          <ButtonGroup variant='contained' aria-label='Basic button group' sx={{ gap: 2}}> 
+          <ButtonGroup
+            variant='contained'
+            aria-label='Basic button group'
+            sx={{ gap: 2 }}
+          >
             <Button
               id='change-plan'
               variant='contained'
@@ -203,8 +208,20 @@ const PlannerDisplays = () => {
                   </TableRow>
                   {selectedPlan.activities.map((activity, index) => (
                     <TableRow key={index}>
-                      <TableCell align='center' colSpan={4}>
-                        {activity}
+                      <TableCell colSpan={4} style={{ position: 'relative' }}>
+                        <div style={{ textAlign: 'center' }}>{activity}</div>
+                        {isChangePlansClicked && (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '50%',
+                              transform: 'translateY(-50%)',
+                            }}
+                          >
+                            <Checkbox />
+                          </div>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
