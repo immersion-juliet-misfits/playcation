@@ -12,6 +12,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Box,
+  Button,
+  ButtonGroup,
   FormControl,
   Grid,
   InputLabel,
@@ -31,8 +33,11 @@ import fData from '../../../../server/db/plan_fData.js';
 
 const PlannerDisplays = () => {
   // React Hooks replace state, constructor, super(), & bind
+  // State Group Start *****
   const [data, setData] = useState([]); // Data retrieved from DB
   const [selectedPlan, setSelectedPlan] = useState(null); // State for Planner select box
+  const [isChangePlansClicked, setIsChangePlansClicked] = useState(false);
+  // State Group End *****
 
   // Create these Axios calls after getting test data to work
   // Need to Create plan / POST to DB
@@ -40,11 +45,16 @@ const PlannerDisplays = () => {
   // Add items to Plan / PATCH
   // Remove items from plan / DELETE
 
-  // Method to det4ct & handle changes made in Planner select box
+  // Handle changes in Select Box
   const handleSelectChange = (event) => {
     const planName = event.target.value;
     const selectedPlanData = data.find((plan) => plan.plan_name === planName);
     setSelectedPlan(selectedPlanData);
+    setIsChangePlansClicked(false);
+  };
+
+  const handleChangePlansClick = () => {
+    setIsChangePlansClicked(true);
   };
 
   useEffect(() => {
@@ -52,13 +62,12 @@ const PlannerDisplays = () => {
     setData(fData);
   }, []);
 
-  // When I have time, figure out what properties I don't need since I added a lot trying to fix the browser proportion issue
   return (
     <Grid className='grid_plans' item xs={6}>
       <Paper style={{ padding: 10, height: '100%' }}>
         <h1 style={{ textAlign: 'center' }}>Playcation Plans</h1>
 
-        {/* Select Box */}
+        {/* Select Box Start*/}
         <FormControl fullWidth>
           <InputLabel id='select-label'>Select Plan</InputLabel>
           <Select
@@ -78,7 +87,41 @@ const PlannerDisplays = () => {
             ))}
           </Select>
         </FormControl>
+        {/* Select Box End*/}
 
+        {/* Plan Buttons Start*/}
+        <Box display='flex' justifyContent='center' mt={2}>
+          <ButtonGroup variant='contained' aria-label='Basic button group' sx={{ gap: 2}}> 
+            <Button
+              id='change-plan'
+              variant='contained'
+              disabled={!selectedPlan}
+              // style={{ marginTop: 5 }}
+              onClick={handleChangePlansClick}
+            >
+              Change Plans
+            </Button>
+            <Button
+              id='edit-plan'
+              variant='contained'
+              disabled={!isChangePlansClicked}
+              // style={{ marginTop: 5 }}
+            >
+              Remove Activities
+            </Button>
+            <Button
+              id='delete-plan'
+              variant='contained'
+              disabled={!selectedPlan || isChangePlansClicked}
+              style={{ marginLeft: 50 }}
+            >
+              Delete Plan
+            </Button>
+          </ButtonGroup>
+        </Box>
+        {/* Plan Buttons Start*/}
+
+        {/* Plan Render Start*/}
         {selectedPlan && (
           <Paper
             style={{
@@ -121,14 +164,14 @@ const PlannerDisplays = () => {
                     <TableCell
                       align='center'
                       colSpan={2}
-                      style={{ fontSize: '1.5rem' }}
+                      // style={{ fontSize: '1.5rem' }}
                     >
                       {selectedPlan.hotel_id}
                     </TableCell>
                     <TableCell
                       align='center'
                       colSpan={2}
-                      style={{ fontSize: '1.5rem' }}
+                      // style={{ fontSize: '1.5rem' }}
                     >
                       {selectedPlan.trip_location}
                     </TableCell>
@@ -137,7 +180,7 @@ const PlannerDisplays = () => {
                     <TableCell
                       align='center'
                       colSpan={4}
-                      style={{ fontSize: '1.5rem' }}
+                      // style={{ fontSize: '1.5rem' }}
                     >
                       {selectedPlan.plan_notes}
                     </TableCell>
@@ -170,6 +213,7 @@ const PlannerDisplays = () => {
             </TableContainer>
           </Paper>
         )}
+        {/* Plan Render Start*/}
       </Paper>
     </Grid>
   );
