@@ -29,15 +29,22 @@ import {
   TableRow,
 } from '@mui/material';
 // Import fake data to test list functionality
-import fData from '../../../../server/db/plan_fData.js';
+import { pData } from '../../../../server/db/plan_fData.js';
 // console.log('Fake Data Verified', fData);
+// Import display select component
+import DisplaySelect from './displaySelect.jsx';
 
 const PlannerDisplays = () => {
   // React Hooks replace state, constructor, super(), & bind
   // State Group Start *****
-  const [data, setData] = useState([]); // Data retrieved from DB
-  const [selectedPlan, setSelectedPlan] = useState(null); // State for Planner select box
+  // Data retrieved from DB
+  const [data, setData] = useState([]);
+  // Has user selected a Plan
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  // Has user selected a Plan
   const [isChangePlansClicked, setIsChangePlansClicked] = useState(false);
+  // User wants to Edit a Plan - remove activities
+  const [isDelActivityClicked, setIsDelActivityClicked] = useState(false);
   // State Group End *****
 
   // Create these Axios calls after getting test data to work
@@ -46,30 +53,39 @@ const PlannerDisplays = () => {
   // Add items to Plan / PATCH
   // Remove items from plan / DELETE
 
-  // Handle changes in Select Box
+  // Detect selections in Select Box
   const handleSelectChange = (event) => {
     const planName = event.target.value;
     const selectedPlanData = data.find((plan) => plan.plan_name === planName);
     setSelectedPlan(selectedPlanData);
     setIsChangePlansClicked(false);
+    setIsDelActivityClicked(false);
   };
-
+  // Detect User wants to Edit/Change Plan
   const handleChangePlansClick = () => {
     setIsChangePlansClicked(true);
+    setIsDelActivityClicked(false);
+  };
+  // Detect user wants to remove activities
+  const handleDelActivityClick = () => {
+    setIsDelActivityClicked(true);
+    setIsChangePlansClicked(false);
+    // Axios DELETE will be triggered here
   };
 
   useEffect(() => {
     // Simulating an API call with the fake data
-    setData(fData);
+    setData(pData);
   }, []);
 
   return (
     <Grid className='grid_plans' item xs={6}>
       <Paper style={{ padding: 10, height: '100%' }}>
         <h1 style={{ textAlign: 'center' }}>Playcation Plans</h1>
-
+        
+        <DisplaySelect selectedPlan={selectedPlan} handleSelectChange={handleSelectChange} data={data} />
         {/* Select Box Start*/}
-        <FormControl fullWidth>
+        {/* <FormControl fullWidth>
           <InputLabel id='select-label'>Select Plan</InputLabel>
           <Select
             labelId='select-label'
@@ -87,7 +103,7 @@ const PlannerDisplays = () => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
         {/* Select Box End*/}
 
         {/* Plan Buttons Start*/}
@@ -101,16 +117,15 @@ const PlannerDisplays = () => {
               id='change-plan'
               variant='contained'
               disabled={!selectedPlan}
-              // style={{ marginTop: 5 }}
               onClick={handleChangePlansClick}
             >
               Change Plans
             </Button>
             <Button
-              id='edit-plan'
+              id='delete-activity'
               variant='contained'
               disabled={!isChangePlansClicked}
-              // style={{ marginTop: 5 }}
+              onClick={handleDelActivityClick}
             >
               Remove Activities
             </Button>
@@ -124,7 +139,7 @@ const PlannerDisplays = () => {
             </Button>
           </ButtonGroup>
         </Box>
-        {/* Plan Buttons Start*/}
+        {/* Plan Buttons End*/}
 
         {/* Plan Render Start*/}
         {selectedPlan && (
@@ -206,6 +221,7 @@ const PlannerDisplays = () => {
                       </Box>
                     </TableCell>
                   </TableRow>
+
                   {selectedPlan.activities.map((activity, index) => (
                     <TableRow key={index}>
                       <TableCell colSpan={4} style={{ position: 'relative' }}>
@@ -223,6 +239,8 @@ const PlannerDisplays = () => {
                           </div>
                         )}
                       </TableCell>
+
+
                     </TableRow>
                   ))}
                 </TableBody>
