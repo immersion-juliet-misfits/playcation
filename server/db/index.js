@@ -1,7 +1,8 @@
 /* 
 For building the database
 */
-const { Sequelize, DataTypes } = require('sequelize');
+ const { Sequelize, DataTypes } = require('sequelize');
+//const { DataTypes } = require('sequelize');
 
 // Database connections
 const db = new Sequelize('Playcation', 'root', '', {
@@ -117,27 +118,6 @@ communityPost.belongsTo(User, { foreignKey: 'user_id' });
 //   }
 //   });
 
-
-// Crimes: id, crime_list, location
-const crimes = db.define('crimes', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  crime_list: {
-    type: DataTypes.STRING
-  },
-  trip_location: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: planner,
-      key: 'id'
-    }
-  }
-  });
-
-
 // Planner: id, user_id, hotel_id, plan_name, trip_location, plan_notes, activities
 const planner = db.define('planner', {
   id: {
@@ -173,7 +153,25 @@ const planner = db.define('planner', {
   }, 
 // Question, how should Activity List be handled (string, array, or other)
   });
-
+  
+// Crimes: id, crime_list, location
+const weather = db.define('weather', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  weather_list: {
+    type: DataTypes.STRING
+  },
+  trip_location: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: planner,
+      key: 'id'
+    }
+  }
+  });
 
 /***REFERENCES SECTION*/
 // User.hasMany(communityPost, { foreignKey: 'user_id' });
@@ -191,8 +189,8 @@ const planner = db.define('planner', {
 User.hasMany(planner, { foreignKey: 'user_id' })
 planner.belongsTo(User, { foreignKey: 'user_id'})
 
-planner.hasMany(crimes, { foreignKey: 'trip_location' }); // Assuming trip_location is the foreign key
-crimes.belongsTo(planner, { foreignKey: 'trip_location' });
+planner.hasMany(weather, { foreignKey: 'trip_location' }); // Assuming trip_location is the foreign key
+weather.belongsTo(planner, { foreignKey: 'trip_location' });
 /***REFERENCES SECTION*/
 
 (async () => {
@@ -205,7 +203,7 @@ crimes.belongsTo(planner, { foreignKey: 'trip_location' });
       // await communityPics.sync();
       // await hotels.sync();
       // await reviews.sync();
-      crimes.sync();
+      weather.sync();
       planner.sync();
       // Connection notification
       console.info('Database connection has been established.');
@@ -218,10 +216,10 @@ module.exports = {
   db,
   User,
   communityPost,
-  communityPics,
+  //communityPics,
   // hotels,
   // reviews,
-  crimes, 
+  weather, 
   planner
 }
 
