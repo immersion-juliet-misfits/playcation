@@ -16,14 +16,18 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
 
   const addReview = () => {
     let obj = { review: text, rating, user_id: user.id }
-    axios.post('reviews/post', obj)
-      .then((data) => {
-      })
-      .catch((err) => {
-        console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
-      })
-    obj.name = user.username
-    add([obj])
+    if (user_id !== null) {
+      axios.post('reviews/post', obj)
+        .then((data) => {
+        })
+        .catch((err) => {
+          console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
+        })
+      obj.name = user.username
+      add([obj])
+    } else {
+      console.log("AddReview.jsx you are currently not login or the current login User data got deleted/reset to undefined/null")
+    }
   }
   return (
     <Box sx={{ border: '2px solid grey', width: '350px', top: '20px' }} >
