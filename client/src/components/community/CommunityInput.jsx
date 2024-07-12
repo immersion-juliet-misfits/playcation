@@ -9,21 +9,19 @@ const CommunityInput = ({getPosts, userId}) => {
   const [body, setPostBody] = useState('');
   const [url, setPostUrl] = useState('');
   const [showUpload, setShowUpload] = useState(false);
-
+  
+  const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;
+  const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
   // computer property to reuse logic?
   const handleTitleChange = (e) => {
-    console.log(e.target.value)
-    console.log(user_id)
     setPostTitle(e.target.value)
   }
 
   const handleBodyChange = (e) => {
-    console.log(e.target.value)
     setPostBody(e.target.value)
   }
 
   const handleSubmit = (e) => {
-    console.log(e.target.value)
     axios.post('/community/post', {
       user_id,
       title,
@@ -41,16 +39,10 @@ const CommunityInput = ({getPosts, userId}) => {
   }
 
   const handleUpload = (url) => {
-    console.log(url)
     setPostUrl(url)
     setShowUpload(false);
   }
 
-  const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;
-  const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
-
-
-  console.log(cloudName, 'CNAMEHERE')
 
   return (
     <div>

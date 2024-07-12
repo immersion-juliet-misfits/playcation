@@ -10,21 +10,17 @@ const CommunityPage = ({user}) => {
 
     useEffect(() => {
       getPosts()
-      // console.log('STATE', posts)
     }, [])
   
     useEffect(() => {
-      console.log('STATE', posts)
     }, [posts])
 
     useEffect(() => {
-        console.log('STATE', makeAPost)
       }, [makeAPost])
   
     const getPosts = () => {
       axios.get('/community/post')
         .then(({data}) => {
-          console.log('Invoked from client', data)
           setPosts(data)
         })
         .catch((err) => {

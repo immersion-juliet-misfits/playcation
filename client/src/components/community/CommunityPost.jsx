@@ -19,7 +19,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
   const [makeEdit, setMakeEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title)
   const [editBody, setEditBody] = useState(body);
-  // console.log('id', id)
   const handleDelete = () => {
     if (user.id !== postOwner) {
       throw 'Cannot delete other user\'s post!'
@@ -103,7 +102,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
         <CardContent>
           {!makeEdit && <Typography color="text.secondary">
             {body}
-          {/* <img src="https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-goose.jpg" /> */}
           </Typography>}
           {makeEdit && 
           <div>

@@ -30,14 +30,11 @@ Community.post('/post', (req, res) => {
 });
 
 Community.delete('/post/:id', (req, res) => {
-  console.log(req.params)
   const { id } = req.params;
 
   communityPost.destroy({where: { id }})
     .then(() => {
-      // console.log(user)
       res.status(200).send('Successfully deleted')
-      // communityPost
     })
 })
 

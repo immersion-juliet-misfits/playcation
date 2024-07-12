@@ -40,7 +40,6 @@ const ImageUpload = ({ cloudName, uploadPreset, handleUpload }) => {
         if (err) {
           console.error('Upload Widget error - ', err);
         } else if (!err && info.event === 'success') {
-            console.log('event', info.event)
             handleUpload(info.info.secure_url);
           }
         }
