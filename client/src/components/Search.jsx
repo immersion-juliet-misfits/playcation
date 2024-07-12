@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Paper, TextField, Button } from '@mui/material';
+// Test data to populate search box
+// import { sData } from '../../../../server/db/plan_fData.js';
+
 
 const Search = () => {
   // State & Axios requests
   // Request list of 10 options from API to show User
   const [searchResults, setSearchResults] = useState([]);
-  // Other request
   // Request to API through the Route
 
   return (
@@ -38,7 +40,7 @@ const Search = () => {
     </Grid>
   );
 
-  // /////
+  // ********
 };
 
 export default Search;

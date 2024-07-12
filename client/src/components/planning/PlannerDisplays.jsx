@@ -10,32 +10,16 @@ DELETE request to delete an existing Plan
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Checkbox,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
-// Import fake data to test list functionality
+import { Box, Button, Grid, Paper } from '@mui/material';
+// Import fake data to test functionality
 import { pData } from '../../../../server/db/plan_fData.js';
 // console.log('Fake Data Verified', fData);
-// Import display select component
+// Import display components
 import DisplaySelect from './displaySelect.jsx';
+import ButtonSelect from './buttonSelect.jsx';
+import TableSelect from './tableSelect.jsx';
 
 const PlannerDisplays = () => {
-  // React Hooks replace state, constructor, super(), & bind
   // State Group Start *****
   // Data retrieved from DB
   const [data, setData] = useState([]);
@@ -47,7 +31,7 @@ const PlannerDisplays = () => {
   const [isDelActivityClicked, setIsDelActivityClicked] = useState(false);
   // State Group End *****
 
-  // Create these Axios calls after getting test data to work
+  // Create these Axios calls
   // Need to Create plan / POST to DB
   // Need to show plan / GET from DB
   // Add items to Plan / PATCH
@@ -81,174 +65,38 @@ const PlannerDisplays = () => {
   return (
     <Grid className='grid_plans' item xs={6}>
       <Paper style={{ padding: 10, height: '100%' }}>
-        <h1 style={{ textAlign: 'center' }}>Playcation Plans</h1>
-        
-        <DisplaySelect selectedPlan={selectedPlan} handleSelectChange={handleSelectChange} data={data} />
-        {/* Select Box Start*/}
-        {/* <FormControl fullWidth>
-          <InputLabel id='select-label'>Select Plan</InputLabel>
-          <Select
-            labelId='select-label'
-            id='select-box'
-            value={selectedPlan ? selectedPlan.plan_name : ''}
-            label='Select Plan'
-            onChange={handleSelectChange}
-          >
-            <MenuItem value=''>
-              <em>None</em>
-            </MenuItem>
-            {data.map((plan) => (
-              <MenuItem key={plan.id} value={plan.plan_name}>
-                {plan.plan_name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl> */}
-        {/* Select Box End*/}
-
-        {/* Plan Buttons Start*/}
-        <Box display='flex' justifyContent='center' mt={2}>
-          <ButtonGroup
+        <Box display='flex' justifyContent='space-between' alignItems='center'>
+        <h1 style={{ textAlign: 'center', flex: 1 }}>Playcation Plans</h1>
+        {/* Create New Plan Button */}
+          <Button
             variant='contained'
-            aria-label='Basic button group'
-            sx={{ gap: 2 }}
+            color='primary'
+            style={{ display: 'block', marginLeft: 'auto' }}
           >
-            <Button
-              id='change-plan'
-              variant='contained'
-              disabled={!selectedPlan}
-              onClick={handleChangePlansClick}
-            >
-              Change Plans
-            </Button>
-            <Button
-              id='delete-activity'
-              variant='contained'
-              disabled={!isChangePlansClicked}
-              onClick={handleDelActivityClick}
-            >
-              Remove Activities
-            </Button>
-            <Button
-              id='delete-plan'
-              variant='contained'
-              disabled={!selectedPlan || isChangePlansClicked}
-              style={{ marginLeft: 50 }}
-            >
-              Delete Plan
-            </Button>
-          </ButtonGroup>
+            Make New Plan
+          </Button>
         </Box>
-        {/* Plan Buttons End*/}
 
-        {/* Plan Render Start*/}
+        {/* Plan Select Dropdown */}
+        <DisplaySelect
+          selectedPlan={selectedPlan}
+          handleSelectChange={handleSelectChange}
+          data={data}
+        />
+        {/* Plan Buttons */}
+        <ButtonSelect
+          selectedPlan={selectedPlan}
+          isChangePlansClicked={isChangePlansClicked}
+          handleChangePlansClick={handleChangePlansClick}
+          handleDelActivityClick={handleDelActivityClick}
+        />
+        {/* Plan Rendering */}
         {selectedPlan && (
-          <Paper
-            style={{
-              maxHeight: '700px',
-              overflowY: 'auto',
-              padding: 15,
-              paddingRight: 30,
-              marginTop: 20,
-            }}
-          >
-            <TableContainer
-              component={Paper}
-              sx={{
-                marginBottom: 10,
-                border: '1px solid #ccc',
-                borderRadius: 5,
-                padding: 5,
-                width: 'auto',
-                display: 'block',
-              }}
-            >
-              <Table sx={{ tableLayout: 'fixed' }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align='center' colSpan={4}>
-                      <h1
-                        style={{
-                          fontWeight: 'bold',
-                          lineHeight: '1',
-                          marginTop: 0,
-                        }}
-                      >
-                        {selectedPlan.plan_name}
-                      </h1>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell
-                      align='center'
-                      colSpan={2}
-                      // style={{ fontSize: '1.5rem' }}
-                    >
-                      {selectedPlan.hotel_id}
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      colSpan={2}
-                      // style={{ fontSize: '1.5rem' }}
-                    >
-                      {selectedPlan.trip_location}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell
-                      align='center'
-                      colSpan={4}
-                      // style={{ fontSize: '1.5rem' }}
-                    >
-                      {selectedPlan.plan_notes}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align='center' colSpan={4}>
-                      <Box
-                        component='section'
-                        sx={{
-                          p: 2,
-                          backgroundColor: '#1976d2',
-                          borderRadius: '5px',
-                          color: '#ffffff',
-                          textAlign: 'center',
-                        }}
-                      >
-                        ACTIVITIES
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-
-                  {selectedPlan.activities.map((activity, index) => (
-                    <TableRow key={index}>
-                      <TableCell colSpan={4} style={{ position: 'relative' }}>
-                        <div style={{ textAlign: 'center' }}>{activity}</div>
-                        {isChangePlansClicked && (
-                          <div
-                            style={{
-                              position: 'absolute',
-                              right: 0,
-                              top: '50%',
-                              transform: 'translateY(-50%)',
-                            }}
-                          >
-                            <Checkbox />
-                          </div>
-                        )}
-                      </TableCell>
-
-
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
+          <TableSelect
+            selectedPlan={selectedPlan}
+            isChangePlansClicked={isChangePlansClicked}
+          />
         )}
-        {/* Plan Render Start*/}
       </Paper>
     </Grid>
   );
