@@ -226,6 +226,6 @@ module.exports = {
   // hotels,
   reviews,
   // crimes, 
-  // planner
+  planner
 }
 

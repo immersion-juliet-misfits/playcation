@@ -19,7 +19,7 @@ router.route('/profile').delete(profileController.deleteProfile);
 router.route('/search').get(searchController.getSearch);
 
 // Planner Routers
-router.route('/planner').get(plannerController.getPlans);
+router.route('/planner/:id').get(plannerController.getPlans);
 router.route('/planner').post(plannerController.addPlan);
 router.route('/planner').patch(plannerController.addAct);
 router.route('/planner').delete(plannerController.delPlan);

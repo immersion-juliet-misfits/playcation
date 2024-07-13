@@ -4,12 +4,13 @@
 // Create new Router instance
 // const Plan = express.Router();
 // import access to the DB
-// const { planner } = require('../../db/index');
-const { planner } = require('../db');
+// const { planner } = require('../../db/index.js');
+const {  planner } = require('../db');
 
 module.exports = {
   // GET: Retrieve all planners
   getPlans: (req, res) => {
+    const {id} = req.params;
     planner
       .findAll()
       .then((plans) => {
