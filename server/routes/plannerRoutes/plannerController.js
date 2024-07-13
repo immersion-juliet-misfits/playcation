@@ -8,11 +8,6 @@ const { planner } = require('../../db/index');
 
 Plan.use(express.json());
 
-// POST: Create a new planner
-Plan.post('/post', (req, res) => {
-// planner.
-})
-
 // GET: Retrieve all planners
 Plan.get('/get', (req, res) => {
   planner.findAll()
@@ -21,13 +16,29 @@ Plan.get('/get', (req, res) => {
   });
 });
 
-// GET: Retrieve one planner
+
+// POST: Create a new planner
+Plan.post('/post', (req, res) => {
+// planner.create()
+})
+
 
 // DELETE: Remove an existing planner
+Plan.delete('/delete:id', (req, res) => {
+  // planner.destroy()
+  })
+
 
 // PATCH: Add activity
+Plan.patch('/patch', (req, res) => {
+  // planner.
+  })
+
 
 // PATCH: Remove activity
+Plan.patch('/patch', (req, res) => {
+  // planner.
+  })
 
 
 

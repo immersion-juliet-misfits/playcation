@@ -1,52 +1,60 @@
+const { request, response } = require('express');
 const { Profile } = require('../db');
 
 module.exports = {
   // GET /api/profile
-  getProfile: (req, res) => {
-    const { id } = req.params;
+  getProfile: (request, response) => {
+    const { id } = request.params;
     const profileId = id;
+    console.log('GET Body Check: ', request.body);
+    console.log('ProfileId: ', profileId);
     // find user 
     Profile.findByPk(profileId)
       .then((profile) => {
-        res.send(profile);
+        response.send(profile);
       })
       .catch((err) => {// if no user
-        res.sendStatus(500);
+        response.sendStatus(500);
         console.error('Error: Can not GET /api/:profileId : ', err);
       });
   },
 
   // POST /api/profile
-  addProfile: (req, res) => {
-    const { newProfile } = req.body;
+  addProfile: (request, response) => {
+    const newProfile = request.body;
+    console.log('Body: ', request.body)
     //find user
-    Profile.findOne()
-    .then(() => {
-      
+    Profile.create({
+      firstName: newProfile.firstName,
+      lastName: newProfile.lastName,
+      bio: newProfile.bio
+    })
+    .then((data) => {
+      response.send(data);
     })
     .then(() => {
-      res.sendStatus(201);
+      response.sendStatus(201);
     })
     .catch((err) => {
-        res.sendStatus(500);
+        response.sendStatus(500);
         console.error(err);
     })
   },
   // PUT /api/profile
-  updateProfile: (req, res) => {
+  updateProfile: (request, response) => {
     Profile.findByPk()
     .then(() => {})
     .catch(err => {
-      res.sendStatus(500);
+      response.sendStatus(500);
       console.error(err);
     })
   },
   // DELETE /api/profile:profileId
-  deleteProfile: (req, res) => {
+  deleteProfile: (request, response) => {
     Profile.findByPk()
     .then(() => {})
     .catch(err => {
-      res.sendStatus(500);
+      response.sendStatus(500);
       console.error(err);
     })
   }
