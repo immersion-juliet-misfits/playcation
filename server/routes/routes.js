@@ -17,5 +17,12 @@ router.route('/profile').delete(profileController.deleteProfile);
 // Search Routers
 router.route('/search').get(searchController.getSearch);
 
+// Planner Routers
+router.route('/planner').get(plannerController.getPlans);
+router.route('/planner').post(plannerController.addPlan);
+router.route('/planner').patch(plannerController.addAct);
+router.route('/planner').delete(plannerController.delPlan);
+
+
 
 module.exports = router;
