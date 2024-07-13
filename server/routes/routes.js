@@ -9,7 +9,7 @@ router.route('/user').get(userController.getUser);
 router.route('/user').post(userController.addUser);
 
 // Profile Routers
-router.route('/profile').get(profileController.getProfile);
+router.route('/profile/:id').get(profileController.getProfile);
 router.route('/profile').post(profileController.addProfile);
 router.route('/profile').put(profileController.updateProfile);
 router.route('/profile').delete(profileController.deleteProfile);

@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { Profile } = require('../db');
+const { Profile, User } = require('../db');
 
 module.exports = {
   // GET /api/profile
@@ -11,7 +11,7 @@ module.exports = {
     // find user 
     Profile.findByPk(profileId)
       .then((profile) => {
-        response.send(profile);
+        response.status(200).send(profile);
       })
       .catch((err) => {// if no user
         response.sendStatus(500);
@@ -22,18 +22,16 @@ module.exports = {
   // POST /api/profile
   addProfile: (request, response) => {
     const newProfile = request.body;
-    console.log('Body: ', request.body)
+    console.log('POST Body Check: ', request.body)
     //find user
     Profile.create({
       firstName: newProfile.firstName,
       lastName: newProfile.lastName,
-      bio: newProfile.bio
+      bio: newProfile.bio,
+      user_id: newProfile.user_id
     })
     .then((data) => {
-      response.send(data);
-    })
-    .then(() => {
-      response.sendStatus(201);
+      response.status(201).send(data);
     })
     .catch((err) => {
         response.sendStatus(500);
