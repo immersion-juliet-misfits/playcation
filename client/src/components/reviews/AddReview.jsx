@@ -20,7 +20,7 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
       .then((data) => {
       })
       .catch((err) => {
-        console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
+        console.error('AddReviews.jsx, something went wrong adding review to database: ', err)
       })
     obj.name = user.username
     add([obj])

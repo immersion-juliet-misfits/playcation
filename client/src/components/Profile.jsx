@@ -14,26 +14,24 @@ const Profile = ({ user }) => {
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [bio, setBio] = useState('');
-  const profileRef = useRef(profile);
-
+  
   // Profile State
   const [profile, setProfile] = useState({
-    firstName: '',
-    lastName: '',
-    bio: '',
+    firstName: fName,
+    lastName: lName,
+    bio: bio,
     user_id: user.id,
   });
+  
+  const profileRef = useRef(profile);
 
   const editState = (name, value) => {
     if (name === 'fName') {
       setFName(value);
-      console.log(value);
     } else if (name === 'lName') {
       setLName(value);
-      console.log(value);
     } else if (name === 'bio') {
       setBio(value);
-      console.log(value);
     }
   };
 
@@ -41,13 +39,16 @@ const Profile = ({ user }) => {
   const getProfile = () => {
     axios
       .get(`/api/profile/${profile.user_id}`)
-      .then((data) => {
+      .then(({data}) => {
+        setFName(data.firstName);
+        setLName(data.lastName);
+        setBio(data.bio);
         setProfile(data);
-        console.log('Profile Retrieved', data);
       })
       .catch((err) => {
         console.error('Could not GET Profile: ', err);
       });
+      
   };
 
   // Create to /api/profile
@@ -70,7 +71,7 @@ const Profile = ({ user }) => {
   // Put request to /api/profile/${profile.id} to edit the profile data
   const editProfile = () => {
     axios
-      .put(`/api/profile/${profile.id}`)
+      .patch(`/api/profile/${profile.id}`, {firstName: fName, lastName:lName, bio})
       .then((data) => {
         setProfile(data);
       })
@@ -82,7 +83,7 @@ const Profile = ({ user }) => {
   // Delete request to /api/profile/${profile.id} to delete profile
   const deleteProfile = () => {
     axios
-      .delete('/api/profile/${profile.id}')
+      .delete(`/api/profile/${profile.id}`)
       .then(() => {})
       .catch((err) => {
         console.error('Could not delete Profile: ', err);
