@@ -18,6 +18,7 @@ import { pData } from '../../../../server/db/plan_fData.js';
 import DisplaySelect from './displaySelect.jsx';
 import ButtonSelect from './buttonSelect.jsx';
 import TableSelect from './tableSelect.jsx';
+import CreatePlanner from './createPlanner.jsx'
 
 const PlannerDisplays = () => {
   // State Group Start *****
@@ -65,17 +66,11 @@ const PlannerDisplays = () => {
   return (
     <Grid className='grid_plans' item xs={6}>
       <Paper style={{ padding: 10, height: '100%' }}>
-        <Box display='flex' justifyContent='space-between' alignItems='center'>
-        <h1 style={{ textAlign: 'center', flex: 1 }}>Playcation Plans</h1>
         {/* Create New Plan Button */}
-          <Button
-            variant='contained'
-            color='primary'
-            style={{ display: 'block', marginLeft: 'auto' }}
-          >
-            Make New Plan
-          </Button>
-        </Box>
+        {/* <Box display='flex' justifyContent='center' alignItems='center'> */}
+          <CreatePlanner />
+        {/* </Box> */}
+        <h1 style={{ textAlign: 'center', flex: 1 }}>Playcation Plans</h1>
 
         {/* Plan Select Dropdown */}
         <DisplaySelect
