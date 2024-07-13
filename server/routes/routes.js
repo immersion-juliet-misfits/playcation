@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('./userController');
 const profileController = require('./profileController');
 const searchController = require('./searchController');
+const plannerController = require('./plannerController');
 
 // User Routers
 router.route('/user').get(userController.getUser);
