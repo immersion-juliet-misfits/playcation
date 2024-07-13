@@ -1,21 +1,15 @@
-// https://expressjs.com/en/4x/api.html#router
-// https://expressjs.com/en/guide/routing.html#express-router
-// const express = require('express');
-// Create new Router instance
-// const Plan = express.Router();
 // import access to the DB
-// const { planner } = require('../../db/index.js');
 const { planner } = require('../db');
 
 module.exports = {
   // GET: Retrieve all planners
   getPlans: (req, res) => {
-    const { id } = req.params; // Integrate this so only the current Users Plans are retrieved
-    const { sortBy = 'createdAt', order = 'DESC' } = req.query; // So the newest plan is shown at the top of the Select bar
+    const { id } = req.params;
+    const { sortBy = 'createdAt', order = 'DESC' } = req.query;
     planner
       .findAll({
-        where: { user_id: id },
-        order: [[ sortBy, order ]]
+        where: { user_id: id }, // To only retrieve current Users plans
+        order: [[sortBy, order]], // So newest plan appears at top of the Select bar
       })
       .then((plans) => {
         res.send(plans);
@@ -30,7 +24,7 @@ module.exports = {
     // destructure data that will be passed into Model.create()
     const { user_id, plan_name, plan_notes } = req.body;
     console.log('POST Body Check: ', req.body);
-// Had to add this here to to enforce plan_name requirement
+    // Required to enforce plan_name requirement
     if (!plan_name) {
       return res.status(400).send('Plan name is required');
     }
@@ -55,22 +49,23 @@ module.exports = {
 
   // DELETE: Remove an existing planner
   delPlan: (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params; // plan id
     planner
       .destroy({
         where: {
           id: id,
         },
       })
-      .then((data) => {
-        if (!data) {
+      .then((destroyed) => {
+        if (!destroyed) {
           console.error('Plan Not Found');
           res.sendStatus(404);
         } else {
-          res.status(201).send(data);
+          res.sendStatus(200);
         }
       })
       .catch((err) => {
+        res.sendStatus(500);
         console.error('Failed to Delete Plan', err);
       });
   },

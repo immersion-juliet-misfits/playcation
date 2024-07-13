@@ -22,7 +22,7 @@ router.route('/search').get(searchController.getSearch);
 router.route('/planner/:id').get(plannerController.getPlans);
 router.route('/planner').post(plannerController.addPlan);
 router.route('/planner').patch(plannerController.addAct);
-router.route('/planner').delete(plannerController.delPlan);
+router.route('/planner/:id').delete(plannerController.delPlan);
 
 
 

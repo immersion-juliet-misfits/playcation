@@ -44,7 +44,6 @@ const PlannerDisplays = () => {
         console.error('Failed To Create New Plan: ', err);
       });
   };
-
   // Retrieve all Plans / GET
   const getPlans = () => {
     axios
@@ -59,6 +58,23 @@ const PlannerDisplays = () => {
   };
   // Add & Remove items to Plan Activities / PATCH
   // Delete Plan / DELETE
+  const delPlan = () => {
+    // Verify a Plan has been selected
+    if (!selectedPlan) {
+      console.error('Must Select A Plan to Delete');
+      return;
+    }
+
+    axios
+      .get(`/api/planner/${selectedPlan.id}`)
+      .then((deleted) => {
+        console.log('Plan Removed', deleted.data);
+        // Refresh list later by invoking getPlans
+      })
+      .catch((err) => {
+        console.error('Failed To Remove Plan From Server: ', err);
+      });
+  };
   // Axios Calls to Express End *****
 
   // Detect User Selection in Select Box
@@ -78,7 +94,7 @@ const PlannerDisplays = () => {
   const handleDelActivityClick = () => {
     setIsDelActivityClicked(true);
     setIsChangePlansClicked(false);
-    // Axios DELETE will be triggered here
+    delPlan() 
   };
 
   // Add All Retrieved Plan Data to State
