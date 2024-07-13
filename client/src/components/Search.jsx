@@ -25,9 +25,9 @@ const Search = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const results = sData.filter((item) =>
-      item.toLowerCase().startsWith(query.toLowerCase())
-    );
+    const results = sData
+      .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
+      .slice(0, 20);
     // .slice(0, 10); // Enable when I only want 10 results displayed
     setSearchResults(results);
     setSearchClicked(true);
@@ -48,8 +48,6 @@ const Search = () => {
         style={{
           padding: 15,
           height: '100%',
-          maxHeight: '820px',
-          overflowY: 'auto',
         }}
       >
         <form onSubmit={handleSearch}>
@@ -87,7 +85,11 @@ const Search = () => {
         >
           Add Activity(s)
         </Button>
-        <Grid item xs={12} style={{ marginTop: 10 }}>
+        <Grid
+          item
+          xs={12}
+          style={{ marginTop: 10, maxHeight: '820px', overflowY: 'auto' }}
+        >
           <TableContainer
             component={Paper}
             sx={{ width: 'auto', display: 'block' }}
