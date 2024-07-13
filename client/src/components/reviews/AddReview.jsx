@@ -16,17 +16,17 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
 
   const addReview = () => {
     let obj = { review: text, rating, user_id: user.id }
-    if (user_id !== null) {
+    if (user.id !== null) {
       axios.post('reviews/post', obj)
         .then((data) => {
         })
         .catch((err) => {
-          console.log('AddReviews.jsx, something went wrong adding review to database: ', err)
+          console.error('AddReviews.jsx, something went wrong adding review to database: ', err)
         })
       obj.name = user.username
       add([obj])
     } else {
-      console.log("AddReview.jsx you are currently not login or the current login User data got deleted/reset to undefined/null")
+      console.error("AddReview.jsx you are currently not login or the current login User data got deleted/reset to undefined/null")
     }
   }
   return (
