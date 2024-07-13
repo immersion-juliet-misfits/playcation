@@ -28,6 +28,23 @@ const PlannerDisplays = () => {
 
   // Axios Calls to Express Start *****
   // Create Plan / POST
+  const addPlan = () => {
+    axios
+      .post('/api/planner', {
+        user_id,
+        plan_name, // Required
+        plan_notes, // Optional
+      })
+      .then((plan) => {
+        // invoke getPlans so that Select box will include new plan
+        // Stretch: make it auto select this plan so it is displayed as soon as the User creates it
+        console.log('New Plan Created', plan);
+      })
+      .catch((err) => {
+        console.error('Failed To Create New Plan: ', err);
+      });
+  };
+
   // Retrieve all Plans / GET
   const getPlans = () => {
     axios
