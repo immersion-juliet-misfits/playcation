@@ -56,7 +56,37 @@ const PlannerDisplays = () => {
         console.error('Failed To Retrieve Plans From Server: ', err);
       });
   };
-  // Add & Remove items to Plan Activities / PATCH
+  // Add items to Plan Activities / PATCH
+  const addAct = (planId, newAct) => {
+    // Need to add a button in Search to connect to this
+    axios
+      .patch(`/api/planner/${planId}/addAct`, {
+        activity: newAct,
+      })
+      .then((added) => {
+        console.log('Activity Added', added.data);
+        // Refresh list by invoking getPlans
+      })
+      .catch((err) => {
+        console.error('Failed To Add Activity to Plan: ', err);
+      });
+  };
+
+  // Remove items from Plan Activities / PATCH
+  const delAct = (planId, oldAct) => {
+    axios
+      .patch(`/api/planner/${planId}/delAct`, {
+        activity: oldAct,
+      })
+      .then((deleted) => {
+        console.log('Activity Removed', deleted.data);
+        // Refresh list by invoking getPlans
+      })
+      .catch((err) => {
+        console.error('Failed To Remove Activity from Plan: ', err);
+      });
+  };
+
   // Delete Plan / DELETE
   const delPlan = () => {
     // Verify a Plan has been selected
@@ -64,12 +94,14 @@ const PlannerDisplays = () => {
       console.error('Must Select A Plan to Delete');
       return;
     }
+    // Need to add something to make User Verify that they want to Delete the selected plan
+    // Another checkbox somewhere off to the side? The current button may be too close to the others
 
     axios
       .get(`/api/planner/${selectedPlan.id}`)
       .then((deleted) => {
         console.log('Plan Removed', deleted.data);
-        // Refresh list later by invoking getPlans
+        // Refresh list by invoking getPlans
       })
       .catch((err) => {
         console.error('Failed To Remove Plan From Server: ', err);
@@ -94,7 +126,7 @@ const PlannerDisplays = () => {
   const handleDelActivityClick = () => {
     setIsDelActivityClicked(true);
     setIsChangePlansClicked(false);
-    delPlan() 
+    delPlan();
   };
 
   // Add All Retrieved Plan Data to State

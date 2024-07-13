@@ -72,11 +72,60 @@ module.exports = {
 
   // PATCH: Add activity
   addAct: (req, res) => {
-    // planner.().then().catch();
+    const { id } = req.params;
+    const { activity } = req.body;
+
+    planner
+      .findByPk(id)
+      .then((plan) => {
+        // Verify there is a plan
+        if (!plan) {
+          return res.sendStatus(404);
+        }
+        // Prevent duplicates
+        if (plan.activities.includes(activity)) {
+          return res.status(400).send('Activity Already Exists');
+        }
+        plan.activities.push(activity);
+        return plan.update({ activities: plan.activities });
+      })
+      .then((updatedPlan) => {
+        res.status(200).send(updatedPlan);
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+        console.error('Failed to Add Activity To Plan', err);
+      });
   },
 
   // PATCH: Remove activity
   delAct: (req, res) => {
-    // planner.().then().catch();
-  },
+    const { id } = req.params;
+    const { activity } = req.body;
+
+    planner
+      .findByPk(id)
+      .then((plan) => {
+        // Verify there is a plan
+        if (!plan) {
+          return res.sendStatus(404);
+        }
+        // Verify activity is in the array
+        if (!plan.activities.includes(activity)) {
+          return res.status(400).send('Activity Not Found');
+        }
+        // retrieve index of activity to be removed
+        const index = plan.activities.indexOf(activity);
+        // Remove activity
+        plan.activities.splice(index, 1);
+        return plan.update({ activities: plan.activities });
+      })
+      .then((updatedPlan) => {
+        res.status(200).send(updatedPlan); // Ensure response is sent after update
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+        console.error('Failed to Remove Activity From Plan', err);
+      });
+  }
 };

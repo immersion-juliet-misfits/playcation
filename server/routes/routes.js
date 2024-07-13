@@ -21,9 +21,8 @@ router.route('/search').get(searchController.getSearch);
 // Planner Routers
 router.route('/planner/:id').get(plannerController.getPlans);
 router.route('/planner').post(plannerController.addPlan);
-router.route('/planner').patch(plannerController.addAct);
+router.route('/planner/:id/addAct').patch(plannerController.addAct);
+router.route('/planner/:id/delAct').patch(plannerController.addAct);
 router.route('/planner/:id').delete(plannerController.delPlan);
-
-
 
 module.exports = router;
