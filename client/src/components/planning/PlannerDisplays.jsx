@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Paper } from '@mui/material';
 // Import fake data to test functionality
-import { pData } from '../../../../server/db/plan_fData.js';
+// import { pData } from '../../../../server/db/plan_fData.js';
 // console.log('Fake Data Verified', fData);
 // Import display components
 import DisplaySelect from './displaySelect.jsx';
@@ -13,10 +13,11 @@ import ButtonSelect from './buttonSelect.jsx';
 import TableSelect from './tableSelect.jsx';
 import CreatePlanner from './createPlanner.jsx';
 
-const PlannerDisplays = () => {
+const PlannerDisplays = ({ profile }) => {
+  console.log('Profile Check: ', profile);
   // State Group Start *****
   // Data retrieved from DB
-  const [data, setData] = useState([]); // Fake Data - Temp
+  // const [data, setData] = useState([]); // Fake Data - Temp
   const [plans, setPlans] = useState([]); // Real Data - Eventual
   // Has user selected a Plan
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -31,7 +32,11 @@ const PlannerDisplays = () => {
   const addPlan = () => {
     axios
       .post('/api/planner', {
-        user_id,
+        // user_id,
+        // plan_name, // Required
+        // plan_notes, // Optional
+        // ^ Works with Test Data
+        user_id: profile.id,
         plan_name, // Required
         plan_notes, // Optional
       })
@@ -44,18 +49,21 @@ const PlannerDisplays = () => {
         console.error('Failed To Create New Plan: ', err);
       });
   };
+
   // Retrieve all Plans / GET
   const getPlans = () => {
     axios
-      .get(`/api/planner/${profile.user_id}`)
+      .get(`/api/planner/${profile.id}`)
       .then((plans) => {
-        setPlans(plans);
+        setPlans(plans.data); // This was working as just plans, but will try it with plans.data for now
         console.log('Plans Retrieved', plans);
+        // console.log('Plans.Data Retrieved', plans.data);
       })
       .catch((err) => {
         console.error('Failed To Retrieve Plans From Server: ', err);
       });
   };
+
   // Add items to Plan Activities / PATCH
   const addAct = (planId, newAct) => {
     // Need to add a button in Search to connect to this
@@ -112,7 +120,8 @@ const PlannerDisplays = () => {
   // Detect User Selection in Select Box
   const handleSelectChange = (event) => {
     const planName = event.target.value;
-    const selectedPlanData = data.find((plan) => plan.plan_name === planName);
+    // const selectedPlanData = data.find((plan) => plan.plan_name === planName); // Worked with Test data, with 1 change I can't recall if I made
+    const selectedPlanData = plans.find((plan) => plan.plan_name === planName);
     setSelectedPlan(selectedPlanData);
     setIsChangePlansClicked(false);
     setIsDelActivityClicked(false);
@@ -131,10 +140,9 @@ const PlannerDisplays = () => {
 
   // Add All Retrieved Plan Data to State
   useEffect(() => {
-    // Simulating an API call with the fake data
-    setData(pData);
-    // Will add
-  }, []);
+    // setData(pData); // Fake data
+    getPlans(); // Real Data
+  }, [profile.id]);
 
   return (
     <Grid className='grid_plans' item xs={6}>
@@ -147,7 +155,7 @@ const PlannerDisplays = () => {
         <DisplaySelect
           selectedPlan={selectedPlan}
           handleSelectChange={handleSelectChange}
-          data={data}
+          data={plans}
         />
         {/* Plan Buttons */}
         <ButtonSelect

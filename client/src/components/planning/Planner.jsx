@@ -3,10 +3,10 @@
 import React from 'react';
 import { Container, Grid } from '@mui/material';
 // import PlannerSearch from './PlannerSearch.jsx';
-import PlannerDisplay from './PlannerDisplays.jsx';
+import PlannerDisplays from './PlannerDisplays.jsx';
 import Search from '../Search.jsx';
 
-const Planner = () => {
+const Planner = ({ user }) => {
   // Render required Planner Components
   // May remove Container during final styling phase
   return (
@@ -31,7 +31,7 @@ const Planner = () => {
         style={{ width: '100%', height: '95%', overflowY: 'hidden'  }}
       >
         <Search />
-        <PlannerDisplay />
+        <PlannerDisplays profile={ user } />
       </Grid>
     </Container>
   );
