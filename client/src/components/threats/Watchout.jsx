@@ -6,9 +6,6 @@
 import WatchInfo from "./WatchInfo.jsx";
 // Import axios
 import axios from 'axios';
-// Import dotenv
-import dotenv from 'dotenv';
-dotenv.config();
 
 // Will need to change the information depending on the city and state
 // Create function to use for axios request handling 
@@ -22,6 +19,7 @@ const WatchOut = () => {
     const [loading, setLoading] = useState(false); // To prevent duplicate requests
     const [weatherData, setWeatherData] = useState(null);
     const apiKey = process.env.WEATHER_API_KEY;
+    console.log('API KEY', apiKey);
     
     const getWeather = () => {}
     
@@ -44,15 +42,14 @@ const WatchOut = () => {
       setLoading(true);
 
       // Use api key
-      console.log(apiKey);
       // Use api url
-      const apiUrl = `http://api.weatherbit.io/v2.0/alerts?&city=${city}&country=${country}&key=${apikey}`
+      const apiUrl = `http://api.weatherbit.io/v2.0/alerts?&city=${city}&country=${country}&key=${apiKey}`
 
       // Use an axios GET request
       axios.get(apiUrl)
       .then((response) => {
         setWeatherData(response.data);
-        setLoading(false);
+         setLoading(false);
       })
       .catch((err) => {
         console.error('Failed to GET data:', err);
@@ -76,7 +73,7 @@ const WatchOut = () => {
             </button>
           </form>
         </div>
-        <WatchInfo weatherData={weatherData}/>
+        {weatherData ? <WatchInfo weatherData={weatherData}/> : 'Please wait'}
       </div>
     </div>
   );
