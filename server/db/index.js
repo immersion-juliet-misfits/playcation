@@ -203,6 +203,7 @@ const planner = db.define('planner', {
     await db.authenticate();
     // Schema sync
     User.sync();
+    Profile.sync();
     communityPost.sync();
     // communityPics.sync();
     hotels.sync();
@@ -219,6 +220,7 @@ const planner = db.define('planner', {
 module.exports = {
   db,
   User,
+  Profile,
   communityPost,
   // communityPics,
   // hotels,
