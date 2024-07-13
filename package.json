@@ -23,6 +23,7 @@
     "@emotion/styled": "^11.11.5",
     "@fontsource/nunito": "^5.0.18",
     "@fontsource/ubuntu": "^5.0.13",
+    "@googlemaps/js-api-loader": "^1.16.6",
     "@mui/icons-material": "^5.16.0",
     "@mui/material": "^5.16.0",
     "axios": "^1.7.2",

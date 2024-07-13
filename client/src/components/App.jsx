@@ -46,7 +46,7 @@ const App = () => {
         <Route path="/community" element={<CommunityPage user={user} />} />
         <Route path="/reviews" element={<Reviews user={user} />} />
         {/* <Route path="/watchout" element={<Watchout />} /> */}
-        <Route path="/profile" element={<Profile/>} />
+        <Route path="/profile" element={<Profile user={user} />} />
         <Route path="/*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </>

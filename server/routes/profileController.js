@@ -1,52 +1,58 @@
-const { Profile } = require('../db');
+const { request, response } = require('express');
+const { Profile, User } = require('../db');
 
 module.exports = {
   // GET /api/profile
-  getProfile: (req, res) => {
-    const { id } = req.params;
+  getProfile: (request, response) => {
+    const { id } = request.params;
     const profileId = id;
+    console.log('GET Body Check: ', request.body);
+    console.log('ProfileId: ', profileId);
     // find user 
     Profile.findByPk(profileId)
       .then((profile) => {
-        res.send(profile);
+        response.status(200).send(profile);
       })
       .catch((err) => {// if no user
-        res.sendStatus(500);
+        response.sendStatus(500);
         console.error('Error: Can not GET /api/:profileId : ', err);
       });
   },
 
   // POST /api/profile
-  addProfile: (req, res) => {
-    const { newProfile } = req.body;
+  addProfile: (request, response) => {
+    const newProfile = request.body;
+    console.log('POST Body Check: ', request.body)
     //find user
-    Profile.findOne()
-    .then(() => {
-      
+    Profile.create({
+      firstName: newProfile.firstName,
+      lastName: newProfile.lastName,
+      bio: newProfile.bio,
+      user_id: newProfile.user_id
     })
-    .then(() => {
-      res.sendStatus(201);
+    .then((data) => {
+      response.status(201).send(data);
     })
     .catch((err) => {
-        res.sendStatus(500);
+        response.sendStatus(500);
         console.error(err);
     })
   },
   // PUT /api/profile
-  updateProfile: (req, res) => {
+  updateProfile: (request, response) => {
     Profile.findByPk()
     .then(() => {})
     .catch(err => {
-      res.sendStatus(500);
+      response.sendStatus(500);
       console.error(err);
     })
   },
   // DELETE /api/profile:profileId
-  deleteProfile: (req, res) => {
+  deleteProfile: (request, response) => {
     Profile.findByPk()
     .then(() => {})
     .catch(err => {
-      res.sendStatus(500);
+      response.sendStatus(500);
       console.error(err);
     })
   }
