@@ -20,6 +20,8 @@ const Search = () => {
   // Request list of 10 options from API to show User
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState('');
+  const [searchClicked, setSearchClicked] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({});
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -27,6 +29,14 @@ const Search = () => {
       .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
       .slice(0, 10);
     setSearchResults(results);
+    setSearchClicked(true);
+    setCheckedItems({});
+  };
+
+  const handleAddActivity = (e) => {
+    e.preventDefault();
+    // Will add selected item to selected Plan
+    console.log('Activity Added!');
   };
 
   // Request to API through the Route
@@ -58,6 +68,17 @@ const Search = () => {
             </Grid>
           </Grid>
         </form>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          fullWidth
+          style={{ marginTop: '10px' }}
+          onClick={handleAddActivity}
+          disabled={!searchClicked}
+        >
+          Add Activity(s)
+        </Button>
         <Grid item xs={12} style={{ marginTop: 10 }}>
           <TableContainer component={Paper}>
             <Table>
@@ -67,7 +88,15 @@ const Search = () => {
                     <TableCell
                       style={{ display: 'flex', alignItems: 'center' }}
                     >
-                      <Checkbox />
+                      <Checkbox
+                        checked={!!checkedItems[index]}
+                        onChange={(e) =>
+                          setCheckedItems({
+                            ...checkedItems,
+                            [index]: e.target.checked,
+                          })
+                        }
+                      />
                       {result}
                     </TableCell>
                   </TableRow>
