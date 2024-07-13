@@ -25,9 +25,10 @@ const Search = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const results = sData
-      .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
-      .slice(0, 10);
+    const results = sData.filter((item) =>
+      item.toLowerCase().startsWith(query.toLowerCase())
+    );
+    // .slice(0, 10); // Enable when I only want 10 results displayed
     setSearchResults(results);
     setSearchClicked(true);
     setCheckedItems({});
@@ -43,7 +44,14 @@ const Search = () => {
 
   return (
     <Grid className='grid_search' item xs={6}>
-      <Paper style={{ padding: 15, height: '100%' }}>
+      <Paper
+        style={{
+          padding: 15,
+          height: '100%',
+          maxHeight: '820px',
+          overflowY: 'auto',
+        }}
+      >
         <form onSubmit={handleSearch}>
           <Grid container spacing={2} alignItems='center'>
             <Grid item xs={8}>
@@ -80,7 +88,10 @@ const Search = () => {
           Add Activity(s)
         </Button>
         <Grid item xs={12} style={{ marginTop: 10 }}>
-          <TableContainer component={Paper}>
+          <TableContainer
+            component={Paper}
+            sx={{ width: 'auto', display: 'block' }}
+          >
             <Table>
               <TableBody>
                 {searchResults.map((result, index) => (
