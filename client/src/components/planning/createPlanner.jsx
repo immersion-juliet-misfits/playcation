@@ -29,8 +29,6 @@ const CreatePlanner = ({ addPlan }) => {
     setPlanNotes('');
     // Close Accordion after submission
     setExpanded(false);
-    // Auto select the new plan
-    // setSelectedPlan(plan.data);
   };
 
   return (

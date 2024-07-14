@@ -14,7 +14,6 @@ module.exports = {
         `https://maps.googleapis.com/maps/api/js?key=${gpmKey}&libraries=places`
       )
       .then((data) => {
-        console.log('Verify Data: ', data);
         res.status(200).send(data);
       })
       .catch((err) => {

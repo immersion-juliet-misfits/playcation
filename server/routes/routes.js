@@ -12,8 +12,8 @@ router.route('/user').post(userController.addUser);
 // Profile Routers
 router.route('/profile/:id').get(profileController.getProfile);
 router.route('/profile').post(profileController.addProfile);
-router.route('/profile').put(profileController.updateProfile);
-router.route('/profile').delete(profileController.deleteProfile);
+router.route('/profile/:id').patch(profileController.updateProfile);
+router.route('/profile/:id').delete(profileController.deleteProfile);
 
 // Search Routers
 router.route('/search').get(searchController.getSearch);
