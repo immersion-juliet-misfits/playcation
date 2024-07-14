@@ -142,22 +142,15 @@ const reviews = db.define('reviews', {
   reviews.belongsTo(User, { foreignKey: 'user_id' });
 
 // Crimes: id, crime_list, location
-const crimes = db.define('crimes', {
+const weather = db.define('weather', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  crime_list: {
-    type: DataTypes.STRING
+  weather_list: {
+    type: DataTypes.JSON
   },
-  trip_location: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: planner,
-      key: 'id'
-    }
-  }
   });
 
 
@@ -207,7 +200,7 @@ const planner = db.define('planner', {
     // communityPics.sync();
     hotels.sync();
     // reviews.sync();
-    // crimes.sync();
+    weather.sync();
     planner.sync();
     // Connection notification
     console.info('Database connection has been established.');
@@ -224,6 +217,6 @@ module.exports = {
   communityPics,
   // hotels,
   reviews,
-  crimes,
+  weather,
   planner,
 };
