@@ -1,13 +1,11 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import { Box, Button, Drawer, Icon, List, ListItem, Topography} from '@mui/material';
+import React from "react";
 import { Link } from "react-router-dom";
+import { Button, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
+import axios from "axios";
 
-const NavDrawer = () => {
-
+const LinkBar = () => {
   const logout = () => {
     axios.post("/auth/logout").catch((err) => {
       console.error("Could not logout: ", err);
@@ -46,4 +44,4 @@ const NavDrawer = () => {
   );
 };
 
-export default NavDrawer;
+export default LinkBar;
