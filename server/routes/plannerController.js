@@ -23,7 +23,6 @@ module.exports = {
   addPlan: (req, res) => {
     // destructure data that will be passed into Model.create()
     const { user_id, plan_name, plan_notes } = req.body;
-    console.log('POST Body Check: ', req.body);
     // Required to enforce plan_name requirement
     if (!plan_name) {
       return res.status(400).send('Plan name is required');

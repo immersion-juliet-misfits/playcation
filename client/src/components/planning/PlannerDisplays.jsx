@@ -4,9 +4,6 @@ This displays everything on the right in Planner.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Paper } from '@mui/material';
-// Import fake data to test functionality
-// import { pData } from '../../../../server/db/plan_fData.js';
-// console.log('Fake Data Verified', fData);
 // Import display components
 import DisplaySelect from './displaySelect.jsx';
 import ButtonSelect from './buttonSelect.jsx';
@@ -14,7 +11,6 @@ import TableSelect from './tableSelect.jsx';
 import CreatePlanner from './createPlanner.jsx';
 
 const PlannerDisplays = ({ profile }) => {
-  console.log('Profile Check: ', profile);
   // State Group Start *****
   // Data retrieved from DB
   // const [data, setData] = useState([]); // Fake Data - Temp
@@ -32,21 +28,14 @@ const PlannerDisplays = ({ profile }) => {
   const addPlan = ({ planName, planNotes }) => {
     axios
       .post('/api/planner', {
-        // user_id,
-        // plan_name, // Required
-        // plan_notes, // Optional
-        // ^ Works with Test Data
         user_id: profile.id,
         plan_name: planName, // Required
         plan_notes: planNotes, // Optional
       })
       .then((plan) => {
-        // Stretch: make it auto select this plan so it is displayed as soon as the User creates it
-        console.log('New Plan Created', plan);
         // invoke getPlans so that Select box will include new plan
         getPlans();
-        // Auto select the new plan
-        // setTimeOut to prevent MUI error
+        // Auto select the new plan - setTimeOut to prevent MUI error
         setTimeout(() => {
           setSelectedPlan(plan.data);
         }, 100);
@@ -62,8 +51,6 @@ const PlannerDisplays = ({ profile }) => {
       .get(`/api/planner/${profile.id}`)
       .then((plans) => {
         setPlans(plans.data); // This was working as just plans, but will try it with plans.data for now
-        console.log('Plans Retrieved', plans);
-        // console.log('Plans.Data Retrieved', plans.data);
       })
       .catch((err) => {
         console.error('Failed To Retrieve Plans From Server: ', err);
@@ -127,7 +114,6 @@ const PlannerDisplays = ({ profile }) => {
   // Detect User Selection in Select Box
   const handleSelectChange = (event) => {
     const planName = event.target.value;
-    // const selectedPlanData = data.find((plan) => plan.plan_name === planName); // Worked with Test data, with 1 change I can't recall if I made
     const selectedPlanData = plans.find((plan) => plan.plan_name === planName);
     setSelectedPlan(selectedPlanData);
     setIsChangePlansClicked(false);
