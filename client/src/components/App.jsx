@@ -34,13 +34,13 @@ const App = () => {
       {/* Replace NavDrawer with empty div on login */}
       {location.pathname === "/" ? <div>Welcome to Playcation</div> :
        (
-        <>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <LinkBar />
           {/* <Button onClick={toggleDrawer}><MenuIcon /></Button >
           <Drawer open={open} onClose={toggleDrawer} >
             <NavDrawer />
           </Drawer > */}
-        </>
+        </div>
         )
       }
       <Routes>

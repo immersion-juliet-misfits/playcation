@@ -37,7 +37,7 @@ const CommunityPage = ({user}) => {
     <h1 style={{ textAlign: "center" }}>Playcay Community</h1>
     <h2 style={{ textAlign: "center" }}>
     {`Venture On, ${user.username}`}
-    {!makeAPost && <div><input type="button" value={"Make a Post"} onClick={() => toggleInput()}></input><br/></div>}
+    {!makeAPost && <div><input style={{ backgroundColor: '#7171D0'}} type="button" value={"Make a Post"} onClick={() => toggleInput()}></input><br/></div>}
     {makeAPost && <div><input type="button" value={"Hide"} onClick={() => toggleInput()}></input><br/></div>}
     </h2>
     {makeAPost && 

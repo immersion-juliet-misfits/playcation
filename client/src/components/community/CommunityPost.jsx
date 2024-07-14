@@ -122,7 +122,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           !makeEdit && <h3>{title}</h3> || makeEdit && 
           <div>
             <label htmlFor="commtitle">Venture Location:</label><br/>
-            <input id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
+            <input style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
           </div>
         }
           subheader={`Posted by ${owner.username} on ${postDate.slice(0, 10)}`}
@@ -140,7 +140,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           {makeEdit && 
           <div>
             <label htmlFor="commbody">Venture Story:</label><br/>
-            <textarea id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
+            <textarea style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
           </div>
           }
 

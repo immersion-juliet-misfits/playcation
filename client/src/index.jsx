@@ -10,9 +10,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <div style={{backgroundColor: "#79F7FF"}}>
-        <App />
-      </div>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );

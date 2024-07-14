@@ -53,10 +53,10 @@ const CommunityInput = ({getPosts, userId}) => {
     <div>
     <h2>Playcay Ventures</h2>
       <label htmlFor="commtitle">Venture Location:</label><br/>
-      <input id="commtitle" type="text" placeholder="Where'd you go?" value={title}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
+      <input style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Where'd you go?" value={title}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
 
       <label htmlFor="commbody">Venture Story:</label><br/>
-      <textarea id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
+      <textarea style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
       
       {!imgUploaded && 
       <div>
