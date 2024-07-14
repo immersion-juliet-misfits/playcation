@@ -153,7 +153,12 @@ const PlannerDisplays = ({ profile }) => {
 
   return (
     <Grid className='grid_plans' item xs={6}>
-      <Paper style={{ padding: 10, height: '100%' }}>
+      <Paper
+        style={{
+          padding: 10,
+          height: '100%',
+        }}
+      >
         {/* Create New Plan Button */}
         <CreatePlanner addPlan={addPlan} />
         <h1 style={{ textAlign: 'center', flex: 1 }}>Playcation Plans</h1>

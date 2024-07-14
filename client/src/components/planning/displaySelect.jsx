@@ -13,14 +13,16 @@ const DisplaySelect = ({ selectedPlan, handleSelectChange, data }) => {
         label='Select Plan'
         onChange={handleSelectChange}
       >
-        <MenuItem value=''>
-          <em>None</em>
-        </MenuItem>
-        {data.map((plan) => (
-          <MenuItem key={plan.id} value={plan.plan_name}>
-            {plan.plan_name}
+        <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+          <MenuItem value=''>
+            <em>None</em>
           </MenuItem>
-        ))}
+          {data.map((plan) => (
+            <MenuItem key={plan.id} value={plan.plan_name}>
+              {plan.plan_name}
+            </MenuItem>
+          ))}
+        </div>
       </Select>
     </FormControl>
   );
