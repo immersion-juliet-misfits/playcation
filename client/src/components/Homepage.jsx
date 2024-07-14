@@ -1,6 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
-import LinkBar from './LinkBar.jsx';
 
 
 function Homepage({ add }) {
@@ -21,7 +20,6 @@ function Homepage({ add }) {
   return (
     <div>
       <h1>Homepage</h1>
-      <LinkBar />
     </div>
   );
 };
