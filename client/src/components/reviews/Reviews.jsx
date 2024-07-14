@@ -19,21 +19,21 @@ const Reviews = ({ user }) => {
       .then(({ data }) => {
         setthumbUp(data)
       }).catch((err) => {
-        console.log('Reviews.jsx, something went wrong requesting emojies: ', err)
+        console.error('Reviews.jsx, something went wrong requesting emojies: ', err)
       })
     //emojis symbols
     axios.get('reviews/getEmoji2')
       .then(({ data }) => {
         setsymbols(data)
       }).catch((err) => {
-        console.log('Reviews.jsx, something went wrong requesting emojies: ', err)
+        console.error('Reviews.jsx, something went wrong requesting emojies: ', err)
       })
     //reviews
     axios.get('reviews/get')
       .then(({ data }) => {
         setreviewList(data)
       }).catch((err) => {
-        console.log('Reviews.jsx, something went wrong requesting reviews: ', err)
+        console.error('Reviews.jsx, something went wrong requesting reviews: ', err)
       })
 
   })
@@ -65,7 +65,7 @@ const Reviews = ({ user }) => {
         setreviewList(arr)
       })
       .catch((err) => {
-        console.log('Reviews.jsx, something went wrong deleting review: ', err)
+        console.error('Reviews.jsx, something went wrong deleting review: ', err)
       })
   }
 

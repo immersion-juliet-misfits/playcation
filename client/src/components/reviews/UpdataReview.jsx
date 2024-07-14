@@ -20,7 +20,7 @@ const UpdateReview = ({ user, currentReview, update, changeShow, currentRow, sym
         changeShow()
       })
       .catch((err) => {
-        console.log('Reviews.jsx, something went wrong updateing reviews: ', err)
+        console.error('Reviews.jsx, something went wrong updateing reviews: ', err)
       })
   }
 
