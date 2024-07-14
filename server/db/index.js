@@ -149,7 +149,7 @@ const planner = db.define('planner', {
     type: DataTypes.STRING
   }, 
   activities: {
-    type: DataTypes.JSONB
+    type: DataTypes.JSON
   }, 
 // Question, how should Activity List be handled (string, array, or other)
   });
@@ -163,13 +163,6 @@ const weather = db.define('weather', {
   },
   weather_list: {
     type: DataTypes.JSON
-  },
-  trip_location: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: planner,
-      key: 'id'
-    }
   }
   });
 
@@ -186,11 +179,9 @@ const weather = db.define('weather', {
 // User.hasMany(reviews, { foreignKey: 'user_id' });
 // reviews.belongsTo(User, { foreignKey: 'user_id' });
 
-User.hasMany(planner, { foreignKey: 'user_id' })
-planner.belongsTo(User, { foreignKey: 'user_id'})
+User.hasMany(planner, { foreignKey: 'user_id' });
+planner.belongsTo(User, { foreignKey: 'user_id'});
 
-planner.hasMany(weather, { foreignKey: 'trip_location' }); // Assuming trip_location is the foreign key
-weather.belongsTo(planner, { foreignKey: 'trip_location' });
 /***REFERENCES SECTION*/
 
 (async () => {
