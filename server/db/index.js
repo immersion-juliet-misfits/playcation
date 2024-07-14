@@ -181,7 +181,7 @@ const reviews = db.define('reviews', {
     communityPost.sync();
     // communityPics.sync();
     // hotels.sync();
-    // reviews.sync();
+    reviews.sync();
     // crimes.sync();
     // planner.sync();
     // Connection notification

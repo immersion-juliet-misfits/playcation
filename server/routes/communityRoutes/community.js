@@ -61,4 +61,18 @@ Community.patch('/post/:id', (req, res) => {
 })
 
 
+Community.get('/owner/:id', (req, res) => {
+  const { id } = req.params;
+  communityPost.findByPk(id)
+    .then((post) => {
+      User.findByPk(post.user_id)
+        .then((ownerData) => {
+          res.send(ownerData)
+        })
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+})
+
 module.exports = Community;

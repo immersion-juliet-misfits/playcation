@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -19,6 +19,24 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
   const [makeEdit, setMakeEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title)
   const [editBody, setEditBody] = useState(body);
+  const [owner, setOwner] = useState({username: '', initial: ''})
+
+  useEffect(() => {
+    getOwners()
+  }, [])
+
+  const getOwners = () => {
+    axios.get(`/community/owner/${id}`)
+      .then(({data}) => {
+        const { username } = data;
+        // setPosts(data)
+        setOwner({username, initial: data.username[0]})
+      })
+      .catch((err) => {
+        console.error('NOT Invoked from client', err)
+      })
+  }
+
   const handleDelete = () => {
     if (user.id !== postOwner) {
       throw 'Cannot delete other user\'s post!'
@@ -68,7 +86,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     <div>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
-          avatar={<Avatar>{user.username[0]}</Avatar>}
+          avatar={<Avatar>{owner.username[0]}</Avatar>}
           action={user.id === postOwner &&
             <div>
             {makeEdit && <IconButton onClick={() => handleEdit()} >
@@ -91,7 +109,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
             <input id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
           </div>
         }
-          subheader={`Posted by ${user.username} on ${postDate.slice(0, 10)}`}
+          subheader={`Posted by ${owner.username} on ${postDate.slice(0, 10)}`}
         />
         <CardMedia
           component="img"
@@ -125,12 +143,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     </div>
   );
 
-  //   (
-  //     <div>
-  //     <h3>{title}</h3>
-  //     <p>{body}</p>
-  //     </div>
-  //   )
 };
 
 export default CommunityPost;
