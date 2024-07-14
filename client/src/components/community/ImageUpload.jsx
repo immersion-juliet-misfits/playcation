@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const ImageUpload = ({ cloudName, uploadPreset, handleUpload }) => {
+const ImageUpload = ({ cloudName, uploadPreset, handleUpload, successUpload }) => {
   useEffect(() => {
       cloudinary.openUploadWidget(
         {
@@ -41,6 +41,7 @@ const ImageUpload = ({ cloudName, uploadPreset, handleUpload }) => {
           console.error('Upload Widget error - ', err);
         } else if (!err && info.event === 'success') {
             handleUpload(info.info.secure_url);
+            successUpload()
           }
         }
       );

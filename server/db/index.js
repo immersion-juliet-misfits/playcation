@@ -65,7 +65,7 @@ const communityPost = db.define('communityPost', {
     type: DataTypes.STRING,
   },
   body: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
   },
   url: {
     type: DataTypes.STRING,
@@ -207,7 +207,7 @@ const planner = db.define('planner', {
     communityPost.sync();
     // communityPics.sync();
     hotels.sync();
-    // reviews.sync();
+    reviews.sync();
     // crimes.sync();
     planner.sync();
     // Connection notification
@@ -223,7 +223,7 @@ module.exports = {
   Profile,
   communityPost,
   // communityPics,
-  // hotels,
+  hotels,
   reviews,
   // crimes, 
   // planner
