@@ -8,11 +8,10 @@ import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import GradingIcon from '@mui/icons-material/Grading';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
 const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
@@ -21,6 +20,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
   const [editBody, setEditBody] = useState(body);
   const [owner, setOwner] = useState({username: '', initial: ''})
   const [showYelp, setShowYelp] = useState(false);
+  const [yelpData, setyelpData] = useState({});
 
   useEffect(() => {
     getOwners()
@@ -40,8 +40,9 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
 
   const getYelp = () => {
     axios.get(`/yelp/search?location=${title}`)
-    .then((data) => {
+    .then(({data}) => {
       console.log(data)
+      setyelpData(data.businesses[0])
     })
     .catch(() => {
       console.error('No results found for search')
@@ -142,15 +143,23 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
             <textarea id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
           </div>
           }
-          
-          {!showYelp && <div>TEsting</div>}
+
+          {showYelp && 
+          <div>
+            <Typography variant="subtitle1">Popular In the Area:</Typography>
+              <Typography color="text.secondary" variant="h6">{yelpData.name}</Typography>
+              <Typography component="h4">Phone Number:</Typography>
+              <Typography variant="subtitle2">{yelpData.display_phone}</Typography>
+              <Typography component="h4">Price Range:</Typography>
+              <Typography variant="subtitle2">{yelpData.price}</Typography>
+              <Typography component="h4">Rating:</Typography>
+              <Typography variant="subtitle2">{yelpData.rating}</Typography>
+          </div>
+          }
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton>
-            <FavoriteIcon />
-          </IconButton>
           <IconButton  onClick={() => toggleYelp()}>
-            <ShareIcon />
+            <MoreVertIcon />
           </IconButton>
         </CardActions>
       </Card>

@@ -3,7 +3,6 @@ const axios = require('axios');
 const Yelp = express.Router()
 
 Yelp.get('/search', (req, res) => {
-    //   const { location } = req.params
     const { location } = req.query
     console.log(location, process.env.YELP_KEY)
     axios.get(`https://api.yelp.com/v3/businesses/search`, {
