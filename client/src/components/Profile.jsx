@@ -8,6 +8,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import LinkBar from './LinkBar.jsx';
 
 const Profile = ({ user }) => {
   // States for input
@@ -20,7 +21,7 @@ const Profile = ({ user }) => {
     firstName: fName,
     lastName: lName,
     bio: bio,
-    user_id: user.id,
+    user_id: user.id || 1,
   });
   
   const profileRef = useRef(profile);
@@ -53,14 +54,15 @@ const Profile = ({ user }) => {
 
   // Create to /api/profile
   const createProfile = () => {
+    
     axios
       .post('/api/profile', {
         firstName: fName,
         lastName: lName,
         bio: bio,
-        user_id: 1,
+        user_id: user.id,
       })
-      .then((data) => {
+      .then(({data}) => {
         setProfile(data);
       })
       .catch((err) => {
@@ -72,7 +74,7 @@ const Profile = ({ user }) => {
   const editProfile = () => {
     axios
       .patch(`/api/profile/${profile.id}`, {firstName: fName, lastName:lName, bio})
-      .then((data) => {
+      .then(({data}) => {
         setProfile(data);
       })
       .catch((err) => {
@@ -84,7 +86,9 @@ const Profile = ({ user }) => {
   const deleteProfile = () => {
     axios
       .delete(`/api/profile/${profile.id}`)
-      .then(() => {})
+      .then(({data}) => {
+        setProfile(data);
+      })
       .catch((err) => {
         console.error('Could not delete Profile: ', err);
       });
@@ -92,10 +96,11 @@ const Profile = ({ user }) => {
 
   useEffect(() => {
     getProfile();
-  }, [profileRef]);
+  }, [user.id]);
 
   return (
     <>
+      <LinkBar />
       <h1>Profile</h1>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <TextField
@@ -116,7 +121,7 @@ const Profile = ({ user }) => {
           }}
         />
         <TextField
-          id='input-with-icon-textfield'
+          id='input-with-icon-textfield2'
           label='Last Name'
           InputProps={{
             startAdornment: (

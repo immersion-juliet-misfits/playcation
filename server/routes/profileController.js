@@ -2,7 +2,7 @@ const { request, response } = require("express");
 const { Profile, User } = require("../db");
 
 module.exports = {
-  // GET /api/profile
+  // GET /api/profile/:id
   getProfile: (request, response) => {
     const { id } = request.params;
     const profileId = id;
@@ -10,6 +10,7 @@ module.exports = {
     // find user
     Profile.findOne({ where: { user_id: id } })
       .then((profile) => {
+        console.log('p.dv', profile.dataValues)
         response.status(200).send(profile.dataValues);
       })
       .catch((err) => {
@@ -38,7 +39,7 @@ module.exports = {
         console.error("Can not create profile: ", err);
       });
   },
-  // PUT /api/profile
+  // PUT /api/profile/:id
   updateProfile: (request, response) => {
     const { id } = request.params;
     const { firstName, lastName, bio } = request.body;
