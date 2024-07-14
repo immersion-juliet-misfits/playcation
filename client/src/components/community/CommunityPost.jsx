@@ -20,9 +20,11 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
   const [editTitle, setEditTitle] = useState(title)
   const [editBody, setEditBody] = useState(body);
   const [owner, setOwner] = useState({username: '', initial: ''})
+  const [showYelp, setShowYelp] = useState(false);
 
   useEffect(() => {
     getOwners()
+    getYelp()
   }, [])
 
   const getOwners = () => {
@@ -34,6 +36,16 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
       .catch((err) => {
         console.error('NOT Invoked from client', err)
       })
+  }
+
+  const getYelp = () => {
+    axios.get(`/yelp/search?location=${title}`)
+    .then((data) => {
+      console.log(data)
+    })
+    .catch(() => {
+      console.error('No results found for search')
+    })
   }
 
   const handleDelete = () => {
@@ -50,11 +62,15 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
       .catch((err) => {
         console.error(err);
       })
-  }
-
-  const toggleEdit = () => {
-    setMakeEdit((makeEdit) => !makeEdit)
-  }
+    }
+    
+    const toggleEdit = () => {
+      setMakeEdit((makeEdit) => !makeEdit)
+    }
+    
+    const toggleYelp = () => {
+      setShowYelp((showYelp) => !showYelp)
+    }
 
   const handleEdit = () => {
     if (user.id !== postOwner) {
@@ -125,14 +141,15 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
             <label htmlFor="commbody">Venture Story:</label><br/>
             <textarea id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
           </div>
-
           }
+          
+          {!showYelp && <div>TEsting</div>}
         </CardContent>
         <CardActions disableSpacing>
           <IconButton>
             <FavoriteIcon />
           </IconButton>
-          <IconButton>
+          <IconButton  onClick={() => toggleYelp()}>
             <ShareIcon />
           </IconButton>
         </CardActions>
