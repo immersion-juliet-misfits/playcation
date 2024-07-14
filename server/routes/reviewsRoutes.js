@@ -20,7 +20,7 @@ reviewsRoute.get('/get', async (req, res)=>{
     res.send(data).status(200)
   })
   .catch((err) => {
-    console.log('reviewsRouter.js, ERROR can\'t get reviews: ', err)
+    console.error('reviewsRouter.js, ERROR can\'t get reviews: ', err)
     res.sendStatus(500)
   })
 })
@@ -46,7 +46,7 @@ reviewsRoute.get('/getEmoji', (req, res)=>{
     }
   })
   .catch((err) => {
-    console.log('reviewsRouter.js, emoji error: ', err)
+    console.error('reviewsRouter.js, emoji error: ', err)
     res.sendStatus(500)
   })
 })
@@ -76,7 +76,7 @@ axios.get('https://emojihub.yurace.pro/api/all/category/symbols')
   res.send(obj).status(200)
 })
 .catch((err) => {
-  console.log('reviewsRouter.js, emoji error: ', err)
+  console.error('reviewsRouter.js, emoji error: ', err)
   res.sendStatus(500)
 })
 })
@@ -90,7 +90,7 @@ reviewsRoute.post('/post', (req, res)=>{
     res.send(data).status(201)
   })
   .catch((err) => {
-    console.log('reviewsRouter.js, ERROR can\'t post reviews: ', err)
+    console.error('reviewsRouter.js, ERROR can\'t post reviews: ', err)
     res.sendStatus(500)
   })
 })
@@ -105,7 +105,7 @@ reviewsRoute.patch('/patch', (req, res)=>{
     res.send(data).status(200)
   })
   .catch((err) => {
-    console.log('reviewsRouter.js, ERROR can\'t post reviews: ', err)
+    console.error('reviewsRouter.js, ERROR can\'t post reviews: ', err)
     res.sendStatus(500)
   })
 })
@@ -120,7 +120,7 @@ reviewsRoute.delete('/delete/:id', (req, res)=>{
     res.sendStatus(200)
   })
   .catch((err) => {
-    console.log('reviewsRouter.js, ERROR can\'t post reviews: ', err)
+    console.error('reviewsRouter.js, ERROR can\'t post reviews: ', err)
     res.sendStatus(500)
   })
 })
