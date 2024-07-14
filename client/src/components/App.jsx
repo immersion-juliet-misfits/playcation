@@ -6,7 +6,7 @@ import Login from "./Login.jsx";
 import NavDrawer from "./NavDrawer.jsx";
 import CommunityPage from "./community/CommunityPage.jsx";
 import Reviews from "./reviews/Reviews.jsx"
-// import Watchout from "./threats/Watchout.jsx"
+import Watchout from "./threats/Watchout.jsx"
 import Profile from "./Profile.jsx";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Drawer, Button } from "@mui/icons-material";
@@ -49,7 +49,7 @@ const App = () => {
         <Route path="/planner" element={<Planner />} />
         <Route path="/community" element={<CommunityPage user={user} />} />
         <Route path="/reviews" element={<Reviews user={user} />} />
-        {/* <Route path="/watchout" element={<Watchout />} /> */}
+        <Route path="/watchout" element={<Watchout />} />
         <Route path="/profile" element={<Profile user={user} />} />
         <Route path="/*" element={<h1>Page Not Found</h1>} />
       </Routes>

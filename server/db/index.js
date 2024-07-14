@@ -1,7 +1,8 @@
 /* 
 For building the database
 */
-const { Sequelize, DataTypes } = require('sequelize');
+ const { Sequelize, DataTypes } = require('sequelize');
+//const { DataTypes } = require('sequelize');
 
 // Database connections
 const db = new Sequelize('Playcation', 'root', '', {
@@ -73,8 +74,8 @@ const communityPost = db.define('communityPost', {
   user_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: User,
-      key: 'id',
+      model: User, 
+      key: 'id'
     },
     allowNull: false,
   },
@@ -87,17 +88,15 @@ communityPost.belongsTo(User, { foreignKey: 'user_id' });
 
 // Community Pics: id, url
 // const communityPics = db.define('communityPics', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   },
-//   url: {
-//     type: DataTypes.STRING,
-//   },
+// id: {
+//   type: DataTypes.INTEGER,
+//   autoIncrement: true,
+//   primaryKey: true,
+// },
+// url: {
+//   type: DataTypes.STRING,
+// }
 // });
-// communityPics.hasOne(communityPost, { foreignKey: 'image_id' });
-// communityPost.belongsTo(communityPics, { foreignKey: 'image_id' });
 
 // Hotels:
 const hotels = db.define('hotels', {
@@ -144,23 +143,17 @@ const reviews = db.define('reviews', {
   reviews.belongsTo(User, { foreignKey: 'user_id' });
 
 // Crimes: id, crime_list, location
-// const crimes = db.define('crimes', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   },
-//   crime_list: {
-//     type: DataTypes.ARRAY,
-//   },
-//   location: {
-//     type: DataTypes.STRING,
-//     references: {
-//       model: planner,
-//       key: 'trip_location',
-//     },
-//   },
-// });
+const weather = db.define('weather', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  weather_list: {
+    type: DataTypes.JSON
+  },
+  });
+
 
 // Planner: id, user_id, hotel_id, plan_name, trip_location, plan_notes, activities
 const planner = db.define('planner', {
@@ -208,7 +201,7 @@ const planner = db.define('planner', {
     // communityPics.sync();
     hotels.sync();
     // reviews.sync();
-    // crimes.sync();
+    weather.sync();
     planner.sync();
     // Connection notification
     console.info('Database connection has been established.');
@@ -222,10 +215,9 @@ module.exports = {
   User,
   Profile,
   communityPost,
-  // communityPics,
+  //communityPics,
   // hotels,
   reviews,
-  // crimes, 
-  // planner
-}
-
+  weather,
+  planner,
+};

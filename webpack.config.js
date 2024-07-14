@@ -10,7 +10,12 @@ module.exports = {
     filename: 'main.js',
   },
   // devTool: 'eval',
-
+  resolve: {
+    fallback: {
+      os: require.resolve('os-browserify/browser'),
+      crypto: require.resolve('crypto-browserify'),
+    },
+  },
   module: {
     rules: [
       {
