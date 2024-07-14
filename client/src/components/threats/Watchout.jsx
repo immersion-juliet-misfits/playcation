@@ -7,22 +7,35 @@ import WatchInfo from "./WatchInfo.jsx";
 // Import axios
 import axios from 'axios';
 
-// Will need to change the information depending on the city and state
-// Create function to use for axios request handling 
-// When user picks a location, the weather report should get information for what's going on in the area
-// When enter key is pressed, and input is submitted, the 
 const WatchOut = () => {
-    const [report, setReport] = useState(null);
-    const [lock, setLock] = useState(null);
+ 
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [loading, setLoading] = useState(false); // To prevent duplicate requests
     const [weatherData, setWeatherData] = useState(null);
     const apiKey = process.env.WEATHER_API_KEY;
-    console.log('API KEY', apiKey);
-    
-    const getWeather = () => {}
-    
+
+  useEffect(() => {
+    const fetchData = () => {
+      if (city && country) {
+        setLoading(true);
+        const apiUrl = `http://api.weatherbit.io/v2.0/alerts?&city=${city}&country=${country}&key=${apiKey}`;
+        axios.get(apiUrl)
+          .then((response) => {
+            console.log('RESPONSE', response)
+            setWeatherData(response.data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error('Failed to fetch data:', error);
+            setLoading(false);
+          });
+      }
+    };
+
+    fetchData();
+  }, [city, country, apiKey]);
+
     const searchSubmit = (event) => {
       event.preventDefault();
 
@@ -33,28 +46,22 @@ const WatchOut = () => {
         alert('Please enter both city and country');
         return;
       }
-       
-      // If loading is truthy
-      if (loading) {
-        // Hard return
-        return;
+    };
+   
+    const saveWeatherData = () => {
+      console.log('TESTING', weatherData)
+       if (weatherData) {
+        axios.post(`/watchout/api/saveWeatherData`, {weatherData: weatherData})
+          .then(response => {
+            console.log('Weather data saved:', response.data);
+           })
+          .catch(error => {
+            console.error('Failed to save weather data:', error);
+            alert('A storm of issues are happening');
+           });
+      } else {
+        console.warn('No weather data to save.');
       }
-      setLoading(true);
-
-      // Use api key
-      // Use api url
-      const apiUrl = `http://api.weatherbit.io/v2.0/alerts?&city=${city}&country=${country}&key=${apiKey}`
-
-      // Use an axios GET request
-      axios.get(apiUrl)
-      .then((response) => {
-        setWeatherData(response.data);
-         setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to GET data:', err);
-        setLoading(false);
-      });
     };
 
   return (
@@ -62,7 +69,6 @@ const WatchOut = () => {
       <div className="weather-information">
         <div className="weather-headers">
           <h1>Weather Report</h1>
-          {/* <button onClick={searchSubmit}>Search Locations</button> */}
           <form onSubmit={searchSubmit}>
             <label htmlFor="cityInput">City: </label>
             <input type="text" id="cityInput" placeholder="Search for city" value={city} onChange={(e) => setCity(e.target.value)}/>
@@ -72,8 +78,12 @@ const WatchOut = () => {
               {loading ? 'loading...' : 'Submit'}
             </button>
           </form>
+          <button onClick={saveWeatherData} disabled={!weatherData}>
+            Save Weather Report
+          </button>
         </div>
-        {weatherData ? <WatchInfo weatherData={weatherData}/> : 'Please wait'}
+         {console.log(weatherData)}
+        <br></br>{weatherData ? <WatchInfo weatherData={weatherData}/> : 'Please wait...'}
       </div>
     </div>
   );
