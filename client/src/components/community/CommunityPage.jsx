@@ -37,9 +37,11 @@ const CommunityPage = ({user}) => {
     <h1>Playcay Community</h1>
     <h2>
     {`Venture On, ${user.username}`}
+    {!makeAPost && <div><input type="button" value={"Make a Post"} onClick={() => toggleInput()}></input><br/></div>}
+    {makeAPost && <div><input type="button" value={"Hide"} onClick={() => toggleInput()}></input><br/></div>}
     </h2>
     {makeAPost && <CommunityInput getPosts={() => getPosts()} userId={user.id} /> }
-    <CommunityFeed posts={posts} toggleInput={() => toggleInput()} getPosts={() => getPosts()} user={user} />
+    <CommunityFeed posts={posts} getPosts={() => getPosts()} user={user} />
     </div>
   )
 }

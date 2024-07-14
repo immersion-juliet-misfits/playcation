@@ -29,7 +29,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     axios.get(`/community/owner/${id}`)
       .then(({data}) => {
         const { username } = data;
-        // setPosts(data)
         setOwner({username, initial: data.username[0]})
       })
       .catch((err) => {

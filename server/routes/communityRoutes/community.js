@@ -6,7 +6,9 @@ Community.use(express.json());
 
 // express handles request; db models + sequelize handle querying
 Community.get('/post', (req, res) => {
-  communityPost.findAll()
+  communityPost.findAll({
+    order: [['updatedAt', 'DESC']]
+  })
     .then((data) => {
       res.send(data);
     })
