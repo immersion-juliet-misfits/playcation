@@ -39,7 +39,7 @@ const communityPost = db.define('communityPost', {
     type: DataTypes.STRING,
   },
   body: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
   },
   url: {
     type: DataTypes.STRING,

@@ -34,13 +34,17 @@ const CommunityPage = ({user}) => {
 
   return (
     <div>
-    <h1>Playcay Community</h1>
-    <h2>
+    <h1 style={{ textAlign: "center" }}>Playcay Community</h1>
+    <h2 style={{ textAlign: "center" }}>
     {`Venture On, ${user.username}`}
     {!makeAPost && <div><input type="button" value={"Make a Post"} onClick={() => toggleInput()}></input><br/></div>}
     {makeAPost && <div><input type="button" value={"Hide"} onClick={() => toggleInput()}></input><br/></div>}
     </h2>
-    {makeAPost && <CommunityInput getPosts={() => getPosts()} userId={user.id} /> }
+    {makeAPost && 
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <CommunityInput style={{ textAlign: "center" }} getPosts={() => getPosts()} userId={user.id} /> 
+    </div>
+    }
     <CommunityFeed posts={posts} getPosts={() => getPosts()} user={user} />
     </div>
   )

@@ -24,7 +24,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
 
   useEffect(() => {
     getOwners()
-    getYelp()
+    // getYelp() // uncomment when ready to test
   }, [])
 
   const getOwners = () => {
@@ -100,7 +100,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: '100%', width: '80%', margin: '20px auto' }} style={{backgroundColor: "#CCE8FF"}}>
         <CardHeader
           avatar={<Avatar>{owner.username[0]}</Avatar>}
           action={user.id === postOwner &&
