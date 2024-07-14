@@ -8,32 +8,31 @@ import {
   InputAdornment,
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import LinkBar from './LinkBar.jsx';
 
 const Profile = ({ user }) => {
   // States for input
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [bio, setBio] = useState('');
-  const profileRef = useRef(profile);
-
+  
   // Profile State
   const [profile, setProfile] = useState({
-    firstName: '',
-    lastName: '',
-    bio: '',
-    user_id: user.id,
+    firstName: fName,
+    lastName: lName,
+    bio: bio,
+    user_id: user.id || 1,
   });
+  
+  const profileRef = useRef(profile);
 
   const editState = (name, value) => {
     if (name === 'fName') {
       setFName(value);
-      console.log(value);
     } else if (name === 'lName') {
       setLName(value);
-      console.log(value);
     } else if (name === 'bio') {
       setBio(value);
-      console.log(value);
     }
   };
 
@@ -41,25 +40,29 @@ const Profile = ({ user }) => {
   const getProfile = () => {
     axios
       .get(`/api/profile/${profile.user_id}`)
-      .then((data) => {
+      .then(({data}) => {
+        setFName(data.firstName);
+        setLName(data.lastName);
+        setBio(data.bio);
         setProfile(data);
-        console.log('Profile Retrieved', data);
       })
       .catch((err) => {
         console.error('Could not GET Profile: ', err);
       });
+      
   };
 
   // Create to /api/profile
   const createProfile = () => {
+    
     axios
       .post('/api/profile', {
         firstName: fName,
         lastName: lName,
         bio: bio,
-        user_id: 1,
+        user_id: user.id,
       })
-      .then((data) => {
+      .then(({data}) => {
         setProfile(data);
       })
       .catch((err) => {
@@ -70,8 +73,8 @@ const Profile = ({ user }) => {
   // Put request to /api/profile/${profile.id} to edit the profile data
   const editProfile = () => {
     axios
-      .put(`/api/profile/${profile.id}`)
-      .then((data) => {
+      .patch(`/api/profile/${profile.id}`, {firstName: fName, lastName:lName, bio})
+      .then(({data}) => {
         setProfile(data);
       })
       .catch((err) => {
@@ -82,8 +85,10 @@ const Profile = ({ user }) => {
   // Delete request to /api/profile/${profile.id} to delete profile
   const deleteProfile = () => {
     axios
-      .delete('/api/profile/${profile.id}')
-      .then(() => {})
+      .delete(`/api/profile/${profile.id}`)
+      .then(({data}) => {
+        setProfile(data);
+      })
       .catch((err) => {
         console.error('Could not delete Profile: ', err);
       });
@@ -91,10 +96,11 @@ const Profile = ({ user }) => {
 
   useEffect(() => {
     getProfile();
-  }, [profileRef]);
+  }, [user.id]);
 
   return (
     <>
+      <LinkBar />
       <h1>Profile</h1>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <TextField
@@ -115,7 +121,7 @@ const Profile = ({ user }) => {
           }}
         />
         <TextField
-          id='input-with-icon-textfield'
+          id='input-with-icon-textfield2'
           label='Last Name'
           InputProps={{
             startAdornment: (

@@ -39,7 +39,6 @@ const userAuth = (req, accessToken, refreshToken, profile, done) => {
         username: profile.given_name,
       })
         .then((newUser) => done(null, newUser))
-        .then((newUser) => console.log(newUser));
       // log in user
     }
   });

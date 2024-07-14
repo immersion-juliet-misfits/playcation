@@ -16,6 +16,16 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
 
   const addReview = () => {
     let obj = { review: text, rating, user_id: user.id }
+
+    axios.post('reviews/post', obj)
+      .then((data) => {
+      })
+      .catch((err) => {
+        console.error('AddReviews.jsx, something went wrong adding review to database: ', err)
+      })
+    obj.name = user.username
+    add([obj])
+
     if (user.id !== null) {
       axios.post('reviews/post', obj)
         .then((data) => {

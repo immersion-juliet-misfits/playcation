@@ -13,7 +13,6 @@ import axios from 'axios';
 import { Box, Button, Grid, Paper } from '@mui/material';
 // Import fake data to test functionality
 import { pData } from '../../../../server/db/plan_fData.js';
-// console.log('Fake Data Verified', fData);
 // Import display components
 import DisplaySelect from './displaySelect.jsx';
 import ButtonSelect from './buttonSelect.jsx';
