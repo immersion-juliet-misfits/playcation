@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+//const routes = require('./routes/testRoutes.js')
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
@@ -8,7 +9,9 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
-const WeatherRoutes = require('./routes/watchRoutes/watch.js');
+const WeatherRoutes = require('./routes/watchRoutes/watch.js')
+// import { Loader } from "@googlemaps/js-api-loader"
+const reviews = require('./routes/reviewsRoutes.js')
 
 require('dotenv').config();
 
@@ -18,6 +21,7 @@ const PORT = 8000;
 // GOOGLE CLIENT keys from .env
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+// const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 // authorize user
 const userAuth = (req, accessToken, refreshToken, profile, done) => {
@@ -36,7 +40,6 @@ const userAuth = (req, accessToken, refreshToken, profile, done) => {
         username: profile.given_name,
       })
         .then((newUser) => done(null, newUser))
-        .then((newUser) => console.log(newUser));
       // log in user
     }
   });
@@ -78,6 +81,8 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+//app.use(routes);
+app.use(express.json());
 // Serves to the dist folder
 app.use(express.static(path.join(__dirname, '../client/dist')));
 // Parse incoming request bodies in a middleware before your handlers
@@ -86,8 +91,7 @@ app.use(bodyParser.json());
 // routers
 app.use('/api', routes);
 app.use('/community', CommunityRoutes);
-
-//app.use('/api/watchout', WeatherRoutes);
+app.use('/reviews', reviews)
 app.use('/watchout', WeatherRoutes);
 
 // login with goggle
@@ -123,3 +127,20 @@ app.get('*', isAuthenticated, (req, res) => {
 app.listen(PORT, () => {
   console.info(`Server listening on http://localhost:${PORT}`);
 });
+
+
+
+// const loader = new Loader({
+//   apiKey: GOOGLE_MAPS_API_KEY,
+//   version: "weekly",
+//   ...additionalOptions,
+// });
+
+// loader.load().then(async () => {
+//   const { Map } = await google.maps.importLibrary("maps");
+
+//   map = new Map(document.getElementById("map"), {
+//     center: { lat: -34.397, lng: 150.644 },
+//     zoom: 8,
+//   });
+// });
