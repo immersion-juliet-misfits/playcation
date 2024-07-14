@@ -6,6 +6,7 @@ const ButtonSelect = ({
   isChangePlansClicked,
   handleChangePlansClick,
   handleDelActivityClick,
+  delPlan,
 }) => {
   return (
     <Box display='flex' justifyContent='center' mt={2}>
@@ -35,6 +36,7 @@ const ButtonSelect = ({
           variant='contained'
           disabled={!selectedPlan || isChangePlansClicked}
           style={{ marginLeft: 50 }}
+          onClick={delPlan}
         >
           Delete Plan
         </Button>

@@ -104,6 +104,8 @@ const PlannerDisplays = ({ profile }) => {
         console.log('Plan Removed', deleted.data);
         // Refresh list by invoking getPlans
         getPlans();
+        // Deselect/Reset after deletion
+        setSelectedPlan(null);
       })
       .catch((err) => {
         console.error('Failed To Remove Plan From Server: ', err);
@@ -161,6 +163,7 @@ const PlannerDisplays = ({ profile }) => {
           isChangePlansClicked={isChangePlansClicked}
           handleChangePlansClick={handleChangePlansClick}
           handleDelActivityClick={handleDelActivityClick}
+          delPlan={delPlan}
         />
         {/* Plan Rendering */}
         {selectedPlan && (
