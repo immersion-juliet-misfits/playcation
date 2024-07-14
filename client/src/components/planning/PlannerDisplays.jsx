@@ -29,7 +29,7 @@ const PlannerDisplays = ({ profile }) => {
 
   // Axios Calls to Express Start *****
   // Create Plan / POST
-  const addPlan = () => {
+  const addPlan = ({ planName, planNotes }) => {
     axios
       .post('/api/planner', {
         // user_id,
@@ -37,13 +37,19 @@ const PlannerDisplays = ({ profile }) => {
         // plan_notes, // Optional
         // ^ Works with Test Data
         user_id: profile.id,
-        plan_name, // Required
-        plan_notes, // Optional
+        plan_name: planName, // Required
+        plan_notes: planNotes, // Optional
       })
       .then((plan) => {
-        // invoke getPlans so that Select box will include new plan
         // Stretch: make it auto select this plan so it is displayed as soon as the User creates it
         console.log('New Plan Created', plan);
+        // invoke getPlans so that Select box will include new plan
+        getPlans();
+        // Auto select the new plan
+        // setTimeOut to prevent MUI error
+        setTimeout(() => {
+          setSelectedPlan(plan.data);
+        }, 100);
       })
       .catch((err) => {
         console.error('Failed To Create New Plan: ', err);
@@ -106,10 +112,11 @@ const PlannerDisplays = ({ profile }) => {
     // Another checkbox somewhere off to the side? The current button may be too close to the others
 
     axios
-      .get(`/api/planner/${selectedPlan.id}`)
+      .delete(`/api/planner/${selectedPlan.id}`)
       .then((deleted) => {
         console.log('Plan Removed', deleted.data);
         // Refresh list by invoking getPlans
+        getPlans();
       })
       .catch((err) => {
         console.error('Failed To Remove Plan From Server: ', err);
@@ -148,7 +155,7 @@ const PlannerDisplays = ({ profile }) => {
     <Grid className='grid_plans' item xs={6}>
       <Paper style={{ padding: 10, height: '100%' }}>
         {/* Create New Plan Button */}
-        <CreatePlanner />
+        <CreatePlanner addPlan={addPlan} />
         <h1 style={{ textAlign: 'center', flex: 1 }}>Playcation Plans</h1>
 
         {/* Plan Select Dropdown */}
