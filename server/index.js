@@ -8,6 +8,7 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
+const WeatherRoutes = require('./routes/watchRoutes/watch.js');
 
 require('dotenv').config();
 
@@ -85,6 +86,9 @@ app.use(bodyParser.json());
 // routers
 app.use('/api', routes);
 app.use('/community', CommunityRoutes);
+
+//app.use('/api/watchout', WeatherRoutes);
+app.use('/watchout', WeatherRoutes);
 
 // login with goggle
 app.get(
