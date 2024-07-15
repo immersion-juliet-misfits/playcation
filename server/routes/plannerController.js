@@ -73,7 +73,7 @@ module.exports = {
   addAct: (req, res) => {
     const { id } = req.params;
     const { activity } = req.body;
-    // console.log('ReqHan Activity Check: ', activity); 
+    // console.log('ReqHan Activity Check: ', activity);
     planner
       .findByPk(id)
       .then((plan) => {
@@ -83,12 +83,12 @@ module.exports = {
           return null;
         }
         // New logic to accept array of options
-        // console.log('Curr Acts: ', plan.activities); 
+        // console.log('Curr Acts: ', plan.activities);
         if (!Array.isArray(activity)) {
           res.status(400).send('Activities should be provided as an array');
           return null;
         }
-        activity.forEach(activity => {
+        activity.forEach((activity) => {
           if (!plan.activities.includes(activity)) {
             plan.activities.push(activity);
           }
@@ -102,7 +102,6 @@ module.exports = {
         // }
         // plan.activities.push(activity);
         // return plan.update({ activities: plan.activities });
-        
       })
       .then((updatedPlan) => {
         if (updatedPlan) {
@@ -144,5 +143,34 @@ module.exports = {
         res.sendStatus(500);
         console.error('Failed to Remove Activity From Plan', err);
       });
-  }
+  },
+  // Adding plan_note patch instead
+  updateNote: (req, res) => {
+    const { id } = req.params;
+    const { plan_notes } = req.body;
+
+    planner
+      .findByPk(id)
+      .then((plan) => {
+        // Verify there is a plan
+        if (!plan) {
+          res.sendStatus(404);
+          return null;
+        }
+
+        // Update the plan notes
+        plan.plan_notes = plan_notes;
+
+        return plan.save();
+      })
+      .then((updatedPlan) => {
+        if (updatedPlan) {
+          res.status(200).send(updatedPlan);
+        }
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+        console.error('Failed To Update Plan Notes', err);
+      });
+  },
 };

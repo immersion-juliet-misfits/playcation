@@ -173,6 +173,7 @@ const PlannerDisplays = ({ profile, onPlanSelect  }) => {
           <TableSelect
             selectedPlan={selectedPlan}
             isChangePlansClicked={isChangePlansClicked}
+            getPlans={getPlans}
           />
         )}
       </Paper>

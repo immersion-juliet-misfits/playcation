@@ -27,5 +27,7 @@ router.route('/planner').post(plannerController.addPlan);
 router.route('/planner/:id/addAct').patch(plannerController.addAct);
 router.route('/planner/:id/delAct').patch(plannerController.delAct);
 router.route('/planner/:id').delete(plannerController.delPlan);
+// Now will attempt to patch plan notes
+router.route('/planner/:id/updateNote').patch(plannerController.updateNote); 
 
 module.exports = router;
