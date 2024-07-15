@@ -9,7 +9,8 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
-const WeatherRoutes = require('./routes/watchRoutes/watch.js')
+const objRoute = require('./routes/watchRoutes/testRoutes')
+//const WeatherRoutes = require('./routes/watchRoutes/watch.js')
 // import { Loader } from "@googlemaps/js-api-loader"
 const reviews = require('./routes/reviewsRoutes.js')
 
@@ -92,7 +93,8 @@ app.use(bodyParser.json());
 app.use('/api', routes);
 app.use('/community', CommunityRoutes);
 app.use('/reviews', reviews)
-app.use('/watchout', WeatherRoutes);
+//app.use('/watchout', WeatherRoutes);
+app.use('/watchout', objRoute);
 
 // login with goggle
 app.get(
