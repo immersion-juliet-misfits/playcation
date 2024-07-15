@@ -25,7 +25,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     }
     axios.delete(`/community/post/${id}`)
       .then(() => {
-        console.log('Successfully deleted');
       })
       .then(() => {
         getPosts()
@@ -45,7 +44,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     }
     axios.patch(`/community/post/${id}`, {body: editBody, title: editTitle})
       .then(() => {
-        console.log('Updated')
         setMakeEdit(false);
       })
       .then(() => {

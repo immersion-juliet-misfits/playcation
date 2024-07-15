@@ -25,7 +25,6 @@ const TableSelect = ({ selectedPlan, isChangePlansClicked, getPlans }) => {
         plan_notes: newPlanNote,
       })
       .then((response) => {
-        // console.log('Plan note updated:', response.data);
         // Update selectedPlan with the new note
         selectedPlan.plan_notes = newPlanNote;
         // invoke getPlans to refresh view

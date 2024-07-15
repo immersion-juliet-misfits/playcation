@@ -57,17 +57,14 @@ axios.get('https://emojihub.yurace.pro/api/all/category/symbols')
   let obj = {}
   for (let i = 0; i < result.data.length; i++) {
     if (result.data[i].name === 'leftwards black arrow ≊ left arrow') {
-      //  console.log((result.data[i]))
       let unicode = result.data[i].unicode[0].slice(2)
       let edit = String.fromCodePoint(parseInt(unicode, 16))
         obj[0] = edit
     }else if (result.data[i].name === 'negative squared cross mark ≊ cross mark button') {
-      //  console.log((result.data[i]))
       let unicode = result.data[i].unicode[0].slice(2)
       let edit = String.fromCodePoint(parseInt(unicode, 16))
         obj[1] = edit
     }else if (result.data[i].name === 'arrow pointing rightwards then curving downwards ≊ right arrow curving down') {
-      //  console.log((result.data[i]))
       let unicode = result.data[i].unicode[0].slice(2)
       let edit = String.fromCodePoint(parseInt(unicode, 16))
         obj[2] = edit

@@ -16,7 +16,6 @@ Community.get('/post', (req, res) => {
 });
 
 Community.post('/post', (req, res) => {
-  console.log('Saved:', req.body);
   const { title, body, user_id, url } = req.body;
   communityPost.create({
     title,

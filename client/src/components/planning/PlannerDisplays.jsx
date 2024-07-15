@@ -46,49 +46,6 @@ const PlannerDisplays = ({ profile, onPlanSelect, getPlans, plans }) => {
       });
   };
 
-  // // Retrieve all Plans / GET
-  // const getPlans = () => {
-  //   axios
-  //     .get(`/api/planner/${profile.id}`)
-  //     .then((plans) => {
-  //       setPlans(plans.data); // This was working as just plans, but will try it with plans.data for now
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed To Retrieve Plans From Server: ', err);
-  //     });
-  // };
-
-  // // Add items to Plan Activities / PATCH
-  // const addAct = (planId, newAct) => {
-  //   // Need to add a button in Search to connect to this
-  //   axios
-  //     .patch(`/api/planner/${planId}/addAct`, {
-  //       activity: newAct,
-  //     })
-  //     .then((added) => {
-  //       console.log('Activity Added', added.data);
-  //       // Refresh list by invoking getPlans
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed To Add Activity to Plan: ', err);
-  //     });
-  // };
-
-  // // Remove items from Plan Activities / PATCH
-  // const delAct = (planId, oldAct) => {
-  //   axios
-  //     .patch(`/api/planner/${planId}/delAct`, {
-  //       activity: oldAct,
-  //     })
-  //     .then((deleted) => {
-  //       console.log('Activity Removed', deleted.data);
-  //       // Refresh list by invoking getPlans
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed To Remove Activity from Plan: ', err);
-  //     });
-  // };
-
   // Delete Plan / DELETE
   const delPlan = () => {
     // Verify a Plan has been selected
@@ -102,7 +59,6 @@ const PlannerDisplays = ({ profile, onPlanSelect, getPlans, plans }) => {
     axios
       .delete(`/api/planner/${selectedPlan.id}`)
       .then((deleted) => {
-        console.log('Plan Removed', deleted.data);
         // Refresh list by invoking getPlans
         getPlans();
         // Deselect/Reset after deletion

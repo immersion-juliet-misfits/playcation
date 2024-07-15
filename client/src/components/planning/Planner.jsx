@@ -41,7 +41,6 @@ const Planner = ({ user }) => {
         activity: newActs,
       })
       .then((added) => {
-        console.log('Activity Added', added.data);
         // Refresh list by invoking getPlans
         getPlans()
       })
@@ -57,7 +56,6 @@ const Planner = ({ user }) => {
         activity: oldAct,
       })
       .then((deleted) => {
-        console.log('Activity Removed', deleted.data);
         // Refresh list by invoking getPlans
       })
       .catch((err) => {
