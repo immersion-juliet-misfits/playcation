@@ -10,7 +10,7 @@ import ButtonSelect from './buttonSelect.jsx';
 import TableSelect from './tableSelect.jsx';
 import CreatePlanner from './createPlanner.jsx';
 
-const PlannerDisplays = ({ profile }) => {
+const PlannerDisplays = ({ profile, onPlanSelect  }) => {
   // State Group Start *****
   // Data retrieved from DB
   // const [data, setData] = useState([]); // Fake Data - Temp
@@ -38,6 +38,7 @@ const PlannerDisplays = ({ profile }) => {
         // Auto select the new plan - setTimeOut to prevent MUI error
         setTimeout(() => {
           setSelectedPlan(plan.data);
+          onPlanSelect(plan.data.id);
         }, 100);
       })
       .catch((err) => {
@@ -57,36 +58,36 @@ const PlannerDisplays = ({ profile }) => {
       });
   };
 
-  // Add items to Plan Activities / PATCH
-  const addAct = (planId, newAct) => {
-    // Need to add a button in Search to connect to this
-    axios
-      .patch(`/api/planner/${planId}/addAct`, {
-        activity: newAct,
-      })
-      .then((added) => {
-        console.log('Activity Added', added.data);
-        // Refresh list by invoking getPlans
-      })
-      .catch((err) => {
-        console.error('Failed To Add Activity to Plan: ', err);
-      });
-  };
+  // // Add items to Plan Activities / PATCH
+  // const addAct = (planId, newAct) => {
+  //   // Need to add a button in Search to connect to this
+  //   axios
+  //     .patch(`/api/planner/${planId}/addAct`, {
+  //       activity: newAct,
+  //     })
+  //     .then((added) => {
+  //       console.log('Activity Added', added.data);
+  //       // Refresh list by invoking getPlans
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed To Add Activity to Plan: ', err);
+  //     });
+  // };
 
-  // Remove items from Plan Activities / PATCH
-  const delAct = (planId, oldAct) => {
-    axios
-      .patch(`/api/planner/${planId}/delAct`, {
-        activity: oldAct,
-      })
-      .then((deleted) => {
-        console.log('Activity Removed', deleted.data);
-        // Refresh list by invoking getPlans
-      })
-      .catch((err) => {
-        console.error('Failed To Remove Activity from Plan: ', err);
-      });
-  };
+  // // Remove items from Plan Activities / PATCH
+  // const delAct = (planId, oldAct) => {
+  //   axios
+  //     .patch(`/api/planner/${planId}/delAct`, {
+  //       activity: oldAct,
+  //     })
+  //     .then((deleted) => {
+  //       console.log('Activity Removed', deleted.data);
+  //       // Refresh list by invoking getPlans
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed To Remove Activity from Plan: ', err);
+  //     });
+  // };
 
   // Delete Plan / DELETE
   const delPlan = () => {
@@ -106,6 +107,7 @@ const PlannerDisplays = ({ profile }) => {
         getPlans();
         // Deselect/Reset after deletion
         setSelectedPlan(null);
+        onPlanSelect(null);
       })
       .catch((err) => {
         console.error('Failed To Remove Plan From Server: ', err);
@@ -120,6 +122,7 @@ const PlannerDisplays = ({ profile }) => {
     setSelectedPlan(selectedPlanData);
     setIsChangePlansClicked(false);
     setIsDelActivityClicked(false);
+    onPlanSelect(selectedPlanData.id); 
   };
   // Detect User wants to Edit/Change Plan
   const handleChangePlansClick = () => {

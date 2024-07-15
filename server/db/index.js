@@ -209,7 +209,7 @@ const planner = db.define('planner', {
     hotels.sync();
     // reviews.sync();
     // crimes.sync();
-    planner.sync();
+    planner.sync({ alter: true });
     // Connection notification
     console.info('Database connection has been established.');
   } catch (error) {

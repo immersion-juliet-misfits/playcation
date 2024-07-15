@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import {
   Button,
   Checkbox,
@@ -15,9 +15,8 @@ import {
 // Test data to populate search box
 import { sData } from '../../../server/db/plan_fData.js';
 
-const Search = () => {
-  // State & Axios requests
-  // Request list of 10 options from API to show User
+const Search = ({ addAct, planId }) => {
+  // State & Event Handlers
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState('');
   const [searchClicked, setSearchClicked] = useState(false);
@@ -37,7 +36,11 @@ const Search = () => {
   const handleAddActivity = (e) => {
     e.preventDefault();
     // Will add selected item to selected Plan
-    console.log('Activity Added!');
+    // addAct();
+        // Gather selected items
+        const selectedItems = searchResults.filter((_, index) => checkedItems[index]);
+        // Pass selected items to addAct
+        addAct(planId, selectedItems);
   };
 
   // Request to API through the Route

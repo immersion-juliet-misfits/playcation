@@ -18,11 +18,14 @@ router.route('/profile/:id').delete(profileController.deleteProfile);
 // Search Routers
 router.route('/search').get(searchController.getSearch);
 
+// Stack Overflow suggestion to fix patch issue: I see no effect
+// router.use(express.json())
+
 // Planner Routers
 router.route('/planner/:id').get(plannerController.getPlans);
 router.route('/planner').post(plannerController.addPlan);
 router.route('/planner/:id/addAct').patch(plannerController.addAct);
-router.route('/planner/:id/delAct').patch(plannerController.addAct);
+router.route('/planner/:id/delAct').patch(plannerController.delAct);
 router.route('/planner/:id').delete(plannerController.delPlan);
 
 module.exports = router;
