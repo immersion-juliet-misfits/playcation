@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
+  Box,
+  Button,
+  Checkbox,
   Paper,
   Table,
   TableBody,
@@ -7,13 +11,26 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Box,
-  Checkbox,
+  TextField,
 } from '@mui/material';
 
+const TableSelect = ({ selectedPlan, isChangePlansClicked, getPlans }) => {
+  const [newPlanNote, setNewPlanNote] = useState('');
 
+  const handleUpdateNote = () => {
+    axios
+      .patch(`/api/planner/${selectedPlan.id}/updateNote`, {
+        plan_notes: newPlanNote,
+      })
+      .then((response) => {
+        selectedPlan.plan_notes = newPlanNote;
+        getPlans();
+      })
+      .catch((error) => {
+        console.error('Error updating plan note:', error);
+      });
+  };
 
-const TableSelect = ({ selectedPlan, isChangePlansClicked }) => {
   return (
     selectedPlan && (
       <Paper
@@ -54,28 +71,38 @@ const TableSelect = ({ selectedPlan, isChangePlansClicked }) => {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell
-                  align='center'
-                  colSpan={2}
-                  // style={{ fontSize: '1.5rem' }}
-                >
+                <TableCell align='center' colSpan={2}>
                   {selectedPlan.hotel_id}
                 </TableCell>
-                <TableCell
-                  align='center'
-                  colSpan={2}
-                  // style={{ fontSize: '1.5rem' }}
-                >
+                <TableCell align='center' colSpan={2}>
                   {selectedPlan.trip_location}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell
-                  align='center'
-                  colSpan={4}
-                  // style={{ fontSize: '1.5rem' }}
-                >
+                <TableCell align='center' colSpan={4}>
                   {selectedPlan.plan_notes}
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell align='center' colSpan={4}>
+                  <TextField
+                    label='Update Plan Notes'
+                    value={newPlanNote}
+                    onChange={(e) => setNewPlanNote(e.target.value)}
+                    fullWidth
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align='center' colSpan={4}>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleUpdateNote}
+                  >
+                    Update Notes
+                  </Button>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -94,7 +121,6 @@ const TableSelect = ({ selectedPlan, isChangePlansClicked }) => {
                   </Box>
                 </TableCell>
               </TableRow>
-
               {selectedPlan.activities.map((activity, index) => (
                 <TableRow key={index}>
                   <TableCell colSpan={4} style={{ position: 'relative' }}>

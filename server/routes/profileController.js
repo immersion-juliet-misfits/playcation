@@ -10,7 +10,6 @@ module.exports = {
     // find user
     Profile.findOne({ where: { user_id: id } })
       .then((profile) => {
-        console.log('p.dv', profile.dataValues)
         response.status(200).send(profile.dataValues);
       })
       .catch((err) => {

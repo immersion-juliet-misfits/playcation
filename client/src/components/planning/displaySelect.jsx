@@ -12,6 +12,13 @@ const DisplaySelect = ({ selectedPlan, handleSelectChange, data }) => {
         value={selectedPlan ? selectedPlan.plan_name : ''}
         label='Select Plan'
         onChange={handleSelectChange}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: 600,
+            },
+          },
+        }}
       >
         <MenuItem value=''>
           <em>None</em>

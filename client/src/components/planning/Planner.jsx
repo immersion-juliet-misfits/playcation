@@ -1,31 +1,57 @@
-// This is the only component that will be passed into Planner.jsx
-// Do I need below for router to work on our Homepage?
-import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Grid, Paper, TextField } from '@mui/material';
-import PlannerSearch from './PlannerSearch.jsx';
-import PlannerDisplay from './PlannerDisplays.jsx';
+import { Container, Grid } from '@mui/material';
+import PlannerDisplays from './PlannerDisplays.jsx';
 import Search from '../Search.jsx';
-// import InitAutocomplete from './PlannerDisplays.jsx';
 
-const Planner = () => {
-  // React Hooks replace state, constructor, and super()
-  // Don't have to bind methods
+const Planner = ({ user }) => {
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
 
-  // GET Method to retrieve stored plans
-  // getPlans(){};
+  const [plans, setPlans] = useState([]);
 
-  // Mount previous method on page load - Does React Hooks use this?
-  // componentDidMount() {
-  //   this.getPlans()
-  // };
+  const getPlans = () => {
+    axios
+      .get(`/api/planner/${user.id}`)
+      .then((plans) => {
+        setPlans(plans.data);
+      })
+      .catch((err) => {
+        console.error('Failed To Retrieve Plans From Server: ', err);
+      });
+  };
 
-  // POST Method to create new plans
-  // savePlans() {};
+  useEffect(() => {
+    getPlans();
+  }, [user.id]);
 
-  // Render required Planner Components
-  // Unsure if I prefer the way it looks with or without the Container
+  const addAct = (planId, newActs) => {
+    axios
+      .patch(`/api/planner/${planId}/addAct`, {
+        activity: newActs,
+      })
+      .then((added) => {
+        getPlans();
+      })
+      .catch((err) => {
+        console.error('Failed To Add Activity to Plan: ', err);
+      });
+  };
+
+  const delAct = (planId, oldAct) => {
+    axios
+      .patch(`/api/planner/${planId}/delAct`, {
+        activity: oldAct,
+      })
+      .then((deleted) => {})
+      .catch((err) => {
+        console.error('Failed To Remove Activity from Plan: ', err);
+      });
+  };
+
+  const handlePlanSelect = (planId) => {
+    setSelectedPlanId(planId);
+  };
+
   return (
     <Container
       className='planner_all'
@@ -45,14 +71,24 @@ const Planner = () => {
         spacing={1}
         alignItems='stretch'
         justifyContent='center'
-        style={{ width: '100%', height: '95%', overflowY: 'hidden'  }}
+        style={{ width: '100%', height: '95%', overflowY: 'hidden' }}
       >
-        <Search />
-        <PlannerDisplay />
+        <Search
+          addAct={addAct}
+          delAct={delAct}
+          planId={selectedPlanId}
+          getPlans={getPlans}
+          plans={plans}
+        />
+        <PlannerDisplays
+          profile={user}
+          onPlanSelect={handlePlanSelect}
+          getPlans={getPlans}
+          plans={plans}
+        />
       </Grid>
     </Container>
   );
-  // ****************
 };
 
 export default Planner;

@@ -1,101 +1,115 @@
-/* 
-This page is for displaying pulled saved plans from the DB
-
-Methods:
-POST request to create a new Plan
-PATCH request to change Plan name
-DELETE request to delete an existing Plan
-*/
-
-import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Button, Grid, Paper } from '@mui/material';
-// Import fake data to test functionality
-import { pData } from '../../../../server/db/plan_fData.js';
-// Import display components
+import { Grid, Paper } from '@mui/material';
 import DisplaySelect from './displaySelect.jsx';
 import ButtonSelect from './buttonSelect.jsx';
 import TableSelect from './tableSelect.jsx';
-import CreatePlanner from './createPlanner.jsx'
+import CreatePlanner from './createPlanner.jsx';
 
-const PlannerDisplays = () => {
-  // State Group Start *****
-  // Data retrieved from DB
-  const [data, setData] = useState([]);
-  // Has user selected a Plan
+const PlannerDisplays = ({ profile, onPlanSelect, getPlans, plans }) => {
   const [selectedPlan, setSelectedPlan] = useState(null);
-  // Has user selected a Plan
   const [isChangePlansClicked, setIsChangePlansClicked] = useState(false);
-  // User wants to Edit a Plan - remove activities
   const [isDelActivityClicked, setIsDelActivityClicked] = useState(false);
-  // State Group End *****
 
-  // Create these Axios calls
-  // Need to Create plan / POST to DB
-  // Need to show plan / GET from DB
-  // Add items to Plan / PATCH
-  // Remove items from plan / DELETE
+  const addPlan = ({ planName, planNotes }) => {
+    axios
+      .post('/api/planner', {
+        user_id: profile.id,
+        plan_name: planName,
+        plan_notes: planNotes,
+      })
+      .then((plan) => {
+        getPlans();
+        setTimeout(() => {
+          setSelectedPlan(plan.data);
+          onPlanSelect(plan.data.id);
+        }, 100);
+      })
+      .catch((err) => {
+        console.error('Failed To Create New Plan: ', err);
+      });
+  };
 
-  // Detect selections in Select Box
+  const delPlan = () => {
+    if (!selectedPlan) {
+      console.error('Must Select A Plan to Delete');
+      return;
+    }
+
+    axios
+      .delete(`/api/planner/${selectedPlan.id}`)
+      .then((deleted) => {
+        getPlans();
+        setSelectedPlan(null);
+        onPlanSelect(null);
+      })
+      .catch((err) => {
+        console.error('Failed To Remove Plan From Server: ', err);
+      });
+  };
+
   const handleSelectChange = (event) => {
     const planName = event.target.value;
-    const selectedPlanData = data.find((plan) => plan.plan_name === planName);
+    const selectedPlanData = plans.find((plan) => plan.plan_name === planName);
     setSelectedPlan(selectedPlanData);
     setIsChangePlansClicked(false);
     setIsDelActivityClicked(false);
+    onPlanSelect(selectedPlanData.id);
   };
-  // Detect User wants to Edit/Change Plan
   const handleChangePlansClick = () => {
     setIsChangePlansClicked(true);
     setIsDelActivityClicked(false);
   };
-  // Detect user wants to remove activities
   const handleDelActivityClick = () => {
     setIsDelActivityClicked(true);
     setIsChangePlansClicked(false);
-    // Axios DELETE will be triggered here
+    delPlan();
   };
 
   useEffect(() => {
-    // Simulating an API call with the fake data
-    setData(pData);
-  }, []);
+    getPlans();
+  }, [profile.id]);
+
+  useEffect(() => {
+    if (selectedPlan) {
+      const updatedPlan = plans.find((plan) => plan.id === selectedPlan.id);
+      setSelectedPlan(updatedPlan);
+    }
+  }, [plans]);
 
   return (
     <Grid className='grid_plans' item xs={6}>
-      <Paper style={{ padding: 10, height: '100%' }}>
-        {/* Create New Plan Button */}
-        {/* <Box display='flex' justifyContent='center' alignItems='center'> */}
-          <CreatePlanner />
-        {/* </Box> */}
+      <Paper
+        style={{
+          padding: 10,
+          height: '100%',
+        }}
+      >
+        <CreatePlanner addPlan={addPlan} />
         <h1 style={{ textAlign: 'center', flex: 1 }}>Playcation Plans</h1>
 
-        {/* Plan Select Dropdown */}
         <DisplaySelect
           selectedPlan={selectedPlan}
           handleSelectChange={handleSelectChange}
-          data={data}
+          data={plans}
         />
-        {/* Plan Buttons */}
         <ButtonSelect
           selectedPlan={selectedPlan}
           isChangePlansClicked={isChangePlansClicked}
           handleChangePlansClick={handleChangePlansClick}
           handleDelActivityClick={handleDelActivityClick}
+          delPlan={delPlan}
         />
-        {/* Plan Rendering */}
         {selectedPlan && (
           <TableSelect
             selectedPlan={selectedPlan}
             isChangePlansClicked={isChangePlansClicked}
+            getPlans={getPlans}
           />
         )}
       </Paper>
     </Grid>
   );
-
-  // ************
 };
 
 export default PlannerDisplays;
