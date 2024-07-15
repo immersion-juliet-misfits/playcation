@@ -8,7 +8,6 @@ import {
   InputAdornment,
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import LinkBar from './LinkBar.jsx';
 
 const Profile = ({ user }) => {
   // States for input
@@ -100,7 +99,6 @@ const Profile = ({ user }) => {
 
   return (
     <>
-      <LinkBar />
       <h1>Profile</h1>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <TextField

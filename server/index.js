@@ -9,7 +9,7 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
-// import { Loader } from "@googlemaps/js-api-loader"
+const YelpRoutes = require('./routes/communityRoutes/yelpApi.js');
 const reviews = require('./routes/reviewsRoutes.js')
 
 require('dotenv').config();
@@ -89,6 +89,7 @@ app.use(bodyParser.json());
 
 // routers
 app.use('/api', routes);
+app.use('/yelp', YelpRoutes);
 app.use('/community', CommunityRoutes);
 app.use('/reviews', reviews)
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -8,17 +8,47 @@ import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import GradingIcon from '@mui/icons-material/Grading';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import image from 'Desktop/fence/screamtest.jpg'
 
 const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
   const [makeEdit, setMakeEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title)
   const [editBody, setEditBody] = useState(body);
+  const [owner, setOwner] = useState({username: '', initial: ''})
+  const [showYelp, setShowYelp] = useState(false);
+  const [yelpData, setyelpData] = useState({});
+
+  useEffect(() => {
+    getOwners()
+    // getYelp() // uncomment when ready to test
+  }, [])
+
+  const getOwners = () => {
+    axios.get(`/community/owner/${id}`)
+      .then(({data}) => {
+        const { username } = data;
+        setOwner({username, initial: data.username[0]})
+      })
+      .catch((err) => {
+        console.error('NOT Invoked from client', err)
+      })
+  }
+
+  const getYelp = () => {
+    axios.get(`/yelp/search?location=${title}`)
+    .then(({data}) => {
+      console.log(data)
+      setyelpData(data.businesses[0])
+    })
+    .catch(() => {
+      console.error('No results found for search')
+    })
+  }
+
   const handleDelete = () => {
     if (user.id !== postOwner) {
       throw 'Cannot delete other user\'s post!'
@@ -32,11 +62,15 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
       .catch((err) => {
         console.error(err);
       })
-  }
-
-  const toggleEdit = () => {
-    setMakeEdit((makeEdit) => !makeEdit)
-  }
+    }
+    
+    const toggleEdit = () => {
+      setMakeEdit((makeEdit) => !makeEdit)
+    }
+    
+    const toggleYelp = () => {
+      setShowYelp((showYelp) => !showYelp)
+    }
 
   const handleEdit = () => {
     if (user.id !== postOwner) {
@@ -64,9 +98,9 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: '100%', width: '80%', margin: '20px auto' }} style={{backgroundColor: "#CCE8FF"}}>
         <CardHeader
-          avatar={<Avatar>{user.username[0]}</Avatar>}
+          avatar={<Avatar>{owner.username[0]}</Avatar>}
           action={user.id === postOwner &&
             <div>
             {makeEdit && <IconButton onClick={() => handleEdit()} >
@@ -86,10 +120,10 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           !makeEdit && <h3>{title}</h3> || makeEdit && 
           <div>
             <label htmlFor="commtitle">Venture Location:</label><br/>
-            <input id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
+            <input style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
           </div>
         }
-          subheader={`Posted by ${user.username} on ${postDate.slice(0, 10)}`}
+          subheader={`Posted by ${owner.username} on ${postDate.slice(0, 10)}`}
         />
         <CardMedia
           component="img"
@@ -104,17 +138,26 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           {makeEdit && 
           <div>
             <label htmlFor="commbody">Venture Story:</label><br/>
-            <textarea id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
+            <textarea style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
           </div>
+          }
 
+          {showYelp && 
+          <div>
+            <Typography variant="subtitle1">Popular In the Area:</Typography>
+              <Typography color="text.secondary" variant="h6">{yelpData.name}</Typography>
+              <Typography component="h4">Phone Number:</Typography>
+              <Typography variant="subtitle2">{yelpData.display_phone}</Typography>
+              <Typography component="h4">Price Range:</Typography>
+              <Typography variant="subtitle2">{yelpData.price}</Typography>
+              <Typography component="h4">Rating:</Typography>
+              <Typography variant="subtitle2">{yelpData.rating}</Typography>
+          </div>
           }
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton>
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton>
-            <ShareIcon />
+          <IconButton  onClick={() => toggleYelp()}>
+            <MoreVertIcon />
           </IconButton>
         </CardActions>
       </Card>
@@ -123,12 +166,6 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
     </div>
   );
 
-  //   (
-  //     <div>
-  //     <h3>{title}</h3>
-  //     <p>{body}</p>
-  //     </div>
-  //   )
 };
 
 export default CommunityPost;
