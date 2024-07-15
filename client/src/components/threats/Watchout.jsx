@@ -13,6 +13,7 @@ const WatchOut = () => {
     const [country, setCountry] = useState('');
     const [loading, setLoading] = useState(false); // To prevent duplicate requests
     const [weatherData, setWeatherData] = useState(null);
+    const [lists, setLists] = useState([]);
     const apiKey = process.env.WEATHER_API_KEY;
 
   useEffect(() => {
@@ -46,22 +47,38 @@ const WatchOut = () => {
         alert('Please enter both city and country');
         return;
       }
+
+        // Prepare data to send in the POST request
+    const postData = {
+      city_name: city,
+      country_code: country,
     };
-   
-    const saveWeatherData = () => {
-      console.log('TESTING', weatherData)
-       if (weatherData) {
-        axios.post(`/watchout/api/saveWeatherData`, {weatherData: weatherData})
-          .then(response => {
-            console.log('Weather data saved:', response.data);
-           })
-          .catch(error => {
-            console.error('Failed to save weather data:', error);
-            alert('A storm of issues are happening');
-           });
-      } else {
-        console.warn('No weather data to save.');
-      }
+
+    // Send POST request to backend
+    axios.post('/weather-data', postData)
+      .then(response => {
+        console.log('Weather data saved:', response.data);
+       })
+      .catch(error => {
+        console.error('Failed to save weather data:', error);
+       });
+    };
+
+     const saveWeatherData = () => {
+       
+    };
+
+    const createLists = () => {
+      axios.get('/create-lists')
+        .then(response => {
+          console.log('Lists created:', response);
+          // Update state or handle the data as required
+           setLists(response.data);
+        })
+        .catch(error => {
+          console.error('Failed to create lists:', error);
+          alert('Failed to create lists');
+        });
     };
 
   return (
@@ -81,9 +98,13 @@ const WatchOut = () => {
           <button onClick={saveWeatherData} disabled={!weatherData}>
             Save Weather Report
           </button>
+          <button onClick={createLists}>
+            Create Lists
+          </button>
         </div>
          {console.log(weatherData)}
         <br></br>{weatherData ? <WatchInfo weatherData={weatherData}/> : 'Please wait...'}
+         
       </div>
     </div>
   );
