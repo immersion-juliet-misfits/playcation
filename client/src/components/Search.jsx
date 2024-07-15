@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import React, { useState } from 'react';
 import {
   Button,
   Checkbox,
@@ -12,11 +11,9 @@ import {
   TableRow,
   TextField,
 } from '@mui/material';
-// Test data to populate search box
 import { sData } from '../../../server/db/plan_fData.js';
 
 const Search = ({ addAct, planId, getPlans, plans }) => {
-  // State & Event Handlers
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState('');
   const [searchClicked, setSearchClicked] = useState(false);
@@ -27,7 +24,6 @@ const Search = ({ addAct, planId, getPlans, plans }) => {
     const results = sData
       .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
       .slice(0, 20);
-    // .slice(0, 10); // Enable when I only want 10 results displayed
     setSearchResults(results);
     setSearchClicked(true);
     setCheckedItems({});
@@ -35,17 +31,13 @@ const Search = ({ addAct, planId, getPlans, plans }) => {
 
   const handleAddActivity = (e) => {
     e.preventDefault();
-    // Will add selected item to selected Plan
-    // addAct();
-        // Gather selected items
-        const selectedItems = searchResults.filter((_, index) => checkedItems[index]);
-        // Pass selected items to addAct
-        addAct(planId, selectedItems);
-        // Invoke to refresh list
-        getPlans()
-  };
 
-  // Request to API through the Route
+    const selectedItems = searchResults.filter(
+      (_, index) => checkedItems[index]
+    );
+    addAct(planId, selectedItems);
+    getPlans();
+  };
 
   return (
     <Grid className='grid_search' item xs={6}>
@@ -126,8 +118,6 @@ const Search = ({ addAct, planId, getPlans, plans }) => {
       </Paper>
     </Grid>
   );
-
-  // ********
 };
 
 export default Search;

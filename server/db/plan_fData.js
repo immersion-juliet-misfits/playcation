@@ -262,6 +262,22 @@ const sData = [
   'Union Square',
   'Coit Tower',
   'Palace of Fine Arts',
+  'Apples & Bees',
+  'Five Fellas',
+  'A Water Park',
+  'A Waterless Park',
+  'Bowling Buddies',
+  'Sunnyvale Meadows Park',
+  'Pine Ridge Forest Reserve',
+  'Maplewood Adventure Park',
+  'Lakeside Serenity Park',
+  'Cedar Hills Nature Sanctuary',
+  'Aspen Grove Park',
+  'Alderwood Preserve',
+  'Arbor Haven Park',
+  'Dover Springs Park',
+  'Dewdrop Valley Park',
+  'Driftwood Beach Park',
 ];
 
 module.exports = {
