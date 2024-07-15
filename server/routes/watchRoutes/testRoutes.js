@@ -1,6 +1,6 @@
 const axios = require('axios')
 const express = require('express');
-let weatherRoute = express.Router()
+const weatherRoute = express.Router()
 //const {User, reviews} = require('../db/index');
 const { weather } = require('../../db/index');
 
@@ -29,8 +29,12 @@ weatherRoute.get('/create-lists', (req, res) => {
     
     console.log('LISTS HERE', lists);
     
-    res.status(200).send(lists);
+  
+    return lists;
     // Respond with the lists as JSON
+  })
+  .then((lists) => {
+     res.status(200).send(lists);
   })
   .catch(error => {
     console.error('Error fetching weather data:', error);

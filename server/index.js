@@ -9,7 +9,7 @@ const isAuthenticated = require('./middleware/auth');
 const { User } = require('./db/index');
 const routes = require('./routes/routes');
 const CommunityRoutes = require('./routes/communityRoutes/community.js');
-const objRoute = require('./routes/watchRoutes/testRoutes')
+const objRoute = require('./routes/watchRoutes/testRoutes.js');
 //const WeatherRoutes = require('./routes/watchRoutes/watch.js')
 // import { Loader } from "@googlemaps/js-api-loader"
 const reviews = require('./routes/reviewsRoutes.js')

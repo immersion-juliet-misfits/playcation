@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import WatchInfo from "./WatchInfo.jsx";
 // Import axios
 import axios from 'axios';
+import { USE } from 'sequelize/lib/index-hints';
 
 const WatchOut = () => {
  
@@ -36,6 +37,7 @@ const WatchOut = () => {
 
     fetchData();
   }, [city, country, apiKey]);
+
 
     const searchSubmit = (event) => {
       event.preventDefault();
@@ -71,9 +73,12 @@ const WatchOut = () => {
     const createLists = () => {
       axios.get('/create-lists')
         .then(response => {
-          console.log('Lists created:', response);
           // Update state or handle the data as required
+          console.log(response);
            setLists(response.data);
+        })
+        .then(() => {
+          console.log(lists);
         })
         .catch(error => {
           console.error('Failed to create lists:', error);
