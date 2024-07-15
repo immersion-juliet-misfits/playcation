@@ -88,15 +88,21 @@ module.exports = {
           res.status(400).send('Activities should be provided as an array');
           return null;
         }
-        activity.forEach((activity) => {
-          if (!plan.activities.includes(activity)) {
-            plan.activities.push(activity);
-          }
-        });
-        // console.log('Updated Acts: ', plan.activities);
-        return plan.update({ activities: plan.activities });
 
-        // // Prevent duplicates - old version
+        // Attempt to replace the old array with a new array
+        plan.activities = activity;
+        return plan.save();
+
+        // This was for pushing to the old array
+        // activity.forEach((activity) => {
+        //   if (!plan.activities.includes(activity)) {
+        //     plan.activities.push(activity);
+        //   }
+        // });
+        // // console.log('Updated Acts: ', plan.activities);
+        // return plan.update({ activities: plan.activities });
+
+        // This was for adding 1 at a time to the array: Prevent duplicates - old version
         // if (plan.activities.includes(activity)) {
         //   return res.status(400).send('Activity Already Exists');
         // }

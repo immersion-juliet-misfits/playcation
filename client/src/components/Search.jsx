@@ -15,7 +15,7 @@ import {
 // Test data to populate search box
 import { sData } from '../../../server/db/plan_fData.js';
 
-const Search = ({ addAct, planId }) => {
+const Search = ({ addAct, planId, getPlans, plans }) => {
   // State & Event Handlers
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState('');
@@ -41,6 +41,8 @@ const Search = ({ addAct, planId }) => {
         const selectedItems = searchResults.filter((_, index) => checkedItems[index]);
         // Pass selected items to addAct
         addAct(planId, selectedItems);
+        // Invoke to refresh list
+        getPlans()
   };
 
   // Request to API through the Route

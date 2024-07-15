@@ -10,11 +10,11 @@ import ButtonSelect from './buttonSelect.jsx';
 import TableSelect from './tableSelect.jsx';
 import CreatePlanner from './createPlanner.jsx';
 
-const PlannerDisplays = ({ profile, onPlanSelect  }) => {
+const PlannerDisplays = ({ profile, onPlanSelect, getPlans, plans }) => {
   // State Group Start *****
   // Data retrieved from DB
   // const [data, setData] = useState([]); // Fake Data - Temp
-  const [plans, setPlans] = useState([]); // Real Data - Eventual
+  // const [plans, setPlans] = useState([]); // Real Data - Eventual
   // Has user selected a Plan
   const [selectedPlan, setSelectedPlan] = useState(null);
   // Has user selected a Plan
@@ -46,17 +46,17 @@ const PlannerDisplays = ({ profile, onPlanSelect  }) => {
       });
   };
 
-  // Retrieve all Plans / GET
-  const getPlans = () => {
-    axios
-      .get(`/api/planner/${profile.id}`)
-      .then((plans) => {
-        setPlans(plans.data); // This was working as just plans, but will try it with plans.data for now
-      })
-      .catch((err) => {
-        console.error('Failed To Retrieve Plans From Server: ', err);
-      });
-  };
+  // // Retrieve all Plans / GET
+  // const getPlans = () => {
+  //   axios
+  //     .get(`/api/planner/${profile.id}`)
+  //     .then((plans) => {
+  //       setPlans(plans.data); // This was working as just plans, but will try it with plans.data for now
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed To Retrieve Plans From Server: ', err);
+  //     });
+  // };
 
   // // Add items to Plan Activities / PATCH
   // const addAct = (planId, newAct) => {
@@ -122,7 +122,7 @@ const PlannerDisplays = ({ profile, onPlanSelect  }) => {
     setSelectedPlan(selectedPlanData);
     setIsChangePlansClicked(false);
     setIsDelActivityClicked(false);
-    onPlanSelect(selectedPlanData.id); 
+    onPlanSelect(selectedPlanData.id);
   };
   // Detect User wants to Edit/Change Plan
   const handleChangePlansClick = () => {
@@ -141,6 +141,14 @@ const PlannerDisplays = ({ profile, onPlanSelect  }) => {
     // setData(pData); // Fake data
     getPlans(); // Real Data
   }, [profile.id]);
+
+  // This Second useEffect is for triggering a re-render when plan get added from Search interaction
+  useEffect(() => {
+    if (selectedPlan) {
+      const updatedPlan = plans.find((plan) => plan.id === selectedPlan.id);
+      setSelectedPlan(updatedPlan);
+    }
+  }, [plans]);
 
   return (
     <Grid className='grid_plans' item xs={6}>
