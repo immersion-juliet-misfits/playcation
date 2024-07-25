@@ -38,4 +38,8 @@ module.exports = {
     new Dotenv(),
     new HtmlWebpackPlugin({ template: './client/index.html' })
   ],
+  watch: process.env.NODE_ENV !== 'production' && true,
+  watchOptions: {
+    ignored: ['node_modules', 'scripts'],
+  },
 };

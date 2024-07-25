@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Button, ButtonGroup } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 const ButtonSelect = ({
   selectedPlan,
