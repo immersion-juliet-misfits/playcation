@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import {
-  Button,
-  TextField,
-  Typography,
-  Box,
-  InputAdornment,
-} from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const Profile = ({ user }) => {
@@ -14,7 +11,7 @@ const Profile = ({ user }) => {
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [bio, setBio] = useState('');
-  
+
   // Profile State
   const [profile, setProfile] = useState({
     firstName: fName,
@@ -22,8 +19,6 @@ const Profile = ({ user }) => {
     bio: bio,
     user_id: user.id || 1,
   });
-  
-  const profileRef = useRef(profile);
 
   const editState = (name, value) => {
     if (name === 'fName') {
@@ -39,7 +34,7 @@ const Profile = ({ user }) => {
   const getProfile = () => {
     axios
       .get(`/api/profile/${profile.user_id}`)
-      .then(({data}) => {
+      .then(({ data }) => {
         setFName(data.firstName);
         setLName(data.lastName);
         setBio(data.bio);
@@ -48,12 +43,10 @@ const Profile = ({ user }) => {
       .catch((err) => {
         console.error('Could not GET Profile: ', err);
       });
-      
   };
 
   // Create to /api/profile
   const createProfile = () => {
-    
     axios
       .post('/api/profile', {
         firstName: fName,
@@ -61,7 +54,7 @@ const Profile = ({ user }) => {
         bio: bio,
         user_id: user.id,
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         setProfile(data);
       })
       .catch((err) => {
@@ -72,8 +65,12 @@ const Profile = ({ user }) => {
   // Put request to /api/profile/${profile.id} to edit the profile data
   const editProfile = () => {
     axios
-      .patch(`/api/profile/${profile.id}`, {firstName: fName, lastName:lName, bio})
-      .then(({data}) => {
+      .patch(`/api/profile/${profile.id}`, {
+        firstName: fName,
+        lastName: lName,
+        bio,
+      })
+      .then(({ data }) => {
         setProfile(data);
       })
       .catch((err) => {
@@ -85,7 +82,7 @@ const Profile = ({ user }) => {
   const deleteProfile = () => {
     axios
       .delete(`/api/profile/${profile.id}`)
-      .then(({data}) => {
+      .then(({ data }) => {
         setProfile(data);
       })
       .catch((err) => {
