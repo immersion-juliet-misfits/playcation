@@ -1,5 +1,6 @@
-import React, { useState, Component } from "react";
-import { Button, Box } from '@mui/material'
+import React, { useState } from "react";
+import  Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import axios from "axios";
 
 const AddReviews = ({ user, add, symbol, thumbup }) => {
@@ -18,7 +19,7 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
     let obj = { review: text, rating, user_id: user.id }
 
     axios.post('reviews/post', obj)
-      .then((data) => {
+      .then(() => {
       })
       .catch((err) => {
         console.error('AddReviews.jsx, something went wrong adding review to database: ', err)
@@ -28,7 +29,7 @@ const AddReviews = ({ user, add, symbol, thumbup }) => {
 
     if (user.id !== null) {
       axios.post('reviews/post', obj)
-        .then((data) => {
+        .then(() => {
         })
         .catch((err) => {
           console.error('AddReviews.jsx, something went wrong adding review to database: ', err)
