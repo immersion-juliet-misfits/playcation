@@ -2,9 +2,8 @@
 .env
 
 # Dependency directories
-jspm_packages/
-node_modules/
-package-lock.json
+jspm_packages
+node_modules
 
 # Wildcard Ignore patterns
 *~Stashed changes
