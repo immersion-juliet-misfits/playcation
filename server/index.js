@@ -20,7 +20,6 @@ const PORT = 8000;
 // GOOGLE CLIENT keys from .env
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-// const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 // authorize user
 const userAuth = (req, accessToken, refreshToken, profile, done) => {
@@ -127,19 +126,3 @@ app.listen(PORT, () => {
   console.info(`Server listening on http://localhost:${PORT}`);
 });
 
-
-
-// const loader = new Loader({
-//   apiKey: GOOGLE_MAPS_API_KEY,
-//   version: "weekly",
-//   ...additionalOptions,
-// });
-
-// loader.load().then(async () => {
-//   const { Map } = await google.maps.importLibrary("maps");
-
-//   map = new Map(document.getElementById("map"), {
-//     center: { lat: -34.397, lng: 150.644 },
-//     zoom: 8,
-//   });
-// });

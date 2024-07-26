@@ -1,4 +1,4 @@
-/* 
+/*
 For building the database
 */
 const { Sequelize, DataTypes } = require('sequelize');
@@ -85,19 +85,6 @@ const communityPost = db.define('communityPost', {
 User.hasMany(communityPost, { foreignKey: 'user_id' });
 communityPost.belongsTo(User, { foreignKey: 'user_id' });
 
-// Community Pics: id, url
-// const communityPics = db.define('communityPics', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   },
-//   url: {
-//     type: DataTypes.STRING,
-//   },
-// });
-// communityPics.hasOne(communityPost, { foreignKey: 'image_id' });
-// communityPost.belongsTo(communityPics, { foreignKey: 'image_id' });
 
 // Hotels:
 const hotels = db.define('hotels', {
@@ -105,17 +92,9 @@ const hotels = db.define('hotels', {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
-    // references: {
-    //   model: planner,
-    //   key: 'hotel_id',
-    // },
   },
   review_id: {
     type: DataTypes.INTEGER,
-    // references: {
-    //   model: reviews,
-    //   key: 'id',
-    // },
   },
 });
 
@@ -135,7 +114,7 @@ const reviews = db.define('reviews', {
   user_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: User, 
+      model: User,
       key: 'id'
     }
   }
@@ -222,10 +201,9 @@ module.exports = {
   User,
   Profile,
   communityPost,
-  // communityPics,
   hotels,
   reviews,
-  // crimes, 
+  // crimes,
   planner
 }
 
