@@ -1,9 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
+// const Dotenv = require('dotenv-webpack');
+require('dotenv').config();
+
+const { NODE_ENV } = process.env;
+const isDev = NODE_ENV.includes('dev');
 
 module.exports = {
-  mode: 'development',
+  // mode: process.env.NODE_ENV,
+  mode: isDev ? 'development' : 'production',
   entry: path.resolve(__dirname, 'client/src/index.jsx'),
   output: {
     path: path.resolve(__dirname, 'client/dist'),
@@ -36,7 +41,10 @@ module.exports = {
   },
   plugins: [
     new Dotenv(),
-    new HtmlWebpackPlugin({ template: './client/index.html' })
+    new HtmlWebpackPlugin({ template: './client/index.html' }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
+    }),
   ],
   watch: process.env.NODE_ENV !== 'production' && true,
   watchOptions: {
