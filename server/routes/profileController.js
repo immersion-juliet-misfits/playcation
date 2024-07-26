@@ -1,5 +1,4 @@
-const { request, response } = require("express");
-const { Profile, User } = require("../db");
+const { Profile } = require("../db");
 
 module.exports = {
   // GET /api/profile/:id

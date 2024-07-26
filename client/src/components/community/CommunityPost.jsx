@@ -12,7 +12,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import GradingIcon from '@mui/icons-material/Grading';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-// import image from 'Desktop/fence/screamtest.jpg'
 
 const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwner }) => {
   const [makeEdit, setMakeEdit] = useState(false);
@@ -63,11 +62,11 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
         console.error(err);
       })
     }
-    
+
     const toggleEdit = () => {
       setMakeEdit((makeEdit) => !makeEdit)
     }
-    
+
     const toggleYelp = () => {
       setShowYelp((showYelp) => !showYelp)
     }
@@ -117,7 +116,7 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
             </div>
           }
           title={
-          !makeEdit && <h3>{title}</h3> || makeEdit && 
+          !makeEdit && <h3>{title}</h3> || makeEdit &&
           <div>
             <label htmlFor="commtitle">Venture Location:</label><br/>
             <input style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Where'd you go?" value={editTitle}  onChange={(e) => handleTitleChange(e)} /><br/><br/>
@@ -135,14 +134,14 @@ const CommunityPost = ({ title, body, postDate, url, id, getPosts, user, postOwn
           {!makeEdit && <Typography color="text.secondary">
             {body}
           </Typography>}
-          {makeEdit && 
+          {makeEdit &&
           <div>
             <label htmlFor="commbody">Venture Story:</label><br/>
             <textarea style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Share your experience" value={editBody} onChange={(e) => handleBodyChange(e)}/><br/><br/>
           </div>
           }
 
-          {showYelp && 
+          {showYelp &&
           <div>
             <Typography variant="subtitle1">Popular In the Area:</Typography>
               <Typography color="text.secondary" variant="h6">{yelpData.name}</Typography>

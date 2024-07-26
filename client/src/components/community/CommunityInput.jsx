@@ -4,16 +4,15 @@ import ImageUpload from "./ImageUpload.jsx";
 
 
 const CommunityInput = ({getPosts, userId}) => {
-  const [user_id] = useState(userId)  
+  const [user_id] = useState(userId)
   const [title, setPostTitle] = useState('')
   const [body, setPostBody] = useState('');
   const [url, setPostUrl] = useState('');
   const [showUpload, setShowUpload] = useState(false);
   const [imgUploaded, setImgUploaded] = useState(false);
-  
+
   const cloudName = process.env.NEXT_PUBLIC_TEST_KEY;
   const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
-  // computer property to reuse logic?
   const handleTitleChange = (e) => {
     setPostTitle(e.target.value)
   }
@@ -38,7 +37,7 @@ const CommunityInput = ({getPosts, userId}) => {
   const toggleUpload = () => {
     setShowUpload((showUpload) => !showUpload)
   }
-  
+
   const successUpload = () => {
     setImgUploaded((imgUploaded) => !imgUploaded)
   }
@@ -57,8 +56,8 @@ const CommunityInput = ({getPosts, userId}) => {
 
       <label htmlFor="commbody">Venture Story:</label><br/>
       <textarea style={{ backgroundColor: '#7171D0', color: '#CCE8FF' }} id="commtitle" type="text" placeholder="Share your experience" value={body} onChange={(e) => handleBodyChange(e)}/><br/><br/>
-      
-      {!imgUploaded && 
+
+      {!imgUploaded &&
       <div>
         <label htmlFor="comm">Venture Snapshot:</label><br/>
         <h4>No image selected.</h4>
@@ -69,7 +68,7 @@ const CommunityInput = ({getPosts, userId}) => {
       {imgUploaded &&
         <><h4>Venture Snapshot Uploaded</h4><br/></>
       }
-      
+
       <input type="button" value="Post Venture" onClick={(e) => handleSubmit(e)} />
       {showUpload && <ImageUpload cloudName={cloudName} uploadPreset={uploadPreset} handleUpload={handleUpload} successUpload={() => successUpload()} />}
     </div>
