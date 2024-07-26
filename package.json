@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npm test",
     "build": "webpack -w --config webpack.config.js",
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "dev": "concurrently --kill-others \"npm run build\" \"npm start\" --restart-tries -1 "
   },
   "repository": {
     "type": "git",
