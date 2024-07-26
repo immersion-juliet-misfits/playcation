@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Checkbox,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  TextField,
+import {  Checkbox,  Grid,  Paper,  Table,  TableBody,  TableCell,  TableContainer,  TableRow,  TextField,
 } from '@mui/material';
+import Button from '@mui/material/Button'
 import { sData } from '../../../server/db/plan_fData.js';
 
 const Search = ({ addAct, planId, getPlans, plans }) => {
