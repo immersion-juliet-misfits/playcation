@@ -55,7 +55,9 @@ After Installations are complete:
 - You will also use this API, which doesn't require a key:
   https://github.com/cheatsnake/emojihub
 
-- You will need an account on Email.js: https://www.emailjs.com/
+- You will need to create an account with Cloudinary for the photo uploads: https://cloudinary.com
+
+- You will need to create an account with Yelp in order to receive a key to be used in location querying: https://docs.developer.yelp.com/docs/fusion-intro
 
 
 # Deployment
@@ -78,3 +80,13 @@ We deployed on AWS
 
 - CD'd into the directory and run:
   `npm install`
+
+# Contributing
+
+[Cam’ron Calldwell](https://github.com/ccaldwell11)
+
+[Gage Cantrelle](https://github.com/gagecantrelle)
+
+[Josh Roberts](https://github.com/jrob112)
+
+[Trelana Martin](https://github.com/TreMartin-OS)
