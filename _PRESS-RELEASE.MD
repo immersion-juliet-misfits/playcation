@@ -1,6 +1,6 @@
 Sometimes we want to get out of the house and go somewhere new. See the world,
 visit famous sites, and try some fun things. But currently, you don't know where
-to start, luckily we can help. Placation is a family-friendly vacation planning website
+to start, luckily we can help. Playcation is a family-friendly vacation planning website
 with multiple fun features. We give our users a list of locations they can choose from
 within a certain range, being in America. You will be able to see and create reviews
 about the hotel you pick for your vacation. While also being able to see if there are any
